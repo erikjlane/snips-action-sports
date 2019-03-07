@@ -1,19 +1,29 @@
 import wretch from 'wretch'
-import { dedupe } from 'wretch-middlewares'
+import { dedupe, throttlingCache } from 'wretch-middlewares'
+import { HOUR_MILLISECONDS } from '../constants'
+import { configFactory } from './configFactory'
 
-const BASE_URL = 'https://pokeapi.co/api/v2'
+const BASE_URL = 'https://api.sportradar.us/soccer-t3/eu'
 
-const http = wretch(BASE_URL)
-    // Add a dedupe middleware, throttling cache would also be useful to prevent excessive token usage.
-    // (https://github.com/elbywan/wretch-middlewares)
+let http = wretch(BASE_URL)
     .middlewares([
         dedupe()
     ])
 
 function init(httpOptions = { mock: false }) {
-    wretch().polyfills({
+    http = http.polyfills({
         fetch: httpOptions.mock || require('node-fetch')
+    }).query({
+        app_key: configFactory.get().apiKey
     })
+
+    if(!httpOptions.mock) {
+        http = http.middlewares([
+            throttlingCache({
+                throttle: HOUR_MILLISECONDS / 6
+            })
+        ])
+    }
 }
 function get() {
     return http

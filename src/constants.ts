@@ -5,6 +5,7 @@ export const LANGUAGE_MAPPINGS = {
     english: 'en',
     french: 'fr'
 }
+export const HOUR_MILLISECONDS = 1000 * 60 * 60
 export const INTENT_PROBABILITY_THRESHOLD = 0.5
 export const INTENT_FILTER_PROBABILITY_THRESHOLD = 0
 export const SLOT_CONFIDENCE_THRESHOLD = 0.5
