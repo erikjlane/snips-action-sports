@@ -19,7 +19,7 @@ export async function getTeamVsTeam (team1Id: string, team2Id: string) {
         }) as TeamVsTeamPayload
 
     if (results) {
-        
+        //TODO
     } else {
         throw new Error('APIResponse')
     }

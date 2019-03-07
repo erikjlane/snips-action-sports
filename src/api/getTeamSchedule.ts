@@ -19,7 +19,7 @@ export async function getTeamSchedule (teamId: string) {
         }) as TeamSchedulePayload
 
     if (results) {
-        
+        //TODO
     } else {
         throw new Error('APIResponse')
     }

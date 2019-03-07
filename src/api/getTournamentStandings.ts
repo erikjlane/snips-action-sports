@@ -19,7 +19,7 @@ export async function getTournamentStandings (tournamentId: string) {
         }) as TournamentStandingsPayload
 
     if (results) {
-        
+        //TODO
     } else {
         throw new Error('APIResponse')
     }

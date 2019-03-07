@@ -1,6 +1,6 @@
 import { httpFactory, configFactory } from '../factories'
 import { LANGUAGE_MAPPINGS } from '../constants'
-import { TournamentSchedulePayload } from './types';
+import { TournamentSchedulePayload } from './types'
 
 export async function getTournamentSchedule (tournamentId: string) {
     const http = httpFactory.get()
@@ -19,7 +19,7 @@ export async function getTournamentSchedule (tournamentId: string) {
         }) as TournamentSchedulePayload
 
     if (results) {
-        
+        //TODO
     } else {
         throw new Error('APIResponse')
     }

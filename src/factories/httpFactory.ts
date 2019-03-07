@@ -14,7 +14,7 @@ function init(httpOptions = { mock: false }) {
     http = http.polyfills({
         fetch: httpOptions.mock || require('node-fetch')
     }).query({
-        app_key: configFactory.get().apiKey
+        api_key: configFactory.get().apiKey
     })
 
     if(!httpOptions.mock) {
