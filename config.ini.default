@@ -2,3 +2,4 @@
 locale=french
 
 [secret]
+api_key=
