@@ -1,24 +1,22 @@
 import { httpFactory, configFactory } from '../factories'
 import { LANGUAGE_MAPPINGS } from '../constants'
-import { TournamentStandingsPayload } from './types'
-import { logger } from '../utils'
+import { TeamResultsPayload } from './types'
 
-export async function getTournamentStandings (tournamentId: string) {
+export async function getTeamResults (teamId: string) {
     const http = httpFactory.get()
     const config = configFactory.get()
 
     const results = await http
-        .url(`/${ LANGUAGE_MAPPINGS[config.locale] }/tournaments/${ tournamentId }/standings.json`)
+        .url(`/${ LANGUAGE_MAPPINGS[config.locale] }/teams/${ teamId }/results.json`)
         .get()
         .json()
         .catch(error => {
-            logger.error(error)
             // Network error
             if (error.name === 'TypeError')
                 throw new Error('APIRequest')
             // Other error
             throw new Error('APIResponse')
-        }) as TournamentStandingsPayload
+        }) as TeamResultsPayload
 
     if (results) {
         //TODO

@@ -17,7 +17,7 @@ function init(httpOptions = { mock: false }) {
         api_key: configFactory.get().apiKey
     })
 
-    if(!httpOptions.mock) {
+    if (!httpOptions.mock) {
         http = http.middlewares([
             throttlingCache({
                 throttle: HOUR_MILLISECONDS / 6
