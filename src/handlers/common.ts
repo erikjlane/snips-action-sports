@@ -26,7 +26,7 @@ export default async function (msg: IntentMessage, knownSlots: KnownSlots) {
         }
     }
 
-    let team: string, tournament: string, league: string
+    let team: string, tournament: string
 
     if (!('team' in knownSlots)) {
         const teamSlot: NluSlot<slotType.custom> = message.getSlotsByName(msg, 'team', {
@@ -54,22 +54,8 @@ export default async function (msg: IntentMessage, knownSlots: KnownSlots) {
         tournament = knownSlots.tournament
     }
 
-    if (!('league' in knownSlots)) {
-        const leagueSlot: NluSlot<slotType.custom> = message.getSlotsByName(msg, 'league', {
-            onlyMostConfident: true,
-            threshold: SLOT_CONFIDENCE_THRESHOLD
-        })
-
-        if (leagueSlot) {
-            league = leagueSlot.value.value
-        }
-    } else {
-        league = knownSlots.league
-    }
-
     logger.info('\tteam: ', team)
     logger.info('\ttournament: ', tournament)
-    logger.info('\tleague: ', league)
 
-    return { team, tournament, league }
+    return { team, tournament }
 }

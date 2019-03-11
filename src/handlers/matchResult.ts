@@ -7,11 +7,10 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
 
     const {
         team,
-        tournament,
-        league
+        tournament
     } = await commonHandler(msg, knownSlots)
 
-    const speech = `${ team } and ${ tournament } and ${ league }`
+    const speech = `${ team } and ${ tournament }`
     logger.info(speech)
 
     flow.end()

@@ -1,0 +1,302 @@
+{
+    "teams": [
+        {
+            "id": "sr:competitor:3",
+            "name": "Wolverhampton Wanderers",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:6",
+            "name": "Burnley",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:7",
+            "name": "Crystal Palace",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:17",
+            "name": "Manchester City",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:24",
+            "name": "Watford",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:30",
+            "name": "Brighton and Hove Albion",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:31",
+            "name": "Leicester City",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:33",
+            "name": "Tottenham Hotspur",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:35",
+            "name": "Manchester United",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:37",
+            "name": "West Ham United",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:38",
+            "name": "Chelsea",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:39",
+            "name": "Newcastle United",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:42",
+            "name": "Arsenal",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:43",
+            "name": "Fulham",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:44",
+            "name": "Liverpool",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:45",
+            "name": "Southampton",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:48",
+            "name": "Everton",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:59",
+            "name": "Huddersfield Town",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:60",
+            "name": "AFC Bournemouth",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:61",
+            "name": "Cardiff City",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        }
+    ],
+    "tournaments": [
+        {
+            "id": "sr:tournament:7",
+            "name": "UEFA Champions League",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:8",
+            "name": "Primera Division",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:17",
+            "name": "Premier League",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:23",
+            "name": "Serie A",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:34",
+            "name": "Ligue 1",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:35",
+            "name": "Bundesliga",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:37",
+            "name": "Eredivisie",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:38",
+            "name": "Pro League",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:52",
+            "name": "Super Lig",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:185",
+            "name": "Super League",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:203",
+            "name": "Premier League",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:218",
+            "name": "Premier League",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:238",
+            "name": "Primeira Liga",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:465",
+            "name": "UEFA Super Cup",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:679",
+            "name": "UEFA Europa League",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:2324",
+            "name": "UEFA Youth League",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:tournament:23755",
+            "name": "UEFA Nations League",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        }
+    ]
+}

@@ -23,8 +23,8 @@ export default function ({
                         action: handlers.nextMatch
                     },
                     {
-                        intent: 'snips-assistant:LeagueStanding',
-                        action: handlers.leagueStanding
+                        intent: 'snips-assistant:TournamentStanding',
+                        action: handlers.tournamentStanding
                     },
                     {
                         intent: 'snips-assistant:MatchResult',
