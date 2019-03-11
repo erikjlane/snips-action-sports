@@ -2,6 +2,7 @@ import { i18nFactory } from '../factories/i18nFactory'
 import { isTournamentEnded } from './sports'
 import { logger } from './logger'
 import { beautify } from './beautify'
+import { Result } from '../api'
 
 export const translation = {
     // Outputs an error message based on the error object, or a default message if not found.
@@ -57,23 +58,32 @@ export const translation = {
         return speech
     },
 
-    teamResultsToSpeech (team: string, tournament: string, resultsData): string {
+    teamResultToSpeech (resultData: Result): string {
         const i18n = i18nFactory.get()
 
         let speech = ''
 
-        if (!tournament) {
-            const team_1_qualifier = resultsData.results[0].sport_event.competitors[0].qualifier + '_score'
-            const team_2_qualifier = resultsData.results[0].sport_event.competitors[1].qualifier + '_score'
+        const team_1_qualifier = resultData.sport_event.competitors[0].qualifier + '_score'
+        const team_2_qualifier = resultData.sport_event.competitors[1].qualifier + '_score'
 
-            speech = i18n('sports.matchResults.lastMatchForTeam', {
-                team_1: resultsData.results[0].sport_event.competitors[0].name,
-                team_2: resultsData.results[0].sport_event.competitors[1].name,
-                date: beautify.date(new Date(resultsData.results[0].sport_event.scheduled)),
-                team_1_score: resultsData.results[0].sport_event_status[team_1_qualifier],
-                team_2_score: resultsData.results[0].sport_event_status[team_2_qualifier]
-            })
-        }
+        speech = i18n('sports.matchResults.lastMatchForTeam', {
+            tournament: resultData.sport_event.tournament.name,
+            team_1: resultData.sport_event.competitors[0].name,
+            team_2: resultData.sport_event.competitors[1].name,
+            date: beautify.date(new Date(resultData.sport_event.scheduled)),
+            team_1_score: resultData.sport_event_status[team_1_qualifier],
+            team_2_score: resultData.sport_event_status[team_2_qualifier]
+        })
+
+        return speech
+    },
+
+    tournamentResultsToSpeech (resultsData: Result[]): string {
+        const i18n = i18nFactory.get()
+
+        let speech = ''
+
+        speech = 'tournament results'
 
         return speech
     }

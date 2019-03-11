@@ -1,5 +1,6 @@
 export * from './getTournamentStandings'
 export * from './getTournamentSchedule'
+export * from './getTournamentResults'
 export * from './getTeamVsTeam'
 export * from './getTeamSchedule'
 export * from './getTeamResults'

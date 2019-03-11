@@ -19,7 +19,7 @@
             "rankEnded": "The last season of {{ tournament }} has ended. {{ team }} finished at rank {{ rank }}."
         },
         "matchResults": {
-            "lastMatchForTeam": "{{ team_1 }} versus {{ team_2 }} on {{ date }} final score was {{ team_1_score }} to {{ team_2_score }}."
+            "lastMatchForTeam": "The {{ tournament }} match {{ team_1 }} versus {{ team_2 }} on {{ date }} final score was {{ team_1_score }} to {{ team_2_score }}."
         }
     }
 }

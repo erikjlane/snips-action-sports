@@ -1,7 +1,7 @@
 import { logger, slot, tts, translation } from '../utils'
 import { Handler } from './index'
 import commonHandler, { KnownSlots } from './common'
-import { getTeamResults, TeamResultsPayload } from '../api'
+import { getTeamResults, getTournamentResults, TeamResultsPayload, TournamentResultsPayload } from '../api'
 const mapping = require('../../assets/mappings')
 
 export const matchResultHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
@@ -20,9 +20,11 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
         const now = Date.now()
 
         let teamId
+        let tournamentId
         let teamResultsData: TeamResultsPayload
+        let tournamentResultsData: TournamentResultsPayload
 
-        // Searching for the id team
+        // Searching for the team id
         if (validTeam) {
             const matchingTeam = mapping.teams.find(teamMapping => teamMapping.name.includes(team))
             if (!matchingTeam) {
@@ -37,12 +39,40 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
             logger.info(teamId)
         }
 
-        // API call
-        teamResultsData = await getTeamResults(teamId)
-        logger.info(teamResultsData)
+        // Searching for the tournament id
+        if (validTournament) {
+            const matchingTournament = mapping.tournaments.find(tournamentMapping => tournamentMapping.name.includes(tournament))
+            if (!matchingTournament) {
+                throw new Error('tournament')
+            }
+    
+            tournamentId = matchingTournament.id
+            if (!tournamentId) {
+                throw new Error('tournament')
+            }
+    
+            logger.info(tournamentId)
+        }
 
         try {
-            const speech = translation.teamResultsToSpeech(team, tournament, teamResultsData)
+            let speech = ''
+
+            // only team
+            if (validTeam && !validTournament) {
+                teamResultsData = await getTeamResults(teamId)
+                logger.info(teamResultsData)
+                
+                speech = translation.teamResultToSpeech(teamResultsData.results[0])
+            }
+            
+            // only tournament
+            if (validTournament && !validTeam) {
+                tournamentResultsData = await getTournamentResults(tournamentId)
+                logger.info(tournamentResultsData)
+
+                speech = translation.tournamentResultsToSpeech(tournamentResultsData.results)
+            }
+
             logger.info(speech)
         
             flow.end()

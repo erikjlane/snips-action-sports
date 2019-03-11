@@ -42,7 +42,7 @@ export const nextMatchHandler: Handler = async function (msg, flow, knownSlots: 
         logger.info(teamResultsData)
 
         try {
-            const speech = translation.teamResultsToSpeech(team, tournament, teamResultsData)
+            const speech = translation.teamResultToSpeech(teamResultsData.results[0])
             logger.info(speech)
         
             flow.end()

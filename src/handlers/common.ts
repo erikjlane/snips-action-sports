@@ -42,7 +42,7 @@ export default async function (msg: IntentMessage, knownSlots: KnownSlots) {
     }
 
     if (!('tournament' in knownSlots)) {
-        const tournamentSlot: NluSlot<slotType.custom> = message.getSlotsByName(msg, 'tournament', {
+        const tournamentSlot: NluSlot<slotType.custom> = message.getSlotsByName(msg, 'league', {
             onlyMostConfident: true,
             threshold: SLOT_CONFIDENCE_THRESHOLD
         })
