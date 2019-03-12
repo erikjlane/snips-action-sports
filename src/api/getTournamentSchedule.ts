@@ -2,7 +2,7 @@ import { httpFactory, configFactory } from '../factories'
 import { LANGUAGE_MAPPINGS } from '../constants'
 import { TournamentSchedulePayload } from './types'
 
-export async function getTournamentSchedule (tournamentId: string) {
+export async function getTournamentSchedule (tournamentId: string): Promise<TournamentSchedulePayload> {
     const http = httpFactory.get()
     const config = configFactory.get()
 

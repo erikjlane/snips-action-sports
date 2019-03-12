@@ -2,7 +2,7 @@ import { httpFactory, configFactory } from '../factories'
 import { LANGUAGE_MAPPINGS } from '../constants'
 import { TeamVsTeamPayload } from './types'
 
-export async function getTeamVsTeam (team1Id: string, team2Id: string) {
+export async function getTeamVsTeam (team1Id: string, team2Id: string): Promise<TeamVsTeamPayload> {
     const http = httpFactory.get()
     const config = configFactory.get()
 

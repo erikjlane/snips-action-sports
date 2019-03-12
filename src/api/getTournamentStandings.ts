@@ -3,7 +3,7 @@ import { LANGUAGE_MAPPINGS } from '../constants'
 import { TournamentStandingsPayload } from './types'
 import { logger } from '../utils'
 
-export async function getTournamentStandings (tournamentId: string) {
+export async function getTournamentStandings (tournamentId: string): Promise<TournamentStandingsPayload> {
     const http = httpFactory.get()
     const config = configFactory.get()
 

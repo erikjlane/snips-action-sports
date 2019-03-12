@@ -3,12 +3,16 @@ import { LANGUAGE_MAPPINGS } from '../constants'
 import { TournamentResultsPayload } from './types'
 import { logger } from '../utils'
 
-export async function getTournamentResults (tournamentId: string) {
+export async function getTournamentResults (tournamentId: string): Promise<TournamentResultsPayload> {
     const http = httpFactory.get()
     const config = configFactory.get()
 
-    const results = await http
+    const request = http
         .url(`/${ LANGUAGE_MAPPINGS[config.locale] }/tournaments/${ tournamentId }/results.json`)
+
+    logger.debug(request)
+
+    const results = await request
         .get()
         .json()
         .catch(error => {

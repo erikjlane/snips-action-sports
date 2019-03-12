@@ -25,6 +25,24 @@ interface Tournament {
     current_season?: CurrentSeason;
 }
 
+export interface Sport2 {
+    id: string;
+    name: string;
+}
+
+export interface Category2 {
+    id: string;
+    name: string;
+    country_code: string;
+}
+
+export interface Tournament2 {
+    id: string;
+    name: string;
+    sport: Sport2;
+    category: Category2;
+}
+
 interface TournamentRound {
     type: string;
     number: number;
@@ -107,7 +125,7 @@ interface SportEvent {
     status?: string;
     tournament_round: TournamentRound;
     season: Season;
-    tournament: Tournament;
+    tournament: Tournament2;
     competitors: Competitor[];
     venue: Venue;
 }
@@ -187,7 +205,7 @@ export interface TournamentSchedulePayload {
 
 export interface TeamVsTeamPayload {
     generated_at: Date;
-    schema: string;
+    schema: any;
     teams: Team[];
     last_meetings: LastMeetings;
     next_meetings: NextMeeting[];

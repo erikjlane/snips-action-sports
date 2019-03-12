@@ -11,7 +11,7 @@ import {
 
 export type KnownSlots = {
     depth: number,
-    team?: string,
+    teams?: string[],
     tournament?: string,
     league?: string
 }
@@ -26,19 +26,18 @@ export default async function (msg: IntentMessage, knownSlots: KnownSlots) {
         }
     }
 
-    let team: string, tournament: string
+    let teams: string[], tournament: string
 
-    if (!('team' in knownSlots)) {
-        const teamSlot: NluSlot<slotType.custom> = message.getSlotsByName(msg, 'team', {
-            onlyMostConfident: true, 
+    if (!('teams' in knownSlots)) {
+        const teamsSlot: NluSlot<slotType.custom>[] = message.getSlotsByName(msg, 'team', {
             threshold: SLOT_CONFIDENCE_THRESHOLD
         })
 
-        if (teamSlot) {
-            team = teamSlot.value.value
+        if (teamsSlot) {
+            teams = teamsSlot.map(x => x.value.value)
         }
     } else {
-        team = knownSlots.team
+        teams = knownSlots.teams
     }
 
     if (!('tournament' in knownSlots)) {
@@ -54,8 +53,8 @@ export default async function (msg: IntentMessage, knownSlots: KnownSlots) {
         tournament = knownSlots.tournament
     }
 
-    logger.info('\tteam: ', team)
+    logger.info('\tteams: ', teams)
     logger.info('\ttournament: ', tournament)
 
-    return { team, tournament }
+    return { teams, tournament }
 }

@@ -2,7 +2,7 @@ import { httpFactory, configFactory } from '../factories'
 import { LANGUAGE_MAPPINGS } from '../constants'
 import { TeamSchedulePayload } from './types'
 
-export async function getTeamSchedule (teamId: string) {
+export async function getTeamSchedule (teamId: string): Promise<TeamSchedulePayload> {
     const http = httpFactory.get()
     const config = configFactory.get()
 

@@ -159,6 +159,166 @@
                 "id": "sr:sport:1",
                 "name": "Soccer"
             }
+        },
+        {
+            "id": "sr:competitor:1676",
+            "name": "SC Amiens",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1684",
+            "name": "SCO Angers",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1645",
+            "name": "FC Girondins Bordeaux",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1667",
+            "name": "SM Caen",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1686",
+            "name": "Dijon FCO",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1654",
+            "name": "EA Guingamp",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1643",
+            "name": "Lille OSC",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1649",
+            "name": "Olympique Lyon",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1641",
+            "name": "Olympique Marseille",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1653",
+            "name": "AS Monaco",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1642",
+            "name": "Montpellier HSC",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1647",
+            "name": "FC Nantes",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1661",
+            "name": "OGC Nice",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1663",
+            "name": "Olympique Nimes",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1644",
+            "name": "Paris Saint-Germain",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1682",
+            "name": "Stade Reims",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1658",
+            "name": "Stade Rennes",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1678",
+            "name": "AS Saint-Étienne",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1659",
+            "name": "Racing Strasbourg",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:1681",
+            "name": "Toulouse FC",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
         }
     ],
     "tournaments": [

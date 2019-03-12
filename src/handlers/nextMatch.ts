@@ -8,37 +8,35 @@ export const nextMatchHandler: Handler = async function (msg, flow, knownSlots: 
     logger.info('NextMatch')
 
     const {
-        team,
+        teams,
         tournament
     } = await commonHandler(msg, knownSlots)
 
-    const validTeam = !slot.missing(team), validTournament = !slot.missing(tournament)
+    const validTeam = !slot.missing(teams), validTournament = !slot.missing(tournament)
 
     if (!validTeam && !validTournament) {
         throw new Error('intentNotRecognized')
     } else {
         const now = Date.now()
 
-        let teamId
+        let teamsId: string[] = []
         let teamResultsData: TeamResultsPayload
 
         // Searching for the id team
         if (validTeam) {
-            const matchingTeam = mapping.teams.find(teamMapping => teamMapping.name.includes(team))
-            if (!matchingTeam) {
-                throw new Error('team')
+            for (let team of teams) {
+                const matchingTeam = mapping.teams.find(teamMapping => teamMapping.name.includes(team))
+                if (!matchingTeam || !matchingTeam.id) {
+                    throw new Error('team')
+                }
+        
+                teamsId.push(matchingTeam.id)
+                logger.info(matchingTeam.id)
             }
-    
-            teamId = matchingTeam.id
-            if (!teamId) {
-                throw new Error('team')
-            }
-    
-            logger.info(teamId)
         }
 
         // API call
-        teamResultsData = await getTeamResults(teamId)
+        teamResultsData = await getTeamResults(teamsId[0])
         logger.info(teamResultsData)
 
         try {

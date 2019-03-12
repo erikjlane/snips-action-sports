@@ -3,7 +3,7 @@ import { LANGUAGE_MAPPINGS } from '../constants'
 import { TeamResultsPayload } from './types'
 import { logger } from '../utils'
 
-export async function getTeamResults (teamId: string) {
+export async function getTeamResults (teamId: string): Promise<TeamResultsPayload> {
     const http = httpFactory.get()
     const config = configFactory.get()
 

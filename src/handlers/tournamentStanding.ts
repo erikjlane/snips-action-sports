@@ -8,39 +8,37 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
     logger.info('TournamentStanding')
 
     const {
-        team,
+        teams,
         tournament
     } = await commonHandler(msg, knownSlots)
 
-    const validTeam = !slot.missing(team), validTournament = !slot.missing(tournament)
+    const validTeam = !slot.missing(teams), validTournament = !slot.missing(tournament)
 
     if (!validTeam && !validTournament) {
         throw new Error('intentNotRecognized')
     } else {
         const now = Date.now()
 
+        let teamsId: string[] = []
         let tournamentId: string
-
         let teamScheduleData: TeamSchedulePayload
         let tournamentStandings: TournamentStandingsPayload
 
         // Searching for the id team
         if (validTeam) {
-            const matchingTeam = mapping.teams.find(teamMapping => teamMapping.name.includes(team))
-            if (!matchingTeam) {
-                throw new Error('team')
+            for (let team of teams) {
+                const matchingTeam = mapping.teams.find(teamMapping => teamMapping.name.includes(team))
+                if (!matchingTeam || !matchingTeam.id) {
+                    throw new Error('team')
+                }
+        
+                teamsId.push(matchingTeam.id)
+                logger.info(matchingTeam.id)
             }
-    
-            const teamId = matchingTeam.id
-            if (!teamId) {
-                throw new Error('team')
-            }
-    
-            logger.info(teamId)
 
             if (!validTournament) {
                 // API call
-                teamScheduleData = await getTeamSchedule(teamId)
+                teamScheduleData = await getTeamSchedule(teamsId[0])
                 logger.info(teamScheduleData)
 
                 tournamentId = teamScheduleData.schedule[0].tournament.id
@@ -67,7 +65,7 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
         logger.info(tournamentStandings)
 
         try {
-            const speech = translation.tournamentStandingsToSpeech(team, tournament, tournamentStandings)
+            const speech = translation.tournamentStandingsToSpeech(teams[0], tournament, tournamentStandings)
             logger.info(speech)
         
             flow.end()

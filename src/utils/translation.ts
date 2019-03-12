@@ -79,11 +79,11 @@ export const translation = {
     },
 
     tournamentResultsToSpeech (resultsData: Result[]): string {
-        const i18n = i18nFactory.get()
-
         let speech = ''
 
-        speech = 'tournament results'
+        for (let i = 0; i < 3; i++) {
+            speech += translation.teamResultToSpeech(resultsData[i])
+        }
 
         return speech
     }
