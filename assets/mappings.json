@@ -319,6 +319,470 @@
                 "id": "sr:sport:1",
                 "name": "Soccer"
             }
+        },
+        {
+            "id": "sr:competitor:2885",
+            "name": "Alavés",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2825",
+            "name": "Athletic Bilbao",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2836",
+            "name": "Atlético Madrid",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2817",
+            "name": "Barcelona",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2821",
+            "name": "Celta Vigo",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2839",
+            "name": "Eibar",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2814",
+            "name": "Espanyol",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2859",
+            "name": "Getafe",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:24264",
+            "name": "Girona",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:24265",
+            "name": "Huesca",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2845",
+            "name": "Leganés",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2849",
+            "name": "Levante",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2818",
+            "name": "Rayo Vallecano",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2816",
+            "name": "Real Betis",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2829",
+            "name": "Real Madrid",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2824",
+            "name": "Real Sociedad",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2833",
+            "name": "Sevilla",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2828",
+            "name": "Valencia",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2831",
+            "name": "Valladolid",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2819",
+            "name": "Villarreal",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2600",
+            "name": "FC Augsburg",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2681",
+            "name": "Bayer Leverkusen",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2672",
+            "name": "Bayern Munich",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2673",
+            "name": "Borussia Dortmund",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2527",
+            "name": "Borussia Mönchengladbach",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2674",
+            "name": "Eintracht Frankfurt",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2588",
+            "name": "Fortuna Düsseldorf",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2538",
+            "name": "SC Freiburg",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2528",
+            "name": "Hertha BSC",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2569",
+            "name": "TSG 1899 Hoffenheim",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2541",
+            "name": "Hannover 96",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:36360",
+            "name": "RB Leipzig",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2556",
+            "name": "FSV Mainz 05",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2523",
+            "name": "FC Nürnberg",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2530",
+            "name": "Schalke 04",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2677",
+            "name": "VfB Stuttgart",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2534",
+            "name": "Werder Bremen",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2524",
+            "name": "VfL Wolfsburg",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2687",
+            "name": "Juventus Turin",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2702",
+            "name": "AS Roma",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2697",
+            "name": "Inter Milan",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2714",
+            "name": "SSC Napoli",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2690",
+            "name": "Parma Calcio 1913 S.r.l.",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2685",
+            "name": "Bologna FC",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2692",
+            "name": "AC Milan",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2693",
+            "name": "ACF Fiorentina",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2686",
+            "name": "Atalanta Bergamasca",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2699",
+            "name": "Lazio Roma",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2695",
+            "name": "Udinese Calcio",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2696",
+            "name": "FC Torino",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2694",
+            "name": "AC Chievo Verona",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2705",
+            "name": "FC Empoli",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2711",
+            "name": "Sampdoria Genoa",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2719",
+            "name": "Cagliari Calcio",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2713",
+            "name": "Genoa FC",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2793",
+            "name": "US Sassuolo",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:2801",
+            "name": "Frosinone Calcio",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
+            "id": "sr:competitor:113755",
+            "name": "Spal 2013",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
         }
     ],
     "tournaments": [

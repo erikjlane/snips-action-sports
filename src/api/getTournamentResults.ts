@@ -12,9 +12,14 @@ export async function getTournamentResults (tournamentId: string): Promise<Tourn
 
     logger.debug(request)
 
-    const results = await request
-        .get()
-        .json()
+    try {
+        const results = await request.get()
+
+        logger.info(results.res)
+        logger.info(results.json)
+        logger.debug(results)
+
+        const results2 = results.json()
         .catch(error => {
             logger.error(error)
             // Network error
@@ -22,13 +27,19 @@ export async function getTournamentResults (tournamentId: string): Promise<Tourn
                 throw new Error('APIRequest')
             // Other error
             throw new Error('APIResponse')
-        }) as TournamentResultsPayload
+        })
 
-    if (results) {
-        //TODO
-    } else {
-        throw new Error('APIResponse')
+        console.log(results2)
+        logger.debug(results2)
+
+        if (results2) {
+            //TODO
+        } else {
+            throw new Error('APIResponse')
+        }
+    
+        return results2 as TournamentResultsPayload
+    } catch (e) {
+        logger.debug(e)
     }
-
-    return results
 }

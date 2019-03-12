@@ -1,7 +1,12 @@
-import { logger, slot, tts, translation } from '../utils'
+import { logger, slot, tts, translation, message } from '../utils'
 import { Handler } from './index'
 import commonHandler, { KnownSlots } from './common'
 import { getTeamResults, getTournamentResults, TeamResultsPayload, TournamentResultsPayload, Result } from '../api'
+import {
+    SLOT_CONFIDENCE_THRESHOLD,
+    DAY_MILLISECONDS
+} from '../constants'
+import { NluSlot, slotType } from 'hermes-javascript';
 const mapping = require('../../assets/mappings')
 
 export const matchResultHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
@@ -12,6 +17,36 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
         tournament
     } = await commonHandler(msg, knownSlots)
 
+    // Get date_time specific slot
+    let timeIntervalDateFrom: Date, timeIntervalDateTo: Date
+
+    if (!('time_interval_from' in knownSlots)) {
+        const timeIntervalSlot = message.getSlotsByName(msg, 'date_time', {
+            onlyMostConfident: true,
+            threshold: SLOT_CONFIDENCE_THRESHOLD
+        })
+
+        if (timeIntervalSlot) {
+            // Is it a TimeInterval object?
+            if (timeIntervalSlot.value.kind == slotType.timeInterval) {
+                timeIntervalDateFrom = new Date(timeIntervalSlot.value.from)
+                timeIntervalDateTo = new Date(timeIntervalSlot.value.to)
+            }
+            // Or is it an InstantTime object?
+            if (timeIntervalSlot.value.kind == slotType.instantTime) {
+                timeIntervalDateFrom = new Date(timeIntervalSlot.value.value)
+                timeIntervalDateTo = new Date(timeIntervalDateFrom.getTime() + DAY_MILLISECONDS)
+            }
+        }
+    } else {
+        timeIntervalDateFrom = knownSlots.time_interval_from
+        timeIntervalDateTo = knownSlots.time_interval_to
+    }
+
+    logger.info('\ttime_interval_from: ', timeIntervalDateFrom)
+    logger.info('\ttime_interval_to: ', timeIntervalDateTo)
+
+    // At least one required slot is missing
     const validTeam = !slot.missing(teams), validTournament = !slot.missing(tournament)
 
     if (!validTeam && !validTournament) {

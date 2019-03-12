@@ -25,24 +25,6 @@ interface Tournament {
     current_season?: CurrentSeason;
 }
 
-export interface Sport2 {
-    id: string;
-    name: string;
-}
-
-export interface Category2 {
-    id: string;
-    name: string;
-    country_code: string;
-}
-
-export interface Tournament2 {
-    id: string;
-    name: string;
-    sport: Sport2;
-    category: Category2;
-}
-
 interface TournamentRound {
     type: string;
     number: number;
@@ -82,12 +64,11 @@ interface Venue {
     country_code: string;
 }
 
-
 interface CurrentSeason {
     id: string;
     name: string;
-    start_date: string;
-    end_date: string;
+    start_date: Date;
+    end_date: Date;
     year: string;
 }
 
@@ -125,7 +106,7 @@ interface SportEvent {
     status?: string;
     tournament_round: TournamentRound;
     season: Season;
-    tournament: Tournament2;
+    tournament: Tournament;
     competitors: Competitor[];
     venue: Venue;
 }
@@ -140,10 +121,10 @@ interface PeriodScore {
 interface SportEventStatus {
     status: string;
     match_status: string;
-    home_score: number;
-    away_score: number;
-    winner_id: string;
-    period_scores: PeriodScore[];
+    home_score?: number;
+    away_score?: number;
+    winner_id?: string;
+    period_scores?: PeriodScore[];
     aggregate_home_score?: number;
     aggregate_away_score?: number;
     aggregate_winner_id?: string;
