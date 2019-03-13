@@ -10,16 +10,11 @@ export async function getTournamentResults (tournamentId: string): Promise<Tourn
     const request = http
         .url(`/${ LANGUAGE_MAPPINGS[config.locale] }/tournaments/${ tournamentId }/results.json`)
 
-    logger.debug(request)
+    console.log(request)
 
-    try {
-        const results = await request.get()
-
-        logger.info(results.res)
-        logger.info(results.json)
-        logger.debug(results)
-
-        const results2 = results.json()
+    const results = await request
+        .get()
+        .json()
         .catch(error => {
             logger.error(error)
             // Network error
@@ -27,19 +22,15 @@ export async function getTournamentResults (tournamentId: string): Promise<Tourn
                 throw new Error('APIRequest')
             // Other error
             throw new Error('APIResponse')
-        })
-
-        console.log(results2)
-        logger.debug(results2)
-
-        if (results2) {
-            //TODO
-        } else {
-            throw new Error('APIResponse')
-        }
+        }) as TournamentResultsPayload
     
-        return results2 as TournamentResultsPayload
-    } catch (e) {
-        logger.debug(e)
+    console.log('apres')
+
+    if (results) {
+        //TODO
+    } else {
+        throw new Error('APIResponse')
     }
+
+    return results
 }

@@ -157,7 +157,7 @@ export interface Result {
 
 export interface TournamentResultsPayload {
     generated_at: Date;
-    schema: string;
+    schema: any;
     tournament: Tournament;
     results: Result[];
 }

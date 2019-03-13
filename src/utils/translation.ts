@@ -58,21 +58,27 @@ export const translation = {
         return speech
     },
 
-    teamResultToSpeech (resultData: Result): string {
+    teamResultToSpeech (result: Result, from: Date = undefined, to: Date = undefined): string {
         const i18n = i18nFactory.get()
 
         let speech = ''
 
-        const team_1_qualifier = resultData.sport_event.competitors[0].qualifier + '_score'
-        const team_2_qualifier = resultData.sport_event.competitors[1].qualifier + '_score'
+        const scheduled: Date = new Date(result.sport_event.scheduled)
+        if (from && to && (scheduled < from || scheduled > to)) {
+            speech += i18n('sports.matchResults.periodDoesntMatch')
+            speech += ' '
+        }
 
-        speech = i18n('sports.matchResults.lastMatchForTeam', {
-            tournament: resultData.sport_event.tournament.name,
-            team_1: resultData.sport_event.competitors[0].name,
-            team_2: resultData.sport_event.competitors[1].name,
-            date: beautify.date(new Date(resultData.sport_event.scheduled)),
-            team_1_score: resultData.sport_event_status[team_1_qualifier],
-            team_2_score: resultData.sport_event_status[team_2_qualifier]
+        const team_1_qualifier = result.sport_event.competitors[0].qualifier + '_score'
+        const team_2_qualifier = result.sport_event.competitors[1].qualifier + '_score'
+
+        speech += i18n('sports.matchResults.lastMatchForTeam', {
+            tournament: result.sport_event.tournament.name,
+            team_1: result.sport_event.competitors[0].name,
+            team_2: result.sport_event.competitors[1].name,
+            date: beautify.date(scheduled),
+            team_1_score: result.sport_event_status[team_1_qualifier],
+            team_2_score: result.sport_event_status[team_2_qualifier]
         })
 
         return speech

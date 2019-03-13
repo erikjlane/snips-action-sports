@@ -13,8 +13,8 @@ export type KnownSlots = {
     depth: number,
     teams?: string[],
     tournament?: string,
-    time_interval_from?: Date,
-    time_interval_to?: Date
+    from?: Date,
+    to?: Date
 }
 
 export default async function (msg: IntentMessage, knownSlots: KnownSlots) {

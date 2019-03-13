@@ -6,7 +6,7 @@ import {
     SLOT_CONFIDENCE_THRESHOLD,
     DAY_MILLISECONDS
 } from '../constants'
-import { NluSlot, slotType } from 'hermes-javascript';
+import { slotType } from 'hermes-javascript';
 const mapping = require('../../assets/mappings')
 
 export const matchResultHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
@@ -18,9 +18,9 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
     } = await commonHandler(msg, knownSlots)
 
     // Get date_time specific slot
-    let timeIntervalDateFrom: Date, timeIntervalDateTo: Date
+    let from: Date, to: Date
 
-    if (!('time_interval_from' in knownSlots)) {
+    if (!('from' in knownSlots)) {
         const timeIntervalSlot = message.getSlotsByName(msg, 'date_time', {
             onlyMostConfident: true,
             threshold: SLOT_CONFIDENCE_THRESHOLD
@@ -29,22 +29,22 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
         if (timeIntervalSlot) {
             // Is it a TimeInterval object?
             if (timeIntervalSlot.value.kind == slotType.timeInterval) {
-                timeIntervalDateFrom = new Date(timeIntervalSlot.value.from)
-                timeIntervalDateTo = new Date(timeIntervalSlot.value.to)
+                from = new Date(timeIntervalSlot.value.from)
+                to = new Date(timeIntervalSlot.value.to)
             }
             // Or is it an InstantTime object?
             if (timeIntervalSlot.value.kind == slotType.instantTime) {
-                timeIntervalDateFrom = new Date(timeIntervalSlot.value.value)
-                timeIntervalDateTo = new Date(timeIntervalDateFrom.getTime() + DAY_MILLISECONDS)
+                from = new Date(timeIntervalSlot.value.value)
+                to = new Date(from.getTime() + DAY_MILLISECONDS)
             }
         }
     } else {
-        timeIntervalDateFrom = knownSlots.time_interval_from
-        timeIntervalDateTo = knownSlots.time_interval_to
+        from = knownSlots.from
+        to = knownSlots.to
     }
 
-    logger.info('\ttime_interval_from: ', timeIntervalDateFrom)
-    logger.info('\ttime_interval_to: ', timeIntervalDateTo)
+    logger.info('\tfrom: ', from)
+    logger.info('\tto: ', to)
 
     // At least one required slot is missing
     const validTeam = !slot.missing(teams), validTournament = !slot.missing(tournament)
@@ -68,7 +68,7 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
                 }
         
                 teamsId.push(matchingTeam.id)
-                logger.info(matchingTeam.id)
+                logger.debug(matchingTeam.id)
             }
         }
 
@@ -80,7 +80,7 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
             }
     
             tournamentId = matchingTournament.id
-            logger.info(tournamentId)
+            logger.debug(tournamentId)
         }
 
         try {
@@ -92,7 +92,8 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
                 logger.info(teamResultsData)
                 
                 if (teams.length === 1) {
-                    speech = translation.teamResultToSpeech(teamResultsData.results[0])
+                    // one team is provided, searching for the last result
+                    speech = translation.teamResultToSpeech(teamResultsData.results[0], from, to)
                 } else {
                     // two teams are provided, searching for the correct result
                     const matchingResult: Result = teamResultsData.results.find(
@@ -104,7 +105,7 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
                     if (!matchingResult) {
                         throw new Error('teamsNotCompetitors')
                     } else {
-                        speech = translation.teamResultToSpeech(matchingResult)
+                        speech = translation.teamResultToSpeech(matchingResult, from, to)
                     }
                 }
             }
