@@ -1,7 +1,7 @@
 import { logger, slot, tts, translation, message } from '../utils'
 import { Handler } from './index'
 import commonHandler, { KnownSlots } from './common'
-import { getTeamResults, getTournamentResults, TeamResultsPayload, TournamentResultsPayload, Result } from '../api'
+import { getTeamResults, getTournamentResults, TeamResultsPayload, TournamentResultsPayload, Result, getTeamVsTeam, TeamVsTeamPayload } from '../api'
 import {
     SLOT_CONFIDENCE_THRESHOLD,
     DAY_MILLISECONDS
@@ -56,8 +56,9 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
 
         let teamsId: string[] = []
         let tournamentId: string
-        let teamResultsData: TeamResultsPayload
-        let tournamentResultsData: TournamentResultsPayload
+        let teamResults: TeamResultsPayload
+        let teamsResults: TeamVsTeamPayload
+        let tournamentResults: TournamentResultsPayload
 
         // Searching for the teams id
         if (validTeam) {
@@ -88,34 +89,27 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
 
             // only team(s)
             if (validTeam && !validTournament) {
-                teamResultsData = await getTeamResults(teamsId[0])
-                logger.info(teamResultsData)
-                
                 if (teams.length === 1) {
                     // one team is provided, searching for the last result
-                    speech = translation.teamResultToSpeech(teamResultsData.results[0], from, to)
-                } else {
-                    // two teams are provided, searching for the correct result
-                    const matchingResult: Result = teamResultsData.results.find(
-                        resultMapping => resultMapping.sport_event.competitors.filter(
-                            competitor => teamsId.includes(competitor.id)
-                        ).length === 2
-                    )
+                    teamResults = await getTeamResults(teamsId[0])
+                    //logger.info(teamResults)
 
-                    if (!matchingResult) {
-                        throw new Error('teamsNotCompetitors')
-                    } else {
-                        speech = translation.teamResultToSpeech(matchingResult, from, to)
-                    }
+                    speech = translation.teamResultToSpeech(teamResults.results[0], from, to)
+                } else {
+                    // two teams are provided, searching for their last result
+                    teamsResults = await getTeamVsTeam(teamsId[0], teamsId[1])
+                    //logger.info(teamsResults)
+
+                    speech = translation.teamResultToSpeech(teamsResults.last_meetings.results[0], from, to)
                 }
             }
             
             // only tournament
             if (validTournament && !validTeam) {
-                tournamentResultsData = await getTournamentResults(tournamentId)
-                logger.info(tournamentResultsData)
+                tournamentResults = await getTournamentResults(tournamentId)
+                //logger.info(tournamentResults)
 
-                speech = translation.tournamentResultsToSpeech(tournamentResultsData.results)
+                speech = translation.tournamentResultsToSpeech(tournamentResults.results)
             }
 
             logger.info(speech)

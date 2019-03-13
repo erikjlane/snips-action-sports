@@ -27,8 +27,8 @@ interface Tournament {
 
 interface TournamentRound {
     type: string;
-    number: number;
-    phase: string;
+    number?: number;
+    phase?: string;
     name?: string;
     cup_round_match_number?: number;
     cup_round_matches?: number;
@@ -104,11 +104,11 @@ interface SportEvent {
     scheduled: Date;
     start_time_tbd: boolean;
     status?: string;
-    tournament_round: TournamentRound;
+    tournament_round?: TournamentRound;
     season: Season;
     tournament: Tournament;
     competitors: Competitor[];
-    venue: Venue;
+    venue?: Venue;
 }
 
 interface PeriodScore {
@@ -120,7 +120,7 @@ interface PeriodScore {
 
 interface SportEventStatus {
     status: string;
-    match_status: string;
+    match_status?: string;
     home_score?: number;
     away_score?: number;
     winner_id?: string;
@@ -186,7 +186,7 @@ export interface TournamentSchedulePayload {
 
 export interface TeamVsTeamPayload {
     generated_at: Date;
-    schema: any;
+    schema: string;
     teams: Team[];
     last_meetings: LastMeetings;
     next_meetings: NextMeeting[];

@@ -18,11 +18,14 @@ function init(httpOptions = { mock: false }) {
     })
 
     if (!httpOptions.mock) {
+        // https://github.com/bitinn/node-fetch/issues/151
+        /*
         http = http.middlewares([
             throttlingCache({
                 throttle: HOUR_MILLISECONDS / 6
             })
         ])
+        */
     }
 }
 function get() {

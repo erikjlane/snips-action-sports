@@ -45,7 +45,7 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
             }
         }
         
-        // Searching for the id tournament/league
+        // Searching for the id tournament
         if (validTournament) {
             const matchingTournament = mapping.tournaments.find(tournamentMapping => tournamentMapping.name.includes(tournament))
             if (!matchingTournament) {

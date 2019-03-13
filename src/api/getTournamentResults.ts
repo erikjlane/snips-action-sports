@@ -7,12 +7,8 @@ export async function getTournamentResults (tournamentId: string): Promise<Tourn
     const http = httpFactory.get()
     const config = configFactory.get()
 
-    const request = http
+    const results = await http
         .url(`/${ LANGUAGE_MAPPINGS[config.locale] }/tournaments/${ tournamentId }/results.json`)
-
-    console.log(request)
-
-    const results = await request
         .get()
         .json()
         .catch(error => {
@@ -23,8 +19,6 @@ export async function getTournamentResults (tournamentId: string): Promise<Tourn
             // Other error
             throw new Error('APIResponse')
         }) as TournamentResultsPayload
-    
-    console.log('apres')
 
     if (results) {
         //TODO

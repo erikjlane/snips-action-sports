@@ -84,11 +84,20 @@ export const translation = {
         return speech
     },
 
-    tournamentResultsToSpeech (resultsData: Result[]): string {
+    tournamentResultsToSpeech (results: Result[], from: Date = undefined, to: Date = undefined): string {
         let speech = ''
 
-        for (let i = 0; i < 3; i++) {
-            speech += translation.teamResultToSpeech(resultsData[i])
+        if (from && to) {
+            results = results.filter(result => from < result.sport_event.scheduled && to > result.sport_event.scheduled)
+            for (let result of results) {
+                speech += translation.teamResultToSpeech(result)
+                speech = ' '
+            }
+        } else {
+            for (let i = results.length - 1; i > results.length - 1 - 3; i--) {
+                speech += translation.teamResultToSpeech(results[i])
+                speech += ' '
+            }
         }
 
         return speech
