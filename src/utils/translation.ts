@@ -2,7 +2,7 @@ import { i18nFactory } from '../factories/i18nFactory'
 import { isTournamentEnded } from './sports'
 import { logger } from './logger'
 import { beautify } from './beautify'
-import { Result } from '../api'
+import { Result, Competitor } from '../api'
 
 export const translation = {
     // Outputs an error message based on the error object, or a default message if not found.
@@ -58,10 +58,10 @@ export const translation = {
         return speech
     },
 
-    teamResultToSpeech (result: Result, from: Date = undefined, to: Date = undefined): string {
+    teamResultToSpeech (result: Result, teamsId: string[] = undefined, from: Date = undefined, to: Date = undefined): string {
         const i18n = i18nFactory.get()
 
-        let speech = ''
+        let speech = '', team1: Competitor, team2: Competitor
 
         const scheduled: Date = new Date(result.sport_event.scheduled)
         if (from && to && (scheduled < from || scheduled > to)) {
@@ -69,16 +69,31 @@ export const translation = {
             speech += ' '
         }
 
-        const team_1_qualifier = result.sport_event.competitors[0].qualifier + '_score'
-        const team_2_qualifier = result.sport_event.competitors[1].qualifier + '_score'
+        if (teamsId) {
+            team1 = result.sport_event.competitors.find(competitor => competitor.id === teamsId[0])
+            team2 = result.sport_event.competitors.find(competitor => competitor.id !== team1.id)
+        } else {
+            team1 = result.sport_event.competitors[0]
+            team2 = result.sport_event.competitors[1]
+        }
 
-        speech += i18n('sports.matchResults.lastMatchForTeam', {
+        const team1Score = result.sport_event_status[team1.qualifier + '_score']
+        const team2Score = result.sport_event_status[team2.qualifier + '_score']
+
+        logger.debug(team1)
+        logger.debug(team2)
+
+        const key = (team1Score === team2Score)
+            ? 'sports.matchResults.teamTied'
+            : ((team1Score < team2Score) ? 'sports.matchResults.teamLost' : 'sports.matchResults.teamWon')
+
+        speech += i18n(key, {
             tournament: result.sport_event.tournament.name,
-            team_1: result.sport_event.competitors[0].name,
-            team_2: result.sport_event.competitors[1].name,
+            team_1: team1.name,
+            team_2: team2.name,
             date: beautify.date(scheduled),
-            team_1_score: result.sport_event_status[team_1_qualifier],
-            team_2_score: result.sport_event_status[team_2_qualifier]
+            team_1_score: team1Score,
+            team_2_score: team2Score
         })
 
         return speech

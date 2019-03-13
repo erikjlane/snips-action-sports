@@ -45,7 +45,7 @@ interface Season {
     tournament_id: string;
 }
 
-interface Competitor {
+export interface Competitor {
     id: string;
     name: string;
     country: string;

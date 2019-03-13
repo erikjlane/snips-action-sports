@@ -19,6 +19,9 @@
             "rankEnded": "The last season of {{ tournament }} has ended. {{ team }} finished at rank {{ rank }}."
         },
         "matchResults": {
+            "teamLost": "On {{ date }}, {{ team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{ team_2 }} in a {{ tournament }} match.",
+            "teamWon": "On {{ date }}, {{ team_1 }} beat {{ team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{ tournament }} match.",
+            "teamTied": "On {{ date }}, {{ team_1 }} tied against {{ team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{ tournament }} match.",
             "lastMatchForTeam": "The {{ tournament }} match {{ team_1 }} versus {{ team_2 }} on {{ date }} final score was {{ team_1_score }} to {{ team_2_score }}.",
             "periodDoesntMatch": "This match did not take place within the requested period."
         }

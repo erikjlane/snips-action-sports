@@ -94,13 +94,13 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
                     teamResults = await getTeamResults(teamsId[0])
                     //logger.info(teamResults)
 
-                    speech = translation.teamResultToSpeech(teamResults.results[0], from, to)
+                    speech = translation.teamResultToSpeech(teamResults.results[0], teamsId, from, to)
                 } else {
                     // two teams are provided, searching for their last result
                     teamsResults = await getTeamVsTeam(teamsId[0], teamsId[1])
                     //logger.info(teamsResults)
 
-                    speech = translation.teamResultToSpeech(teamsResults.last_meetings.results[0], from, to)
+                    speech = translation.teamResultToSpeech(teamsResults.last_meetings.results[0], teamsId, from, to)
                 }
             }
             
