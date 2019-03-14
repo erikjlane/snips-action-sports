@@ -110,10 +110,11 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
             // tournament only
             if (teams.length === 0) {
                 tournamentResults = await getTournamentResults(tournamentId)
-                logger.debug(tournamentResults)
+                //logger.debug(tournamentResults)
 
-                speech = translation.tournamentResultsToSpeech(tournamentResults.results)
+                speech += translation.tournamentResultsToSpeech(tournamentResults.results)
             }
+            
             // one team + tournament optionally
             else if (teams.length === 1) {
                 teamResults = await getTeamResults(teamsId[0])
@@ -122,14 +123,17 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
                 if (validTournament) {
                     const results = teamResults.results.filter(result => result.sport_event.tournament.id === tournamentId)
                     if (results.length > 0) {
-                        speech = translation.teamResultToSpeech(results[0])
+                        speech += translation.teamResultToSpeech(results[0])
                     } else {
-                        speech = 'no match found'
+                        speech += i18n('sports.dialog.teamsNeverMetInTournament', { tournament })
+                        speech += ' '
+                        speech += translation.teamResultToSpeech(teamResults.results[0], teamsId)
                     }
                 } else {
-                    speech = translation.teamResultToSpeech(teamResults.results[0], teamsId)
+                    speech += translation.teamResultToSpeech(teamResults.results[0], teamsId)
                 }
             } 
+
             // two teams + tournament optionally
             else {
                 teamsResults = await getTeamVsTeam(teamsId[0], teamsId[1])
@@ -144,12 +148,14 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
                     if (validTournament) {
                         const results = teamsResults.last_meetings.results.filter(result => result.sport_event.tournament.id === tournamentId)
                         if (results.length > 0) {
-                            speech = translation.teamResultToSpeech(results[0], teamsId)
+                            speech += translation.teamResultToSpeech(results[0], teamsId)
                         } else {
-                            speech = 'no match found'
+                            speech += i18n('sports.dialog.teamsNeverMetInTournament', { tournament })
+                            speech += ' '
+                            speech += translation.teamResultToSpeech(teamsResults.last_meetings.results[0], teamsId)
                         }
                     } else {
-                        speech = translation.teamResultToSpeech(teamsResults.last_meetings.results[0], teamsId)
+                        speech += translation.teamResultToSpeech(teamsResults.last_meetings.results[0], teamsId)
                     }
                 }
             }

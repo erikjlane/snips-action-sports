@@ -3,6 +3,7 @@ import { isTournamentEnded } from './sports'
 import { logger } from './logger'
 import { beautify } from './beautify'
 import { Result, Competitor } from '../api'
+import { time } from './time'
 
 export const translation = {
     // Outputs an error message based on the error object, or a default message if not found.
@@ -96,24 +97,30 @@ export const translation = {
 
         let speech = ''
 
-        const tournamentRound = results[results.length - 1].sport_event.tournament_round.number
-        if (tournamentRound) {
+        if (results[results.length - 1].sport_event.tournament_round.type === "cup") {
+            const day = new Date(results[results.length - 1].sport_event.scheduled)
+
             speech += i18n('sports.tournamentResults.introduction', {
-                tournament: results[0].sport_event.tournament.name,
-                day: tournamentRound
+                tournament: results[0].sport_event.tournament.name
             })
             speech += ' '
 
-            results = results.filter(result => result.sport_event.tournament_round.number === tournamentRound)
-            for (let result of results) {
-                speech += translation.teamResultToSpeech(result, undefined, false)
-                speech += ' '
-            }
+            results = results.filter(result => time.areSameDays(day, new Date(result.sport_event.scheduled)))
         } else {
-            for (let i = results.length - 1; i > results.length - 1 - 5; i--) {
-                speech += translation.teamResultToSpeech(results[i])
-                speech += ' '
-            }
+            const round = results[results.length - 1].sport_event.tournament_round.number
+
+            speech += i18n('sports.tournamentResults.introductionRound', {
+                tournament: results[0].sport_event.tournament.name,
+                day: round
+            })
+            speech += ' '
+
+            results = results.filter(result => result.sport_event.tournament_round.number === round)
+        }
+
+        for (let result of results) {
+            speech += translation.teamResultToSpeech(result, undefined, false)
+            speech += ' '
         }
 
         return speech
