@@ -58,16 +58,10 @@ export const translation = {
         return speech
     },
 
-    teamResultToSpeech (result: Result, teamsId: string[] = undefined, from: Date = undefined, to: Date = undefined): string {
+    teamResultToSpeech (result: Result, teamsId: string[] = undefined, longTts = true): string {
         const i18n = i18nFactory.get()
 
         let speech = '', team1: Competitor, team2: Competitor
-
-        const scheduled: Date = new Date(result.sport_event.scheduled)
-        if (from && to && (scheduled < from || scheduled > to)) {
-            speech += i18n('sports.matchResults.periodDoesntMatch')
-            speech += ' '
-        }
 
         if (teamsId) {
             team1 = result.sport_event.competitors.find(competitor => competitor.id === teamsId[0])
@@ -80,18 +74,16 @@ export const translation = {
         const team1Score = result.sport_event_status[team1.qualifier + '_score']
         const team2Score = result.sport_event_status[team2.qualifier + '_score']
 
-        logger.debug(team1)
-        logger.debug(team2)
-
+        const subKey = longTts ? 'sports.matchResults.' : 'sports.tournamentResults.'
         const key = (team1Score === team2Score)
-            ? 'sports.matchResults.teamTied'
-            : ((team1Score < team2Score) ? 'sports.matchResults.teamLost' : 'sports.matchResults.teamWon')
+            ? (subKey + 'teamTied')
+            : ((team1Score < team2Score) ? (subKey + 'teamLost') : (subKey + 'teamWon'))
 
         speech += i18n(key, {
             tournament: result.sport_event.tournament.name,
             team_1: team1.name,
             team_2: team2.name,
-            date: beautify.date(scheduled),
+            date: beautify.date(new Date(result.sport_event.scheduled)),
             team_1_score: team1Score,
             team_2_score: team2Score
         })
@@ -99,17 +91,26 @@ export const translation = {
         return speech
     },
 
-    tournamentResultsToSpeech (results: Result[], from: Date = undefined, to: Date = undefined): string {
+    tournamentResultsToSpeech (results: Result[]): string {
+        const i18n = i18nFactory.get()
+
         let speech = ''
 
-        if (from && to) {
-            results = results.filter(result => from < result.sport_event.scheduled && to > result.sport_event.scheduled)
+        const tournamentRound = results[results.length - 1].sport_event.tournament_round.number
+        if (tournamentRound) {
+            speech += i18n('sports.tournamentResults.introduction', {
+                tournament: results[0].sport_event.tournament.name,
+                day: tournamentRound
+            })
+            speech += ' '
+
+            results = results.filter(result => result.sport_event.tournament_round.number === tournamentRound)
             for (let result of results) {
-                speech += translation.teamResultToSpeech(result)
-                speech = ' '
+                speech += translation.teamResultToSpeech(result, undefined, false)
+                speech += ' '
             }
         } else {
-            for (let i = results.length - 1; i > results.length - 1 - 3; i--) {
+            for (let i = results.length - 1; i > results.length - 1 - 5; i--) {
                 speech += translation.teamResultToSpeech(results[i])
                 speech += ' '
             }

@@ -13,17 +13,24 @@
     },
     "sports": {
         "dialog": {
+            "periodDoesntMatch": "This match did not take place within the requested period.",
+            "teamsNeverMet": "These teams never played against each other!"
         },
         "tournamentStandings": {
             "rankNotEnded": "{{ team }} currently occupies rank {{ rank }} of {{ tournament }}.",
             "rankEnded": "The last season of {{ tournament }} has ended. {{ team }} finished at rank {{ rank }}."
         },
         "matchResults": {
-            "teamLost": "On {{ date }}, {{ team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{ team_2 }} in a {{ tournament }} match.",
-            "teamWon": "On {{ date }}, {{ team_1 }} beat {{ team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{ tournament }} match.",
-            "teamTied": "On {{ date }}, {{ team_1 }} tied against {{ team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{ tournament }} match.",
-            "lastMatchForTeam": "The {{ tournament }} match {{ team_1 }} versus {{ team_2 }} on {{ date }} final score was {{ team_1_score }} to {{ team_2_score }}.",
-            "periodDoesntMatch": "This match did not take place within the requested period."
+            "teamLost": "On {{ date }}, {{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }} in a {{ tournament }} match.",
+            "teamWon": "On {{ date }}, {{- team_1 }} beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{ tournament }} match.",
+            "teamTied": "On {{ date }}, {{- team_1 }} tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{ tournament }} match.",
+            "lastMatchForTeam": "The {{ tournament }} match {{- team_1 }} versus {{- team_2 }} on {{ date }} final score was {{ team_1_score }} to {{ team_2_score }}."
+        },
+        "tournamentResults": {
+            "introduction": "Here are the results of the {{ tournament }} day {{ day }}.",
+            "teamLost": "{{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }}.",
+            "teamWon": "{{- team_1 }} beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}.",
+            "teamTied": "{{- team_1 }} tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}."
         }
     }
 }

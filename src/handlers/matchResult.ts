@@ -8,8 +8,11 @@ import {
 } from '../constants'
 import { slotType } from 'hermes-javascript';
 const mapping = require('../../assets/mappings')
+import { i18nFactory } from '../factories'
 
 export const matchResultHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
+    const i18n = i18nFactory.get()
+
     logger.info('MatchResult')
 
     const {
@@ -84,32 +87,62 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
             logger.debug(tournamentId)
         }
 
+        /*
+        if (from && to && (scheduled < from || scheduled > to)) {
+            speech += i18n('sports.dialog.periodDoesntMatch')
+            speech += ' '
+        }
+
+
+
+        if (from && to) {
+            results = results.filter(result => from < result.sport_event.scheduled && to > result.sport_event.scheduled)
+            for (let result of results) {
+                speech += translation.teamResultToSpeech(result)
+                speech = ' '
+            }
+        } else {
+        */
+
         try {
             let speech: string = ''
-
-            // only team(s)
-            if (validTeam && !validTournament) {
-                if (teams.length === 1) {
-                    // one team is provided, searching for the last result
-                    teamResults = await getTeamResults(teamsId[0])
-                    //logger.info(teamResults)
-
-                    speech = translation.teamResultToSpeech(teamResults.results[0], teamsId, from, to)
-                } else {
-                    // two teams are provided, searching for their last result
-                    teamsResults = await getTeamVsTeam(teamsId[0], teamsId[1])
-                    //logger.info(teamsResults)
-
-                    speech = translation.teamResultToSpeech(teamsResults.last_meetings.results[0], teamsId, from, to)
-                }
-            }
             
-            // only tournament
-            if (validTournament && !validTeam) {
-                tournamentResults = await getTournamentResults(tournamentId)
-                //logger.info(tournamentResults)
+            if (validTournament) {
+                if (validTeam) {
+                    // tournament and team(s)
 
-                speech = translation.tournamentResultsToSpeech(tournamentResults.results)
+
+                } else {
+                    // only tournament
+                    tournamentResults = await getTournamentResults(tournamentId)
+                    logger.debug(tournamentResults)
+
+                    speech = translation.tournamentResultsToSpeech(tournamentResults.results)
+                }
+            } else {
+                if (validTeam) {
+                    // only team(s)
+                    if (teams.length === 1) {
+                        // one team is provided, searching for the last result
+                        teamResults = await getTeamResults(teamsId[0])
+                        logger.debug(teamResults)
+    
+                        speech = translation.teamResultToSpeech(teamResults.results[0], teamsId)
+                    } else {
+                        // two teams are provided, searching for their last result
+                        teamsResults = await getTeamVsTeam(teamsId[0], teamsId[1])
+                        logger.debug(teamsResults)
+    
+                        if (teamsResults.message && teamsResults.message === 'No meetings between these teams.') {
+                            const speech = i18n('sports.dialog.teamsNeverMet')
+                            flow.end()
+                            logger.info(speech)
+                            return speech
+                        } else {
+                            speech = translation.teamResultToSpeech(teamsResults.last_meetings.results[0], teamsId)
+                        }
+                    }
+                }
             }
 
             logger.info(speech)

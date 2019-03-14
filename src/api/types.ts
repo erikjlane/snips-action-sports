@@ -190,6 +190,7 @@ export interface TeamVsTeamPayload {
     teams: Team[];
     last_meetings: LastMeetings;
     next_meetings: NextMeeting[];
+    message?: string;
 }
 
 export interface TeamSchedulePayload {
