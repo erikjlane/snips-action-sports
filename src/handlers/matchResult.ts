@@ -107,40 +107,49 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
         try {
             let speech: string = ''
             
-            if (validTournament) {
-                if (validTeam) {
-                    // tournament and team(s)
+            // tournament only
+            if (teams.length === 0) {
+                tournamentResults = await getTournamentResults(tournamentId)
+                logger.debug(tournamentResults)
 
+                speech = translation.tournamentResultsToSpeech(tournamentResults.results)
+            }
+            // one team + tournament optionally
+            else if (teams.length === 1) {
+                teamResults = await getTeamResults(teamsId[0])
+                logger.debug(teamResults)
 
-                } else {
-                    // only tournament
-                    tournamentResults = await getTournamentResults(tournamentId)
-                    logger.debug(tournamentResults)
-
-                    speech = translation.tournamentResultsToSpeech(tournamentResults.results)
-                }
-            } else {
-                if (validTeam) {
-                    // only team(s)
-                    if (teams.length === 1) {
-                        // one team is provided, searching for the last result
-                        teamResults = await getTeamResults(teamsId[0])
-                        logger.debug(teamResults)
-    
-                        speech = translation.teamResultToSpeech(teamResults.results[0], teamsId)
+                if (validTournament) {
+                    const results = teamResults.results.filter(result => result.sport_event.tournament.id === tournamentId)
+                    if (results.length > 0) {
+                        speech = translation.teamResultToSpeech(results[0])
                     } else {
-                        // two teams are provided, searching for their last result
-                        teamsResults = await getTeamVsTeam(teamsId[0], teamsId[1])
-                        logger.debug(teamsResults)
-    
-                        if (teamsResults.message && teamsResults.message === 'No meetings between these teams.') {
-                            const speech = i18n('sports.dialog.teamsNeverMet')
-                            flow.end()
-                            logger.info(speech)
-                            return speech
+                        speech = 'no match found'
+                    }
+                } else {
+                    speech = translation.teamResultToSpeech(teamResults.results[0], teamsId)
+                }
+            } 
+            // two teams + tournament optionally
+            else {
+                teamsResults = await getTeamVsTeam(teamsId[0], teamsId[1])
+                logger.debug(teamsResults)
+
+                if (teamsResults.message && teamsResults.message === 'No meetings between these teams.') {
+                    const speech = i18n('sports.dialog.teamsNeverMet')
+                    flow.end()
+                    logger.info(speech)
+                    return speech
+                } else {
+                    if (validTournament) {
+                        const results = teamsResults.last_meetings.results.filter(result => result.sport_event.tournament.id === tournamentId)
+                        if (results.length > 0) {
+                            speech = translation.teamResultToSpeech(results[0], teamsId)
                         } else {
-                            speech = translation.teamResultToSpeech(teamsResults.last_meetings.results[0], teamsId)
+                            speech = 'no match found'
                         }
+                    } else {
+                        speech = translation.teamResultToSpeech(teamsResults.last_meetings.results[0], teamsId)
                     }
                 }
             }
