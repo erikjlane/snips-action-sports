@@ -72,7 +72,7 @@ interface CurrentSeason {
     year: string;
 }
 
-interface TeamStanding {
+export interface TeamStanding {
     team: Team;
     rank: number;
     current_outcome: string;
@@ -93,7 +93,7 @@ interface Group {
     team_standings: TeamStanding[];
 }
 
-interface Standing {
+export interface Standing {
     tie_break_rule: string;
     type: string;
     groups: Group[];

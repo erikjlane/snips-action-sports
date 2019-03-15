@@ -1,12 +1,12 @@
 import { logger, slot, tts, translation, message } from '../utils'
 import { Handler } from './index'
 import commonHandler, { KnownSlots } from './common'
-import { getTeamResults, getTournamentResults, TeamResultsPayload, TournamentResultsPayload, Result, getTeamVsTeam, TeamVsTeamPayload } from '../api'
+import { getTeamResults, getTournamentResults, TeamResultsPayload, TournamentResultsPayload, getTeamVsTeam, TeamVsTeamPayload } from '../api'
 import {
     SLOT_CONFIDENCE_THRESHOLD,
     DAY_MILLISECONDS
 } from '../constants'
-import { slotType } from 'hermes-javascript';
+import { slotType } from 'hermes-javascript'
 const mapping = require('../../assets/mappings')
 import { i18nFactory } from '../factories'
 
@@ -92,8 +92,6 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
             speech += i18n('sports.dialog.periodDoesntMatch')
             speech += ' '
         }
-
-
 
         if (from && to) {
             results = results.filter(result => from < result.sport_event.scheduled && to > result.sport_event.scheduled)

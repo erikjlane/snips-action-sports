@@ -1,6 +1,5 @@
 import wretch from 'wretch'
-import { dedupe, throttlingCache } from 'wretch-middlewares'
-import { HOUR_MILLISECONDS } from '../constants'
+import { dedupe } from 'wretch-middlewares'
 import { configFactory } from './configFactory'
 
 const BASE_URL = 'https://api.sportradar.us/soccer-t3/eu'

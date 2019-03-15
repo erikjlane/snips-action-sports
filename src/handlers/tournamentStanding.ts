@@ -1,7 +1,7 @@
 import { logger, slot, tts, translation } from '../utils'
 import { Handler } from './index'
 import commonHandler, { KnownSlots } from './common'
-import { getTournamentStandings, getTeamSchedule, TournamentStandingsPayload, TeamSchedulePayload } from '../api'
+import { getTournamentStandings, TournamentStandingsPayload } from '../api'
 const mapping = require('../../assets/mappings')
 
 export const tournamentStandingHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
@@ -17,14 +17,14 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
     if (!validTeam && !validTournament) {
         throw new Error('intentNotRecognized')
     } else {
-        const now = Date.now()
+        const now: number = Date.now()
 
         let teamsId: string[] = []
         let tournamentId: string
-        let teamScheduleData: TeamSchedulePayload
+        //let teamScheduleData: TeamSchedulePayload
         let tournamentStandings: TournamentStandingsPayload
 
-        // Searching for the id team
+        // Searching for the teams id
         if (validTeam) {
             for (let team of teams) {
                 const matchingTeam = mapping.teams.find(teamMapping => teamMapping.name.includes(team))
@@ -33,41 +33,34 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
                 }
         
                 teamsId.push(matchingTeam.id)
-                logger.info(matchingTeam.id)
-            }
-
-            if (!validTournament) {
-                // API call
-                teamScheduleData = await getTeamSchedule(teamsId[0])
-                logger.info(teamScheduleData)
-
-                tournamentId = teamScheduleData.schedule[0].tournament.id
+                logger.debug(matchingTeam.id)
             }
         }
         
-        // Searching for the id tournament
+        // Searching for the tournament id
         if (validTournament) {
             const matchingTournament = mapping.tournaments.find(tournamentMapping => tournamentMapping.name.includes(tournament))
-            if (!matchingTournament) {
+            if (!matchingTournament || !matchingTournament.id) {
                 throw new Error('tournament')
             }
 
             tournamentId = matchingTournament.id
+            logger.debug(tournamentId)
         }
-
-        if (!tournamentId) {
-            throw new Error('tournament')
-        }
-        logger.info(tournamentId)
-
-        // API call
-        tournamentStandings = await getTournamentStandings(tournamentId)
-        logger.info(tournamentStandings)
 
         try {
-            const speech = translation.tournamentStandingsToSpeech(teams[0], tournament, tournamentStandings)
-            logger.info(speech)
-        
+            let speech: string = ''
+
+            // tournament only
+            if (teams.length === 0) {
+                tournamentStandings = await getTournamentStandings(tournamentId)
+                logger.debug(tournamentStandings)
+
+                speech += translation.tournamentStandingsToSpeech(tournamentStandings)
+            }
+
+            logger.info(speech)        
+
             flow.end()
             if (Date.now() - now < 4000) {
                 return speech
