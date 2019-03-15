@@ -51,12 +51,16 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
         try {
             let speech: string = ''
 
+            tournamentStandings = await getTournamentStandings(tournamentId)
+            logger.debug(tournamentStandings)
+
             // tournament only
             if (teams.length === 0) {
-                tournamentStandings = await getTournamentStandings(tournamentId)
-                logger.debug(tournamentStandings)
-
                 speech += translation.tournamentStandingsToSpeech(tournamentStandings)
+            }
+            // tournament and team
+            else if (teams.length === 1) {
+                speech += translation.teamInTournamentStandingsToSpeech(tournamentStandings, teamsId[0])
             }
 
             logger.info(speech)        

@@ -1,8 +1,13 @@
 import { i18nFactory } from '../factories/i18nFactory'
-import { isTournamentEnded } from './sports'
-import { logger } from './logger'
 import { beautify } from './beautify'
-import { Result, Competitor, TournamentStandingsPayload, TeamStanding } from '../api'
+import {
+    Result,
+    Competitor,
+    TournamentStandingsPayload,
+    TeamStanding,
+    Group
+} from '../api'
+import { isTournamentEnded } from '../utils/sports'
 import { time } from './time'
 
 export const translation = {
@@ -34,40 +39,56 @@ export const translation = {
     },
 
     tournamentStandingsToSpeech(standings: TournamentStandingsPayload): string {
+        let speech: string = ''
+
+        if (standings.standings[0].groups.length === 1) {
+            const teamStandings: TeamStanding[] = standings.standings[0].groups[0].team_standings
+
+            for (let i = 0; i < Math.min(teamStandings.length, 5); i++) {
+                speech += translation.randomTranslation('sports.tournamentStandings.standings.' + (i + 1), {
+                    team: teamStandings[i].team.name,
+                    points: teamStandings[i].points
+                })
+                speech += ' '
+            }
+        } else {
+            const groups: Group[] = standings.standings[0].groups
+
+            for (let group of groups) {
+                const teamStandings: TeamStanding[] = group.team_standings
+
+                speech += translation.randomTranslation('sports.tournamentStandings.groupsStandings', {
+                    team: teamStandings[0].team.name,
+                    points: teamStandings[0].points
+                })
+                speech += ' '
+            }
+        }
+
+        return speech
+    },
+
+    teamInTournamentStandingsToSpeech(standings: TournamentStandingsPayload, teamId: string): string {
         const i18n = i18nFactory.get()
 
-        let speech = ''
+        let speech: string = ''
 
-        /*
-        const groups = standingsData.standings[0].groups
-        const groupData = groups.find(groupMapping => groupMapping.team_standings.some(teamMapping => teamMapping.team.name.includes(team)))
-        const teamData = groupData.team_standings.find(teamData => teamData.team.name.includes(team))
+        const groups = standings.standings[0].groups
+        const group = groups.find(groupMapping => groupMapping.team_standings.some(teamMapping => teamMapping.team.id === teamId))
+        const teamStandings = group.team_standings.find(teamData => teamData.team.id === teamId)
 
-        logger.info(teamData)
-
-        if (isTournamentEnded(standingsData)) {
+        if (isTournamentEnded(standings)) {
             speech = i18n('sports.tournamentStandings.rankEnded', {
-                team,
-                tournament,
-                rank: teamData.rank
+                team: teamStandings.team.name,
+                tournament: standings.tournament.name,
+                rank: teamStandings.rank
             })
         } else {
             speech = i18n('sports.tournamentStandings.rankNotEnded', {
-                team,
-                tournament,
-                rank: teamData.rank
+                team: teamStandings.team.name,
+                tournament: standings.tournament.name,
+                rank: teamStandings.rank
             })
-        }
-        */
-
-        const teamStandings: TeamStanding[] = standings.standings[0].groups[0].team_standings
-
-        for (let i = 0; i < Math.min(teamStandings.length, 5); i++) {
-            speech += translation.randomTranslation('sports.tournamentStandings.standings.' + (i + 1), {
-                team: teamStandings[i].team.name,
-                points: teamStandings[i].points
-            })
-            speech += ' '
         }
 
         return speech
@@ -111,7 +132,7 @@ export const translation = {
 
         let speech = ''
 
-        if (results[results.length - 1].sport_event.tournament_round.type === 'cup') {
+        if (results[0].sport_event.tournament_round.type === 'cup') {
             const day = new Date(results[results.length - 1].sport_event.scheduled)
 
             speech += i18n('sports.tournamentResults.introduction', {

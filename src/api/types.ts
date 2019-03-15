@@ -87,7 +87,7 @@ export interface TeamStanding {
     change: number;
 }
 
-interface Group {
+export interface Group {
     name: string;
     id: string;
     team_standings: TeamStanding[];

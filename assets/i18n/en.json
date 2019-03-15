@@ -35,14 +35,15 @@
                     "{{- team }} are in third place with {{ points }} points."
                 ],
                 "4": [
-                    "{{- teams }} follows with {{ points }} points.",
+                    "{{- team }} follows with {{ points }} points.",
                     "{{- team }} are in fourth place with {{ points }} points."
                 ],
                 "5": [
                     "And {{- team }} has {{ points }} points.",
                     "Finally, {{- team }} has {{ points }} points."
                 ]
-            }
+            },
+            "groupsStandings": "{{- team }} lead their group with {{ points }} points."
         },
         "matchResults": {
             "teamLost": "On {{ date }}, {{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }} in a {{- tournament }} match.",

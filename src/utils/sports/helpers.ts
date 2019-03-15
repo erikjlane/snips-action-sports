@@ -1,8 +1,11 @@
-export function isTournamentEnded(standingsData): boolean {
-    if (standingsData.tournament && standingsData.tournament.current_season) {
-        const endDate = standingsData.tournament.current_season.end_date
+import { TournamentStandingsPayload } from '../../api'
+
+export function isTournamentEnded(standings: TournamentStandingsPayload): boolean {
+    if (standings.tournament && standings.tournament.current_season) {
+        const endDate = standings.tournament.current_season.end_date
+
         if (endDate) {
-            return Date.now() > Date.parse(endDate)
+            return new Date() > endDate
         }
     }
 
