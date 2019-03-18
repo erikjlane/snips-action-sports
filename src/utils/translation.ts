@@ -5,10 +5,30 @@ import {
     Competitor,
     TournamentStandingsPayload,
     TeamStanding,
-    Group
+    Group,
+    TournamentResultsPayload,
+    TournamentRound
 } from '../api'
-import { isTournamentEnded } from '../utils/sports'
+import { helpers } from '../utils/sports'
 import { time } from './time'
+
+function buildFinalPhasesTts(results: TournamentResultsPayload): string {
+    const rounds: TournamentRound[] = []
+
+    for (let result of results.results) {
+        if (!rounds.find(round => round.name === result.sport_event.tournament_round.name)) {
+            rounds.push(result.sport_event.tournament_round)
+        }
+    }
+
+    let tts = ''
+    for (let round of rounds) {
+        tts += round.name + '/' + round.type + ' '
+    }
+    tts += '.'
+
+    return tts
+}
 
 export const translation = {
     // Outputs an error message based on the error object, or a default message if not found.
@@ -26,6 +46,7 @@ export const translation = {
             return 'Oops, something went wrong.'
         }
     },
+
     // Takes an array from the i18n and returns a random item.
     randomTranslation (key: string | string[], opts: {[key: string]: any}): string {
         const i18n = i18nFactory.get()
@@ -41,7 +62,8 @@ export const translation = {
     tournamentStandingsToSpeech(standings: TournamentStandingsPayload): string {
         let speech: string = ''
 
-        if (standings.standings[0].groups.length === 1) {
+        // regular season
+        if (helpers.isRegularSeason(standings)) {
             const teamStandings: TeamStanding[] = standings.standings[0].groups[0].team_standings
 
             for (let i = 0; i < Math.min(teamStandings.length, 5); i++) {
@@ -51,7 +73,9 @@ export const translation = {
                 })
                 speech += ' '
             }
-        } else {
+        }
+        // group phases
+        else {
             const groups: Group[] = standings.standings[0].groups
 
             for (let group of groups) {
@@ -69,7 +93,7 @@ export const translation = {
         return speech
     },
 
-    teamInTournamentStandingsToSpeech(standings: TournamentStandingsPayload, teamId: string): string {
+    teamStandingToSpeech(standings: TournamentStandingsPayload, results: TournamentResultsPayload, teamId: string): string {
         const i18n = i18nFactory.get()
 
         let speech: string = ''
@@ -78,18 +102,25 @@ export const translation = {
         const group = groups.find(groupMapping => groupMapping.team_standings.some(teamMapping => teamMapping.team.id === teamId))
         const teamStandings = group.team_standings.find(teamData => teamData.team.id === teamId)
 
-        if (isTournamentEnded(standings)) {
-            speech = i18n('sports.tournamentStandings.rankEnded', {
+        // regular season
+        if (helpers.isRegularSeason(standings)) {
+            speech += i18n('sports.tournamentStandings.rank', {
                 team: teamStandings.team.name,
                 tournament: standings.tournament.name,
                 rank: teamStandings.rank
             })
-        } else {
-            speech = i18n('sports.tournamentStandings.rankNotEnded', {
+        }
+        // group phases
+        else {
+            speech += i18n('sports.tournamentStandings.rankInGroup', {
                 team: teamStandings.team.name,
                 tournament: standings.tournament.name,
-                rank: teamStandings.rank
+                rank: teamStandings.rank,
+                group: group.name
             })
+
+            speech += ' '
+            speech += buildFinalPhasesTts(results)
         }
 
         return speech
@@ -128,21 +159,14 @@ export const translation = {
         return speech
     },
 
-    tournamentResultsToSpeech (results: Result[]): string {
+    tournamentResultsToSpeech (tournamentResults: TournamentResultsPayload): string {
         const i18n = i18nFactory.get()
 
+        let results = tournamentResults.results
         let speech = ''
 
-        if (results[0].sport_event.tournament_round.type === 'cup') {
-            const day = new Date(results[results.length - 1].sport_event.scheduled)
-
-            speech += i18n('sports.tournamentResults.introduction', {
-                tournament: results[0].sport_event.tournament.name
-            })
-            speech += ' '
-
-            results = results.filter(result => time.areSameDays(day, new Date(result.sport_event.scheduled)))
-        } else {
+        // regular season
+        if (helpers.isRegularSeason(tournamentResults)) {
             const round = results[results.length - 1].sport_event.tournament_round.number
 
             speech += i18n('sports.tournamentResults.introductionRound', {
@@ -152,6 +176,18 @@ export const translation = {
             speech += ' '
 
             results = results.filter(result => result.sport_event.tournament_round.number === round)
+        }
+        // group phases
+        else {
+            const day = new Date(results[results.length - 1].sport_event.scheduled)
+
+            speech += i18n('sports.tournamentResults.introduction', {
+                tournament: results[0].sport_event.tournament.name
+            })
+            speech += ' '
+
+            // printing games played the same day
+            results = results.filter(result => time.areSameDays(day, new Date(result.sport_event.scheduled)))
         }
 
         for (let result of results) {

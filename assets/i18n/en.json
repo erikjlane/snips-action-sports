@@ -20,8 +20,8 @@
             "teamsNeverMetInTournament": "In my memory, these teams never played against each other in the {{- tournament }}."
         },
         "tournamentStandings": {
-            "rankNotEnded": "{{- team }} currently occupies rank {{ rank }} of {{- tournament }}.",
-            "rankEnded": "The last season of {{- tournament }} has ended. {{- team }} finished at rank {{ rank }}.",
+            "rank": "{{- team }} occupies rank {{ rank }} in the {{- tournament }}.",
+            "rankInGroup": "{{- team }} occupies rank {{ rank }} of group {{ group }} in the {{- tournament }}.",
             "standings": {
                 "1": [
                     "{{- team }} is at the top of the table with {{ points }} points.",

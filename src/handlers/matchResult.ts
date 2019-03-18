@@ -1,7 +1,14 @@
 import { logger, slot, tts, translation, message } from '../utils'
 import { Handler } from './index'
 import commonHandler, { KnownSlots } from './common'
-import { getTeamResults, getTournamentResults, TeamResultsPayload, TournamentResultsPayload, getTeamVsTeam, TeamVsTeamPayload } from '../api'
+import {
+    getTeamResults,
+    getTournamentResults,
+    TeamResultsPayload,
+    TournamentResultsPayload,
+    getTeamVsTeam,
+    TeamVsTeamPayload
+} from '../api'
 import {
     SLOT_CONFIDENCE_THRESHOLD,
     DAY_MILLISECONDS
@@ -110,7 +117,7 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
                 tournamentResults = await getTournamentResults(tournamentId)
                 //logger.debug(tournamentResults)
 
-                speech += translation.tournamentResultsToSpeech(tournamentResults.results)
+                speech += translation.tournamentResultsToSpeech(tournamentResults)
             }
             
             // one team + tournament optionally

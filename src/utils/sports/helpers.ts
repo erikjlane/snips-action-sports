@@ -1,13 +1,23 @@
-import { TournamentStandingsPayload } from '../../api'
+import { TournamentStandingsPayload, TournamentResultsPayload } from '../../api'
 
-export function isTournamentEnded(standings: TournamentStandingsPayload): boolean {
-    if (standings.tournament && standings.tournament.current_season) {
-        const endDate = standings.tournament.current_season.end_date
-
-        if (endDate) {
-            return new Date() > endDate
+export const helpers = {
+    isTournamentEnded: (standings: TournamentStandingsPayload): boolean => {
+        if (standings.tournament && standings.tournament.current_season) {
+            const endDate = standings.tournament.current_season.end_date
+    
+            if (endDate) {
+                return new Date() > endDate
+            }
         }
-    }
+    
+        return false
+    },
 
-    return false
+    isRegularSeason: (standings: TournamentResultsPayload | TournamentStandingsPayload): boolean => {
+        if (standings.hasOwnProperty('standings')) {
+            return (standings as TournamentStandingsPayload).standings[0].groups.length === 1
+        }
+
+        return (standings as TournamentResultsPayload).results.find(result => result.sport_event.tournament_round.phase !== 'regular season') === undefined
+    }
 }

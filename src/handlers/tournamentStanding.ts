@@ -1,9 +1,15 @@
 import { logger, slot, tts, translation } from '../utils'
 import { Handler } from './index'
 import commonHandler, { KnownSlots } from './common'
-import { getTournamentStandings, TournamentStandingsPayload } from '../api'
+import {
+    getTournamentStandings,
+    TournamentStandingsPayload,
+    getTournamentResults,
+    TournamentResultsPayload
+} from '../api'
 import { INTENT_FILTER_PROBABILITY_THRESHOLD } from '../constants'
 import { i18nFactory } from '../factories'
+import { helpers } from '../utils/sports'
 const mapping = require('../../assets/mappings')
 
 export const tournamentStandingHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
@@ -57,7 +63,7 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
 
         let teamsId: string[] = []
         let tournamentId: string
-        //let teamScheduleData: TeamSchedulePayload
+        let tournamentResults: TournamentResultsPayload
         let tournamentStandings: TournamentStandingsPayload
 
         // Searching for the teams id
@@ -88,15 +94,35 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
             let speech: string = ''
 
             tournamentStandings = await getTournamentStandings(tournamentId)
-            logger.debug(tournamentStandings)
+            //logger.debug(tournamentStandings)
 
-            // tournament only
-            if (teams.length === 0) {
-                speech += translation.tournamentStandingsToSpeech(tournamentStandings)
+            //TODO: fix QPS limit
+            await new Promise(resolve => setTimeout(resolve, 1000))
+
+            tournamentResults = await getTournamentResults(tournamentId)
+            //logger.debug(tournamentResults)
+
+            // regular season
+            if (helpers.isRegularSeason(tournamentResults)) {
+                // tournament only
+                if (teams.length === 0) {
+                    speech += translation.tournamentStandingsToSpeech(tournamentStandings)
+                }
+                // tournament and team
+                else if (teams.length > 0) {
+                    speech += translation.teamStandingToSpeech(tournamentStandings, tournamentResults, teamsId[0])
+                }
             }
-            // tournament and team
-            else if (teams.length > 0) {
-                speech += translation.teamInTournamentStandingsToSpeech(tournamentStandings, teamsId[0])
+            // group phases
+            else {
+                // tournament only
+                if (teams.length === 0) {
+                    speech += translation.tournamentStandingsToSpeech(tournamentStandings)
+                }
+                // tournament and team
+                else if (teams.length > 0) {
+                    speech += translation.teamStandingToSpeech(tournamentStandings, tournamentResults, teamsId[0])
+                }
             }
 
             logger.info(speech)        

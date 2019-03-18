@@ -25,7 +25,7 @@ interface Tournament {
     current_season?: CurrentSeason;
 }
 
-interface TournamentRound {
+export interface TournamentRound {
     type: string;
     number?: number;
     phase?: string;
