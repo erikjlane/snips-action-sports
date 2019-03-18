@@ -2,9 +2,13 @@ import { logger, slot, tts, translation } from '../utils'
 import { Handler } from './index'
 import commonHandler, { KnownSlots } from './common'
 import { getTournamentStandings, TournamentStandingsPayload } from '../api'
+import { INTENT_FILTER_PROBABILITY_THRESHOLD } from '../constants'
+import { i18nFactory } from '../factories'
 const mapping = require('../../assets/mappings')
 
 export const tournamentStandingHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
+    const i18n = i18nFactory.get()
+
     logger.info('TournamentStanding')
 
     const {
@@ -14,8 +18,40 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
 
     const validTeam = !slot.missing(teams), validTournament = !slot.missing(tournament)
 
-    if (!validTeam && !validTournament) {
-        throw new Error('intentNotRecognized')
+    // for now, the tournament is required
+    if (!validTournament) {
+        if (knownSlots.depth === 0) {
+            throw new Error('slotsNotRecognized')
+        }
+
+        /*
+        flow.notRecognized((msg, flow) => {
+            knownSlots.depth -= 1
+            return tournamentStandingHandler(msg, flow, knownSlots)
+        })
+        */
+        
+        flow.continue('snips-assistant:TournamentStanding', (msg, flow) => {
+            if (msg.intent.confidenceScore < INTENT_FILTER_PROBABILITY_THRESHOLD) {
+                throw new Error('intentNotRecognized')
+            }
+            
+            let slotsToBeSent = {
+                teams,
+                depth: knownSlots.depth - 1
+            }
+
+            return tournamentStandingHandler(msg, flow, slotsToBeSent)
+        })
+
+        flow.continue('snips-assistant:Cancel', (_, flow) => {
+            flow.end()
+        })
+        flow.continue('snips-assistant:Stop', (_, flow) => {
+            flow.end()
+        })
+
+        return i18n('sports.dialog.noTournament')
     } else {
         const now: number = Date.now()
 
@@ -59,7 +95,7 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
                 speech += translation.tournamentStandingsToSpeech(tournamentStandings)
             }
             // tournament and team
-            else if (teams.length === 1) {
+            else if (teams.length > 0) {
                 speech += translation.teamInTournamentStandingsToSpeech(tournamentStandings, teamsId[0])
             }
 

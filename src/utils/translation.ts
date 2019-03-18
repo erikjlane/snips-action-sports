@@ -59,6 +59,7 @@ export const translation = {
 
                 speech += translation.randomTranslation('sports.tournamentStandings.groupsStandings', {
                     team: teamStandings[0].team.name,
+                    group: group.name,
                     points: teamStandings[0].points
                 })
                 speech += ' '
