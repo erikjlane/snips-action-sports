@@ -45,7 +45,12 @@
                     "Finally, {{- team }} has {{ points }} points."
                 ]
             },
-            "groupsStandings": "{{- team }} lead group {{ group }} with {{ points }} points."
+            "standingsInGroups": "{{- team }} lead group {{ group }} with {{ points }} points."
+        },
+        "teamStanding": {
+            "lostFinalPhases": "They lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }} in {{ round }}.",
+            "wonFinalPhases": "They beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in {{ round }}.",
+            "tiedFinalPhases": "They tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in {{ round }}."
         },
         "matchResults": {
             "teamLost": "On {{ date }}, {{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }} in a {{- tournament }} match.",
@@ -59,6 +64,9 @@
             "teamLost": "{{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }}.",
             "teamWon": "{{- team_1 }} beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}.",
             "teamTied": "{{- team_1 }} tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}."
+        },
+        "finalPhases": {
+            "roundOf16": "round of 16"
         }
     }
 }

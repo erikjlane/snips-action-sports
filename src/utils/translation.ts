@@ -12,20 +12,30 @@ import {
 import { helpers } from '../utils/sports'
 import { time } from './time'
 
-function buildFinalPhasesTts(results: TournamentResultsPayload): string {
-    const rounds: TournamentRound[] = []
-
-    for (let result of results.results) {
-        if (!rounds.find(round => round.name === result.sport_event.tournament_round.name)) {
-            rounds.push(result.sport_event.tournament_round)
-        }
-    }
+function buildFinalPhasesTts(results: Result[], teamId: string): string {
+    const i18n = i18nFactory.get()
+    const result = results[results.length - 1]
 
     let tts = ''
-    for (let round of rounds) {
-        tts += round.name + '/' + round.type + ' '
+
+    const team1 = result.sport_event.competitors.find(competitor => competitor.id === teamId)
+    const team2 = result.sport_event.competitors.find(competitor => competitor.id !== teamId)
+
+    const team1Score = result.sport_event_status[team1.qualifier + '_score']
+    const team2Score = result.sport_event_status[team2.qualifier + '_score']
+
+    if (result.sport_event_status.match_status === 'ended') {
+        const key = (team1Score === team2Score)
+            ? 'tiedFinalPhases'
+            : ((team1Score < team2Score) ? 'lostFinalPhases' : 'wonFinalPhases')
+
+        tts += i18n('sports.teamStanding.' + key, {
+            team_2: team2.name,
+            team_1_score: team1Score,
+            team_2_score: team2Score,
+            round: i18n('sports.finalPhases.roundOf16')
+        })
     }
-    tts += '.'
 
     return tts
 }
@@ -81,7 +91,7 @@ export const translation = {
             for (let group of groups) {
                 const teamStandings: TeamStanding[] = group.team_standings
 
-                speech += translation.randomTranslation('sports.tournamentStandings.groupsStandings', {
+                speech += translation.randomTranslation('sports.tournamentStandings.standingsInGroups', {
                     team: teamStandings[0].team.name,
                     group: group.name,
                     points: teamStandings[0].points
@@ -98,9 +108,10 @@ export const translation = {
 
         let speech: string = ''
 
-        const groups = standings.standings[0].groups
-        const group = groups.find(groupMapping => groupMapping.team_standings.some(teamMapping => teamMapping.team.id === teamId))
-        const teamStandings = group.team_standings.find(teamData => teamData.team.id === teamId)
+        const group = standings.standings[0].groups.find(
+            g => g.team_standings.some(team => team.team.id === teamId)
+        )
+        const teamStandings = group.team_standings.find(team => team.team.id === teamId)
 
         // regular season
         if (helpers.isRegularSeason(standings)) {
@@ -120,7 +131,9 @@ export const translation = {
             })
 
             speech += ' '
-            speech += buildFinalPhasesTts(results)
+            speech += buildFinalPhasesTts(results.results.filter(
+                r => r.sport_event.competitors.filter(c => c.id === teamId).length === 1
+            ), teamId)
         }
 
         return speech
@@ -142,12 +155,11 @@ export const translation = {
         const team1Score = result.sport_event_status[team1.qualifier + '_score']
         const team2Score = result.sport_event_status[team2.qualifier + '_score']
 
-        const subKey = longTts ? 'sports.matchResults.' : 'sports.tournamentResults.'
         const key = (team1Score === team2Score)
-            ? (subKey + 'teamTied')
-            : ((team1Score < team2Score) ? (subKey + 'teamLost') : (subKey + 'teamWon'))
+            ? 'teamTied'
+            : ((team1Score < team2Score) ? 'teamLost' : 'teamWon')
 
-        speech += i18n(key, {
+        speech += i18n((longTts ? 'sports.matchResults.' : 'sports.tournamentResults.') + key, {
             tournament: result.sport_event.tournament.name,
             team_1: team1.name,
             team_2: team2.name,
