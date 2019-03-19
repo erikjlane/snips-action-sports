@@ -21,7 +21,7 @@ export async function getTeamResults (teamId: string): Promise<TeamResultsPayloa
         }) as TeamResultsPayload
 
     if (results) {
-        //TODO
+        //logger.debug(results)
     } else {
         throw new Error('APIResponse')
     }

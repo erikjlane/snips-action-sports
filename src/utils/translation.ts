@@ -7,7 +7,7 @@ import {
     TeamStanding,
     Group,
     TournamentResultsPayload,
-    TournamentRound
+    TournamentSchedulePayload
 } from '../api'
 import { helpers } from '../utils/sports'
 import { time } from './time'
@@ -208,5 +208,37 @@ export const translation = {
         }
 
         return speech
+    },
+
+    tournamentScheduleToSpeech(tournamentSchedule: TournamentSchedulePayload): string {
+        const i18n = i18nFactory.get()
+
+        let tts = ''
+
+        const nextEvents = tournamentSchedule.sport_events.filter(e => new Date(e.scheduled) > new Date())
+        
+        if (nextEvents.length === 0) {
+            tts += i18n('sports.dialog.tournamentOver')
+        } else {
+            const nextDate = new Date(nextEvents[0].scheduled)
+            const events = nextEvents.filter(e => time.areSameDays(new Date(e.scheduled), nextDate))
+
+            tts += i18n('sports.tournamentSchedule.introduction', {
+                tournament: tournamentSchedule.tournament.name,
+                date: beautify.date(new Date(events[0].scheduled))
+            })
+            tts += ' '
+
+            for (let event of events) {
+                tts += translation.randomTranslation('sports.tournamentSchedule.match', {
+                    team_1: event.competitors[0].name,
+                    team_2: event.competitors[1].name,
+                    date: beautify.time(new Date(event.scheduled))
+                })
+                tts += ' '
+            }
+        }
+
+        return tts
     }
 }

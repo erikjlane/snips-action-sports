@@ -17,7 +17,8 @@
             "noTournament": "I'm sorry, can you repeat for which tournament you want the standings?",
             "periodDoesntMatch": "This match did not take place within the requested period.",
             "teamsNeverMet": "In my memory, these teams never played against each other.",
-            "teamsNeverMetInTournament": "In my memory, these teams never played against each other in the {{- tournament }}."
+            "teamsNeverMetInTournament": "In my memory, these teams never played against each other in the {{- tournament }}.",
+            "tournamentOver": "{{- tournament }} seems to be over."
         },
         "tournamentStandings": {
             "rank": "{{- team }} occupies rank {{ rank }} in the {{- tournament }}.",
@@ -64,6 +65,13 @@
             "teamLost": "{{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }}.",
             "teamWon": "{{- team_1 }} beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}.",
             "teamTied": "{{- team_1 }} tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}."
+        },
+        "tournamentSchedule": {
+            "introduction": "The next {{- tournament }} matches will be played on {{ date }}.",
+            "match": [
+                "{{- team_1 }} will play {{- team_2 }} at {{ date }}.",
+                "{{- team_1 }} will meet {{- team_2 }} at {{ date }}."
+            ]
         },
         "finalPhases": {
             "roundOf16": "round of 16"

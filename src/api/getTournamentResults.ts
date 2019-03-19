@@ -21,7 +21,7 @@ export async function getTournamentResults (tournamentId: string): Promise<Tourn
         }) as TournamentResultsPayload
 
     if (results) {
-        //TODO
+        //logger.debug(tournamentResults)
     } else {
         throw new Error('APIResponse')
     }

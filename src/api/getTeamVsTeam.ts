@@ -25,7 +25,7 @@ export async function getTeamVsTeam (team1Id: string, team2Id: string): Promise<
         }) as TeamVsTeamPayload
 
     if (results) {
-        //TODO
+        //logger.debug(results)
     } else {
         throw new Error('APIResponse')
     }

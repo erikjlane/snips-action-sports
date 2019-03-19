@@ -69,7 +69,7 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
         // Searching for the teams id
         if (validTeam) {
             for (let team of teams) {
-                const matchingTeam = mapping.teams.find(teamMapping => teamMapping.name.includes(team))
+                const matchingTeam = mapping.teams.find(t => t.name.includes(team))
                 if (!matchingTeam || !matchingTeam.id) {
                     throw new Error('team')
                 }
@@ -81,7 +81,7 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
         
         // Searching for the tournament id
         if (validTournament) {
-            const matchingTournament = mapping.tournaments.find(tournamentMapping => tournamentMapping.name.includes(tournament))
+            const matchingTournament = mapping.tournaments.find(t => t.name.includes(tournament))
             if (!matchingTournament || !matchingTournament.id) {
                 throw new Error('tournament')
             }
