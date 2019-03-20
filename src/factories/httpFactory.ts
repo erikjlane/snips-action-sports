@@ -1,4 +1,4 @@
-import wretch from 'wretch'
+import wretch, { Wretcher } from 'wretch'
 import { dedupe } from 'wretch-middlewares'
 import { configFactory } from './configFactory'
 
@@ -27,7 +27,7 @@ function init(httpOptions = { mock: false }) {
         */
     }
 }
-function get() {
+function get(): Wretcher {
     return http
 }
 

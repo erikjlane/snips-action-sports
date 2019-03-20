@@ -7,10 +7,12 @@ import {
     TeamStanding,
     Group,
     TournamentResultsPayload,
-    TournamentSchedulePayload
+    TournamentSchedulePayload,
+    TeamSchedulePayload
 } from '../api'
 import { helpers } from '../utils/sports'
 import { time } from './time'
+import { logger } from './logger';
 
 function buildFinalPhasesTts(results: Result[], teamId: string): string {
     const i18n = i18nFactory.get()
@@ -139,13 +141,13 @@ export const translation = {
         return speech
     },
 
-    teamResultToSpeech (result: Result, teamsId: string[] = undefined, longTts = true): string {
+    teamResultToSpeech (result: Result, firstTeamId: string = undefined, longTts = true): string {
         const i18n = i18nFactory.get()
 
         let speech = '', team1: Competitor, team2: Competitor
 
-        if (teamsId) {
-            team1 = result.sport_event.competitors.find(competitor => competitor.id === teamsId[0])
+        if (firstTeamId) {
+            team1 = result.sport_event.competitors.find(competitor => competitor.id === firstTeamId)
             team2 = result.sport_event.competitors.find(competitor => competitor.id !== team1.id)
         } else {
             team1 = result.sport_event.competitors[0]
@@ -233,10 +235,32 @@ export const translation = {
                 tts += translation.randomTranslation('sports.tournamentSchedule.match', {
                     team_1: event.competitors[0].name,
                     team_2: event.competitors[1].name,
-                    date: beautify.time(new Date(event.scheduled))
+                    time: beautify.time(new Date(event.scheduled))
                 })
                 tts += ' '
             }
+        }
+
+        return tts
+    },
+
+    teamScheduleToSpeech(teamSchedule: TeamSchedulePayload): string {
+        const i18n = i18nFactory.get()
+
+        let tts = ''
+
+        if (teamSchedule.schedule.length === 0) {
+            tts += i18n('sports.dialog.noScheduledGames')
+        } else {
+            const scheduledEvent = teamSchedule.schedule[0]
+
+            tts += i18n('sports.teamSchedule.nextMatch', {
+                team_1: scheduledEvent.competitors[0].name,
+                team_2: scheduledEvent.competitors[1].name,
+                tournament: scheduledEvent.tournament.name,
+                date: beautify.date(new Date(scheduledEvent.scheduled)),
+                time: beautify.time(new Date(scheduledEvent.scheduled))
+            })
         }
 
         return tts

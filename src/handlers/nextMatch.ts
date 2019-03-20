@@ -4,11 +4,15 @@ import commonHandler, { KnownSlots } from './common'
 import {
     TeamSchedulePayload,
     TournamentSchedulePayload,
-    getTournamentSchedule
+    getTournamentSchedule,
+    getTeamSchedule
 } from '../api'
+import { i18nFactory } from '../factories';
 const mapping = require('../../assets/mappings')
 
 export const nextMatchHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
+    const i18n = i18nFactory.get()
+
     logger.info('NextMatch')
 
     const {
@@ -64,34 +68,28 @@ export const nextMatchHandler: Handler = async function (msg, flow, knownSlots: 
             
             // one team + optional tournament
             else if (teams.length === 1) {
-
+                teamSchedule = await getTeamSchedule(teamsId[0])
+                teamSchedule.schedule = teamSchedule.schedule.filter(
+                    s => new Date(s.scheduled) > new Date()
+                )
 
                 if (validTournament) {
-                    
-                } else {
+                    const inTournamentSchedules = teamSchedule.schedule.filter(s => s.tournament.id === tournamentId)
 
+                    if (inTournamentSchedules.length > 0) {
+                        teamSchedule.schedule = inTournamentSchedules
+                    } else {
+                        speech += i18n('sports.dialog.teamWillNeverParticipateInTournament', { tournament })
+                        speech += ' '
+                    }
                 }
+
+                speech += translation.teamScheduleToSpeech(teamSchedule)
             } 
 
             // two teams + optional tournament
             else {
-                /*
-                teamsResults = await getTeamVsTeam(teamsId[0], teamsId[1])
-                logger.debug(teamsResults)
-
-                if (teamsResults.message && teamsResults.message === 'No meetings between these teams.') {
-                    const speech = i18n('sports.dialog.teamsNeverMet')
-                    flow.end()
-                    logger.info(speech)
-                    return speech
-                } else {
-                    if (validTournament) {
-                        
-                    } else {
-
-                    }
-                }
-                */
+                
             }
 
             logger.info(speech)

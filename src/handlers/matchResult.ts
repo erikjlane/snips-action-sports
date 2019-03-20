@@ -94,49 +94,41 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
             logger.debug(tournamentId)
         }
 
-        /*
-        if (from && to && (scheduled < from || scheduled > to)) {
-            speech += i18n('sports.dialog.periodDoesntMatch')
-            speech += ' '
-        }
-
-        if (from && to) {
-            results = results.filter(result => from < result.sport_event.scheduled && to > result.sport_event.scheduled)
-            for (let result of results) {
-                speech += translation.teamResultToSpeech(result)
-                speech = ' '
-            }
-        } else {
-        */
-
         try {
             let speech: string = ''
             
             // tournament only
             if (teams.length === 0) {
                 tournamentResults = await getTournamentResults(tournamentId)
+                tournamentResults.results = tournamentResults.results.filter(
+                    r => r.sport_event_status.match_status === 'ended'
+                )
+
                 speech += translation.tournamentResultsToSpeech(tournamentResults)
             }
             
-            // one team + tournament optionally
+            // one team + optional tournament
             else if (teams.length === 1) {
                 teamResults = await getTeamResults(teamsId[0])
+                teamResults.results = teamResults.results.filter(
+                    r => r.sport_event_status.match_status === 'ended'
+                )
 
                 if (validTournament) {
                     const results = teamResults.results.filter(r => r.sport_event.tournament.id === tournamentId)
+
                     if (results.length > 0) {
-                        speech += translation.teamResultToSpeech(results[0])
+                        teamResults.results = results
                     } else {
-                        speech += i18n('sports.dialog.teamsNeverMetInTournament', { tournament })
+                        speech += i18n('sports.dialog.teamNeverParticipatedInTournament', { tournament })
                         speech += ' '
-                        speech += translation.teamResultToSpeech(teamResults.results[0], teamsId)
                     }
-                } else {
-                    speech += translation.teamResultToSpeech(teamResults.results[0], teamsId)
                 }
+
+                speech += translation.teamResultToSpeech(teamResults.results[0], teamsId[0])
             } 
 
-            // two teams + tournament optionally
+            // two teams + optional tournament
             else {
                 teamsResults = await getTeamVsTeam(teamsId[0], teamsId[1])
 
@@ -146,18 +138,24 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
                     logger.info(speech)
                     return speech
                 } else {
+                    teamsResults.last_meetings.results = teamsResults.last_meetings.results.filter(
+                        r => r.sport_event_status.match_status === 'ended'
+                    )
+
                     if (validTournament) {
-                        const results = teamsResults.last_meetings.results.filter(r => r.sport_event.tournament.id === tournamentId)
+                        const results = teamsResults.last_meetings.results.filter(
+                            r => r.sport_event.tournament.id === tournamentId
+                        )
+
                         if (results.length > 0) {
-                            speech += translation.teamResultToSpeech(results[0], teamsId)
+                            teamsResults.last_meetings.results = results
                         } else {
                             speech += i18n('sports.dialog.teamsNeverMetInTournament', { tournament })
                             speech += ' '
-                            speech += translation.teamResultToSpeech(teamsResults.last_meetings.results[0], teamsId)
                         }
-                    } else {
-                        speech += translation.teamResultToSpeech(teamsResults.last_meetings.results[0], teamsId)
                     }
+
+                    speech += translation.teamResultToSpeech(teamsResults.last_meetings.results[0], teamsId[0])
                 }
             }
 

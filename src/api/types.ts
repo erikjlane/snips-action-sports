@@ -138,7 +138,7 @@ interface LastMeetings {
     results: Result[];
 }
 
-interface Schedule {
+export interface Schedule {
     id: string;
     scheduled: Date;
     start_time_tbd: boolean;
