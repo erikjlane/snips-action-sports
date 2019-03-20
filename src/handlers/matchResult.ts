@@ -1,4 +1,4 @@
-import { logger, slot, tts, translation, message } from '../utils'
+import { logger, slot, tts, translation } from '../utils'
 import { Handler } from './index'
 import commonHandler, { KnownSlots } from './common'
 import {
@@ -9,13 +9,8 @@ import {
     getTeamVsTeam,
     TeamVsTeamPayload
 } from '../api'
-import {
-    SLOT_CONFIDENCE_THRESHOLD,
-    DAY_MILLISECONDS
-} from '../constants'
-import { slotType } from 'hermes-javascript'
-const mapping = require('../../assets/mappings')
 import { i18nFactory } from '../factories'
+import { reader } from '../utils/sports'
 
 export const matchResultHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
     const i18n = i18nFactory.get()
@@ -27,72 +22,22 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
         tournament
     } = await commonHandler(msg, knownSlots)
 
-    // Get date_time specific slot
-    let from: Date, to: Date
-
-    if (!('from' in knownSlots)) {
-        const timeIntervalSlot = message.getSlotsByName(msg, 'date_time', {
-            onlyMostConfident: true,
-            threshold: SLOT_CONFIDENCE_THRESHOLD
-        })
-
-        if (timeIntervalSlot) {
-            // Is it a TimeInterval object?
-            if (timeIntervalSlot.value.kind == slotType.timeInterval) {
-                from = new Date(timeIntervalSlot.value.from)
-                to = new Date(timeIntervalSlot.value.to)
-            }
-            // Or is it an InstantTime object?
-            if (timeIntervalSlot.value.kind == slotType.instantTime) {
-                from = new Date(timeIntervalSlot.value.value)
-                to = new Date(from.getTime() + DAY_MILLISECONDS)
-            }
-        }
-    } else {
-        from = knownSlots.from
-        to = knownSlots.to
-    }
-
-    logger.info('\tfrom: ', from)
-    logger.info('\tto: ', to)
-
     // At least one required slot is missing
-    const validTeam = !slot.missing(teams), validTournament = !slot.missing(tournament)
+    const validTournament = !slot.missing(tournament)
 
-    if (!validTeam && !validTournament) {
+    if (slot.missing(teams) && !validTournament) {
         throw new Error('intentNotRecognized')
     } else {
         const now: number = Date.now()
 
-        let teamsId: string[] = []
-        let tournamentId: string
         let teamResults: TeamResultsPayload
         let teamsResults: TeamVsTeamPayload
         let tournamentResults: TournamentResultsPayload
 
-        // Searching for the teams id
-        if (validTeam) {
-            for (let team of teams) {
-                const matchingTeam = mapping.teams.find(t => t.name.includes(team))
-                if (!matchingTeam || !matchingTeam.id) {
-                    throw new Error('team')
-                }
-        
-                teamsId.push(matchingTeam.id)
-                logger.debug(matchingTeam.id)
-            }
-        }
-
-        // Searching for the tournament id
-        if (validTournament) {
-            const matchingTournament = mapping.tournaments.find(t => t.name.includes(tournament))
-            if (!matchingTournament || !matchingTournament.id) {
-                throw new Error('tournament')
-            }
-    
-            tournamentId = matchingTournament.id
-            logger.debug(tournamentId)
-        }
+        const {
+            teamsId,
+            tournamentId
+        } = await reader(teams, tournament)
 
         try {
             let speech: string = ''

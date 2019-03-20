@@ -8,7 +8,7 @@ import {
     getTeamSchedule
 } from '../api'
 import { i18nFactory } from '../factories'
-const mapping = require('../../assets/mappings')
+import { reader } from '../utils/sports'
 
 export const nextMatchHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
     const i18n = i18nFactory.get()
@@ -28,34 +28,13 @@ export const nextMatchHandler: Handler = async function (msg, flow, knownSlots: 
     } else {
         const now = Date.now()
 
-        let teamsId: string[] = []
-        let tournamentId: string
         let teamSchedule: TeamSchedulePayload
         let tournamentSchedule: TournamentSchedulePayload
 
-        // Searching for the teams id
-        if (validTeam) {
-            for (let team of teams) {
-                const matchingTeam = mapping.teams.find(t => t.name.includes(team))
-                if (!matchingTeam || !matchingTeam.id) {
-                    throw new Error('team')
-                }
-        
-                teamsId.push(matchingTeam.id)
-                logger.info(matchingTeam.id)
-            }
-        }
-
-        // Searching for the tournament id
-        if (validTournament) {
-            const matchingTournament = mapping.tournaments.find(t => t.name.includes(tournament))
-            if (!matchingTournament || !matchingTournament.id) {
-                throw new Error('tournament')
-            }
-    
-            tournamentId = matchingTournament.id
-            logger.debug(tournamentId)
-        }
+        const {
+            teamsId,
+            tournamentId
+        } = await reader(teams, tournament)
 
         try {
             let speech: string = ''
