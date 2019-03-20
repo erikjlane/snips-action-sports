@@ -47,3 +47,11 @@ npm run test
 
 - **http**: see `tests/httpMocks/index.ts`
 - **i18n**: see `src/factories/i18nFactory.ts`
+
+## Contributing
+
+Please see the [Contribution Guidelines](https://github.com/snipsco/snips-action-sports/blob/master/CONTRIBUTING.md).
+
+## Copyright
+
+This library is provided by [Snips](https://snips.ai) as Open Source software. See [LICENSE](https://github.com/snipsco/snips-action-sports/blob/master/LICENSE) for more information.
