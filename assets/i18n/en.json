@@ -19,6 +19,7 @@
             "teamsNeverMet": "In my memory, these teams never played against each other.",
             "teamNeverParticipatedInTournament": "In this memory, this team has never participated in the {{- tournament}}.",
             "teamsNeverMetInTournament": "In my memory, these teams never played against each other in the {{- tournament }}.",
+            "teamsWillNeverMeet": "These teams will never play against each other.",
             "teamWillNeverParticipateInTournament": "This team will never participate in the {{- tournament }}.",
             "teamsWillNeverMeetInTournament": "These teams will never play against each other in the {{- tournament }}.",
             "tournamentOver": "{{- tournament }} seems to be over.",

@@ -2,7 +2,6 @@ import { i18nFactory } from '../factories/i18nFactory'
 import { beautify } from './beautify'
 import {
     Result,
-    Competitor,
     TournamentStandingsPayload,
     TeamStanding,
     Group,
@@ -12,7 +11,6 @@ import {
 } from '../api'
 import { helpers } from '../utils/sports'
 import { time } from './time'
-import { logger } from './logger';
 
 function buildFinalPhasesTts(results: Result[], teamId: string): string {
     const i18n = i18nFactory.get()
@@ -141,18 +139,13 @@ export const translation = {
         return speech
     },
 
-    teamResultToSpeech (result: Result, firstTeamId: string = undefined, longTts = true): string {
+    teamResultToSpeech (result: Result, firstTeamId: string, longTts = true): string {
         const i18n = i18nFactory.get()
 
-        let speech = '', team1: Competitor, team2: Competitor
+        let speech = ''
 
-        if (firstTeamId) {
-            team1 = result.sport_event.competitors.find(competitor => competitor.id === firstTeamId)
-            team2 = result.sport_event.competitors.find(competitor => competitor.id !== team1.id)
-        } else {
-            team1 = result.sport_event.competitors[0]
-            team2 = result.sport_event.competitors[1]
-        }
+        const team1 = result.sport_event.competitors.find(competitor => competitor.id === firstTeamId)
+        const team2 = result.sport_event.competitors.find(competitor => competitor.id !== team1.id)
 
         const team1Score = result.sport_event_status[team1.qualifier + '_score']
         const team2Score = result.sport_event_status[team2.qualifier + '_score']
@@ -205,7 +198,7 @@ export const translation = {
         }
 
         for (let result of results) {
-            speech += translation.teamResultToSpeech(result, undefined, false)
+            speech += translation.teamResultToSpeech(result, result.sport_event.competitors[0].id, false)
             speech += ' '
         }
 
@@ -244,19 +237,22 @@ export const translation = {
         return tts
     },
 
-    teamScheduleToSpeech(teamSchedule: TeamSchedulePayload): string {
+    teamScheduleToSpeech(schedule: TeamSchedulePayload, firstTeamId: string): string {
         const i18n = i18nFactory.get()
 
         let tts = ''
 
-        if (teamSchedule.schedule.length === 0) {
+        if (schedule.schedule.length === 0) {
             tts += i18n('sports.dialog.noScheduledGames')
         } else {
-            const scheduledEvent = teamSchedule.schedule[0]
+            const scheduledEvent = schedule.schedule[0]
+
+            const team1 = scheduledEvent.competitors.find(competitor => competitor.id === firstTeamId)
+            const team2 = scheduledEvent.competitors.find(competitor => competitor.id !== team1.id)
 
             tts += i18n('sports.teamSchedule.nextMatch', {
-                team_1: scheduledEvent.competitors[0].name,
-                team_2: scheduledEvent.competitors[1].name,
+                team_1: team1.name,
+                team_2: team2.name,
                 tournament: scheduledEvent.tournament.name,
                 date: beautify.date(new Date(scheduledEvent.scheduled)),
                 time: beautify.time(new Date(scheduledEvent.scheduled))

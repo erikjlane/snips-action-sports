@@ -115,12 +115,16 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
                 )
 
                 if (validTournament) {
-                    const results = teamResults.results.filter(r => r.sport_event.tournament.id === tournamentId)
+                    const inTournamentResults = teamResults.results.filter(
+                        r => r.sport_event.tournament.id === tournamentId
+                    )
 
-                    if (results.length > 0) {
-                        teamResults.results = results
+                    if (inTournamentResults.length > 0) {
+                        teamResults.results = inTournamentResults
                     } else {
-                        speech += i18n('sports.dialog.teamNeverParticipatedInTournament', { tournament })
+                        speech += i18n('sports.dialog.teamNeverParticipatedInTournament', {
+                            tournament
+                        })
                         speech += ' '
                     }
                 }
@@ -143,14 +147,16 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
                     )
 
                     if (validTournament) {
-                        const results = teamsResults.last_meetings.results.filter(
+                        const inTournamentResults = teamsResults.last_meetings.results.filter(
                             r => r.sport_event.tournament.id === tournamentId
                         )
 
-                        if (results.length > 0) {
-                            teamsResults.last_meetings.results = results
+                        if (inTournamentResults.length > 0) {
+                            teamsResults.last_meetings.results = inTournamentResults
                         } else {
-                            speech += i18n('sports.dialog.teamsNeverMetInTournament', { tournament })
+                            speech += i18n('sports.dialog.teamsNeverMetInTournament', {
+                                tournament
+                            })
                             speech += ' '
                         }
                     }

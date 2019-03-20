@@ -7,7 +7,7 @@ import {
     getTournamentSchedule,
     getTeamSchedule
 } from '../api'
-import { i18nFactory } from '../factories';
+import { i18nFactory } from '../factories'
 const mapping = require('../../assets/mappings')
 
 export const nextMatchHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
@@ -74,22 +74,59 @@ export const nextMatchHandler: Handler = async function (msg, flow, knownSlots: 
                 )
 
                 if (validTournament) {
-                    const inTournamentSchedules = teamSchedule.schedule.filter(s => s.tournament.id === tournamentId)
+                    const inTournamentSchedules = teamSchedule.schedule.filter(
+                        s => s.tournament.id === tournamentId
+                    )
 
                     if (inTournamentSchedules.length > 0) {
                         teamSchedule.schedule = inTournamentSchedules
                     } else {
-                        speech += i18n('sports.dialog.teamWillNeverParticipateInTournament', { tournament })
+                        speech += i18n('sports.dialog.teamWillNeverParticipateInTournament', {
+                            tournament
+                        })
                         speech += ' '
                     }
                 }
 
-                speech += translation.teamScheduleToSpeech(teamSchedule)
+                speech += translation.teamScheduleToSpeech(teamSchedule, teamsId[0])
             } 
 
             // two teams + optional tournament
             else {
-                
+                teamSchedule = await getTeamSchedule(teamsId[0])
+                teamSchedule.schedule = teamSchedule.schedule.filter(
+                    s => new Date(s.scheduled) > new Date()
+                )
+
+                const nextSchedules = teamSchedule.schedule.filter(
+                    s => s.competitors.filter(c => c.id === teamsId[1]).length === 1
+                )
+
+                if (nextSchedules.length === 0) {
+                    const speech = i18n('sports.dialog.teamsWillNeverMeet')
+                    flow.end()
+                    logger.info(speech)
+                    return speech
+                } else {
+                    teamSchedule.schedule = nextSchedules
+
+                    if (validTournament) {
+                        const inTournamentSchedules = teamSchedule.schedule.filter(
+                            s => s.tournament.id === tournamentId
+                        )
+
+                        if (inTournamentSchedules.length > 0) {
+                            teamSchedule.schedule = inTournamentSchedules
+                        } else {
+                            speech += i18n('sports.dialog.teamsWillNeverMeetInTournament', {
+                                tournament
+                            })
+                            speech += ' '
+                        }
+                    }
+
+                    speech += translation.teamScheduleToSpeech(teamSchedule, teamsId[0])
+                }
             }
 
             logger.info(speech)
