@@ -2,35 +2,62 @@ import { slot } from '../slot'
 import { logger } from '../logger'
 const mapping = require('../../../assets/mappings.json')
 
-export const reader = async function (teams: string[], tournament: string) {
-    const validTeam = !slot.missing(teams), validTournament = !slot.missing(tournament)
+export type SportMapping = {
+    id:     string,
+    name:   string
+}
 
-    let teamsId: string[] = []
-    let tournamentId: string
+export type TeamMapping = {
+    id:     string,
+    name:   string,
+    sport:  SportMapping
+}
+
+export type TournamentMapping = {
+    id:     string,
+    name:   string,
+    sport:  SportMapping
+}
+
+export class Mappings {
+    teams:      TeamMapping[];
+    tournament: TournamentMapping;
+
+    constructor(teams: TeamMapping[], tournament: TournamentMapping) {
+        this.teams = teams
+        this.tournament = tournament
+    }
+}
+
+export const reader = async function (teamNames: string[], tournamentName: string): Promise<Mappings> {
+    const validTeam = !slot.missing(teamNames), validTournament = !slot.missing(tournamentName)
+
+    let teams: TeamMapping[] = []
+    let tournament: TournamentMapping
 
     // Searching for the teams ids
     if (validTeam) {
-        for (let team of teams) {
-            const matchingTeam = mapping.teams.find(t => t.name.includes(team))
+        for (let teamName of teamNames) {
+            const matchingTeam = mapping.teams.find(t => t.name.includes(teamName))
             if (!matchingTeam || !matchingTeam.id) {
                 throw new Error('team')
             }
     
-            teamsId.push(matchingTeam.id)
-            logger.debug(matchingTeam.id)
+            teams.push(matchingTeam)
+            logger.debug(matchingTeam)
         }
     }
     
     // Searching for the tournament id
     if (validTournament) {
-        const matchingTournament = mapping.tournaments.find(t => t.name.includes(tournament))
+        const matchingTournament = mapping.tournaments.find(t => t.name.includes(tournamentName))
         if (!matchingTournament || !matchingTournament.id) {
             throw new Error('tournament')
         }
 
-        tournamentId = matchingTournament.id
-        logger.debug(tournamentId)
+        tournament = matchingTournament
+        logger.debug(tournament)
     }
 
-    return { teamsId, tournamentId }
+    return new Mappings(teams, tournament)
 }

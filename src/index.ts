@@ -16,7 +16,6 @@ export default function ({
 
                 const dialog = hermes.dialog()
 
-                // This is a placeholder! Replace that by something valid!
                 dialog.flows([
                     {
                         intent: 'snips-assistant:NextMatch',

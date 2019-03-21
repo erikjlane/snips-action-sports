@@ -1,15 +1,10 @@
-import { logger, slot, tts, translation } from '../utils'
+import { logger, slot, tts } from '../utils'
 import { Handler } from './index'
 import commonHandler, { KnownSlots } from './common'
-import {
-    getTournamentStandings,
-    TournamentStandingsPayload,
-    getTournamentResults,
-    TournamentResultsPayload
-} from '../api'
+import { soccerTournamentStanding } from './soccer'
 import { INTENT_FILTER_PROBABILITY_THRESHOLD } from '../constants'
+import { reader } from '../utils/sports'
 import { i18nFactory } from '../factories'
-import { helpers, reader } from '../utils/sports'
 
 export const tournamentStandingHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
     const i18n = i18nFactory.get()
@@ -58,47 +53,10 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
     } else {
         const now: number = Date.now()
 
-        let tournamentResults: TournamentResultsPayload
-        let tournamentStandings: TournamentStandingsPayload
-
-        const {
-            teamsId,
-            tournamentId
-        } = await reader(teams, tournament)
+        const mappings = await reader(teams, tournament)
 
         try {
-            let speech: string = ''
-
-            tournamentStandings = await getTournamentStandings(tournamentId)
-
-            //TODO: fix QPS limit
-            await new Promise(resolve => setTimeout(resolve, 1000))
-
-            tournamentResults = await getTournamentResults(tournamentId)
-
-            // regular season
-            if (helpers.isRegularSeason(tournamentResults)) {
-                // tournament only
-                if (teams.length === 0) {
-                    speech += translation.tournamentStandingsToSpeech(tournamentStandings)
-                }
-                // tournament and team
-                else if (teams.length > 0) {
-                    speech += translation.teamStandingToSpeech(tournamentStandings, tournamentResults, teamsId[0])
-                }
-            }
-            // group phases
-            else {
-                // tournament only
-                if (teams.length === 0) {
-                    speech += translation.tournamentStandingsToSpeech(tournamentStandings)
-                }
-                // tournament and team
-                else if (teams.length > 0) {
-                    speech += translation.teamStandingToSpeech(tournamentStandings, tournamentResults, teamsId[0])
-                }
-            }
-
+            const speech = await soccerTournamentStanding(mappings)
             logger.info(speech)        
 
             flow.end()
