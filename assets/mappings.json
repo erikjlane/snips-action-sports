@@ -921,6 +921,14 @@
                 "id": "sr:sport:1",
                 "name": "Soccer"
             }
+        },
+        {
+            "id": "tournament:1",
+            "name": "NBA",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
         }
     ]
 }

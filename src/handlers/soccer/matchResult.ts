@@ -45,6 +45,7 @@ export const soccerMatchResult = async function(mappings: Mappings): Promise<str
                 teamResults.results = inTournamentResults
             } else {
                 speech += i18n('sports.dialog.teamNeverParticipatedInTournament', {
+                    team: mappings.teams[0].name,
                     tournament: mappings.tournament.name
                 })
                 speech += ' '

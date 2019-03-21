@@ -17,10 +17,16 @@ export const nextMatchHandler: Handler = async function (msg, flow, knownSlots: 
     } else {
         const now: number = Date.now()
 
-        const mappings = await reader(teams, tournament)
+        const mappings = reader(teams, tournament)
 
         try {
-            const speech = await soccerNextMatch(mappings)
+            let speech: string = ''
+            
+            // Soccer
+            if (mappings.sport.id === 'sr:sport:1') {
+                speech = await soccerNextMatch(mappings)
+            }
+
             logger.info(speech)
         
             flow.end()

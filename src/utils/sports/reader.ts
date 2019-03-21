@@ -22,21 +22,22 @@ export type TournamentMapping = {
 export class Mappings {
     teams:      TeamMapping[];
     tournament: TournamentMapping;
+    sport:      SportMapping;
 
-    constructor(teams: TeamMapping[], tournament: TournamentMapping) {
+    constructor(teams: TeamMapping[], tournament: TournamentMapping, sport: SportMapping) {
         this.teams = teams
         this.tournament = tournament
+        this.sport = sport
     }
 }
 
-export const reader = async function (teamNames: string[], tournamentName: string): Promise<Mappings> {
-    const validTeam = !slot.missing(teamNames), validTournament = !slot.missing(tournamentName)
-
+export const reader = function (teamNames: string[], tournamentName: string): Mappings {
     let teams: TeamMapping[] = []
     let tournament: TournamentMapping
+    let sport: SportMapping
 
     // Searching for the teams ids
-    if (validTeam) {
+    if (!slot.missing(teamNames)) {
         for (let teamName of teamNames) {
             const matchingTeam = mapping.teams.find(t => t.name.includes(teamName))
             if (!matchingTeam || !matchingTeam.id) {
@@ -49,7 +50,7 @@ export const reader = async function (teamNames: string[], tournamentName: strin
     }
     
     // Searching for the tournament id
-    if (validTournament) {
+    if (!slot.missing(tournamentName)) {
         const matchingTournament = mapping.tournaments.find(t => t.name.includes(tournamentName))
         if (!matchingTournament || !matchingTournament.id) {
             throw new Error('tournament')
@@ -59,5 +60,11 @@ export const reader = async function (teamNames: string[], tournamentName: strin
         logger.debug(tournament)
     }
 
-    return new Mappings(teams, tournament)
+    if (teams.length > 0) {
+        sport = teams[0].sport
+    } else {
+        sport = tournament.sport
+    }
+
+    return new Mappings(teams, tournament, sport)
 }

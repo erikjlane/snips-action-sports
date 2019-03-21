@@ -53,10 +53,16 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
     } else {
         const now: number = Date.now()
 
-        const mappings = await reader(teams, tournament)
+        const mappings = reader(teams, tournament)
 
         try {
-            const speech = await soccerTournamentStanding(mappings)
+            let speech: string = ''
+            
+            // Soccer
+            if (mappings.sport.id === 'sr:sport:1') {
+                speech = await soccerTournamentStanding(mappings)
+            }
+
             logger.info(speech)        
 
             flow.end()

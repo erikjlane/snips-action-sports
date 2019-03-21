@@ -38,6 +38,7 @@ export const soccerNextMatch = async function(mappings: Mappings): Promise<strin
                 teamSchedule.schedule = inTournamentSchedules
             } else {
                 speech += i18n('sports.dialog.teamWillNeverParticipateInTournament', {
+                    team: mappings.teams[0].name,
                     tournament: mappings.tournament.name
                 })
                 speech += ' '

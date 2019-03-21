@@ -2,46 +2,65 @@ import { translation } from '../../utils'
 import { helpers } from '../../utils/sports'
 import {
     getTournamentStandings,
-    TournamentStandingsPayload,
-    getTournamentResults,
-    TournamentResultsPayload
+    getTournamentResults
 } from '../../api'
 import { Mappings } from '../../utils/sports/reader'
+import { i18nFactory } from '../../factories'
 
 export const soccerTournamentStanding = async function(mappings: Mappings): Promise<string> {
+    const i18n = i18nFactory.get()
+
     let speech: string = ''
 
-    let tournamentResults: TournamentResultsPayload
-    let tournamentStandings: TournamentStandingsPayload
-
-    tournamentStandings = await getTournamentStandings(mappings.tournament.id)
+    const tournamentStandings = await getTournamentStandings(mappings.tournament.id)
 
     //TODO: fix QPS limit
     await new Promise(resolve => setTimeout(resolve, 1000))
 
-    tournamentResults = await getTournamentResults(mappings.tournament.id)
+    const tournamentResults = await getTournamentResults(mappings.tournament.id)
 
     // regular season
     if (helpers.isRegularSeason(tournamentResults)) {
-        // tournament only
-        if (mappings.teams.length === 0) {
-            speech += translation.tournamentStandingsToSpeech(tournamentStandings)
-        }
         // tournament and team
-        else if (mappings.teams.length > 0) {
-            speech += translation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
+        if (mappings.teams.length > 0) {
+            const inTournamentResults = tournamentResults.results.filter(
+                r => r.sport_event.competitors.filter(c => c.id === mappings.teams[0].id).length === 1
+            )
+
+            if (inTournamentResults.length > 0) {
+                return translation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
+            } else {
+                speech += i18n('sports.dialog.teamDoesntParticipateInTournament', {
+                    team: mappings.teams[0].name,
+                    tournament: mappings.tournament.name
+                })
+                speech += ' '
+            }
         }
+
+        speech += translation.tournamentStandingsToSpeech(tournamentStandings)
     }
+
     // group phases
     else {
-        // tournament only
-        if (mappings.teams.length === 0) {
-            speech += translation.tournamentStandingsToSpeech(tournamentStandings)
-        }
         // tournament and team
-        else if (mappings.teams.length > 0) {
-            speech += translation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
+        if (mappings.teams.length > 0) {
+            const inTournamentResults = tournamentResults.results.filter(
+                r => r.sport_event.competitors.filter(c => c.id === mappings.teams[0].id).length === 1
+            )
+
+            if (inTournamentResults.length > 0) {
+                return translation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
+            } else {
+                speech += i18n('sports.dialog.teamDoesntParticipateInTournament', {
+                    team: mappings.teams[0].name,
+                    tournament: mappings.tournament.name
+                })
+                speech += ' '
+            }
         }
+
+        speech += translation.tournamentStandingsToSpeech(tournamentStandings)
     }
 
     return speech
