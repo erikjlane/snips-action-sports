@@ -12,7 +12,11 @@ export const nbaTournamentStanding = async function(mappings: Mappings): Promise
 
     const rankings = await getRankings()
 
-    speech += nbaTranslation.rankingsToSpeech(rankings)
+    if (mappings.teams.length > 0) {
+        return nbaTranslation.teamRankingToSpeech(rankings, mappings.teams[0].id)
+    }
+
+    speech += nbaTranslation.tournamentRankingsToSpeech(rankings)
 
     return speech
 }

@@ -27,14 +27,14 @@ export const soccerTournamentStanding = async function(mappings: Mappings): Prom
                 r => r.sport_event.competitors.filter(c => c.id === mappings.teams[0].id).length === 1
             )
 
-            if (inTournamentResults.length > 0) {
-                return soccerTranslation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
-            } else {
+            if (inTournamentResults.length === 0) {
                 speech += i18n('sports.soccer.dialog.teamDoesntParticipateInTournament', {
                     team: mappings.teams[0].name,
                     tournament: mappings.tournament.name
                 })
                 speech += ' '
+            } else {
+                return soccerTranslation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
             }
         }
 
@@ -49,14 +49,14 @@ export const soccerTournamentStanding = async function(mappings: Mappings): Prom
                 r => r.sport_event.competitors.filter(c => c.id === mappings.teams[0].id).length === 1
             )
 
-            if (inTournamentResults.length > 0) {
-                return soccerTranslation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
-            } else {
+            if (inTournamentResults.length === 0) {
                 speech += i18n('sports.soccer.dialog.teamDoesntParticipateInTournament', {
                     team: mappings.teams[0].name,
                     tournament: mappings.tournament.name
                 })
                 speech += ' '
+            } else {
+                return soccerTranslation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
             }
         }
 

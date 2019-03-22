@@ -783,6 +783,267 @@
                 "id": "sr:sport:1",
                 "name": "Soccer"
             }
+        },
+        {
+            "id": "sr:team:3433",
+            "name": "Raptors",
+            "market": "Toronto",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3420",
+            "name": "76ers",
+            "market": "Philadelphia",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3422",
+            "name": "Celtics",
+            "market": "Boston",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3436",
+            "name": "Nets",
+            "market": "Brooklyn",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3421",
+            "name": "Knicks",
+            "market": "New York",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3410",
+            "name": "Bucks",
+            "market": "Milwaukee",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3419",
+            "name": "Pacers",
+            "market": "Indiana",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3424",
+            "name": "Pistons",
+            "market": "Detroit",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3409",
+            "name": "Bulls",
+            "market": "Chicago",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3432",
+            "name": "Cavaliers",
+            "market": "Cleveland",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3435",
+            "name": "Heat",
+            "market": "Miami",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3437",
+            "name": "Magic",
+            "market": "Orlando",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3430",
+            "name": "Hornets",
+            "market": "Charlotte",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3423",
+            "name": "Hawks",
+            "market": "Atlanta",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3417",
+            "name": "Nuggets",
+            "market": "Denver",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3414",
+            "name": "Trail Blazers",
+            "market": "Portland",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3418",
+            "name": "Thunder",
+            "market": "Oklahoma City",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3434",
+            "name": "Jazz",
+            "market": "Utah",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3426",
+            "name": "Timberwolves",
+            "market": "Minnesota",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3428",
+            "name": "Warriors",
+            "market": "Golden State",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3425",
+            "name": "Clippers",
+            "market": "Los Angeles",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3413",
+            "name": "Kings",
+            "market": "Sacramento",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3427",
+            "name": "Lakers",
+            "market": "Los Angeles",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3416",
+            "name": "Suns",
+            "market": "Phoenix",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3412",
+            "name": "Rockets",
+            "market": "Houston",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3429",
+            "name": "Spurs",
+            "market": "San Antonio",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:5539",
+            "name": "Pelicans",
+            "market": "New Orleans",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3415",
+            "name": "Grizzlies",
+            "market": "Memphis",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
+        },
+        {
+            "id": "sr:team:3411",
+            "name": "Mavericks",
+            "market": "Dallas",
+            "sport": {
+                "id": "sport:1",
+                "name": "Basketball"
+            }
         }
     ],
     "tournaments": [

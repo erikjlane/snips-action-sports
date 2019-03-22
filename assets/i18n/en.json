@@ -29,7 +29,7 @@
                 "noScheduledGames": "I'm sorry, I found no scheduled game for {{- team }}."
             },
             "tournamentStandings": {
-                "rank": "{{- team }} occupies rank {{ rank }} in the {{- tournament }}.",
+                "rank": "{{- team }} occupies rank {{ rank }} of the {{- tournament }}.",
                 "rankInGroup": "{{- team }} occupies rank {{ rank }} of group {{ group }} in the {{- tournament }}.",
                 "standings": {
                     "1": [
@@ -90,6 +90,7 @@
         },
         "nba": {
             "tournamentStandings": {
+                "rank": "The {{- team }} occupies rank {{ rank }} of the {{- conference }}.",
                 "standingsInConferences": "In the {{- conference }}, the {{- team_1 }} are first, the {{- team_2 }} are second, the {{- team_3 }} are third."
             }
         }

@@ -2,7 +2,7 @@ import { i18nFactory } from '../../../factories/i18nFactory'
 import { RankingsPayload, Team } from '../../../api/nba'
 
 export const nbaTranslation = {
-    rankingsToSpeech(rankings: RankingsPayload): string {
+    tournamentRankingsToSpeech(rankings: RankingsPayload): string {
         const i18n = i18nFactory.get()
 
         let speech: string = ''
@@ -24,6 +24,28 @@ export const nbaTranslation = {
             })
             speech += ' '
         }
+
+        return speech
+    },
+
+    teamRankingToSpeech(rankings: RankingsPayload, teamId: string): string {
+        const i18n = i18nFactory.get()
+
+        let speech: string = ''
+
+        for (let conference of rankings.conferences) {
+            for (let division of conference.divisions) {
+                let team = division.teams.find(t => t.sr_id === teamId)
+
+                if (team) {
+                    return i18n('sports.nba.tournamentStandings.rank', {
+                        team: team.name,
+                        rank: team.rank.conference,
+                        conference: conference.name
+                    })
+                }
+            }
+        } 
 
         return speech
     }
