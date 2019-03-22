@@ -2,10 +2,10 @@ import { logger, slot, tts } from '../utils'
 import { Handler } from './index'
 import commonHandler, { KnownSlots } from './common'
 import { soccerTournamentStanding } from './soccer'
+import { nbaTournamentStanding } from './nba'
 import { INTENT_FILTER_PROBABILITY_THRESHOLD } from '../constants'
 import { reader } from '../utils/sports'
 import { i18nFactory } from '../factories'
-import { nbaTournamentStanding } from './nba'
 
 export const tournamentStandingHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
     const i18n = i18nFactory.get()

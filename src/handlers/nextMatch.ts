@@ -1,8 +1,9 @@
 import { logger, slot, tts } from '../utils'
 import { Handler } from './index'
 import commonHandler, { KnownSlots } from './common'
-import { reader } from '../utils/sports'
 import { soccerNextMatch } from './soccer'
+import { nbaNextMatch } from './nba'
+import { reader } from '../utils/sports'
 
 export const nextMatchHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
     logger.info('NextMatch')
@@ -21,10 +22,18 @@ export const nextMatchHandler: Handler = async function (msg, flow, knownSlots: 
 
         try {
             let speech: string = ''
-            
-            // Soccer
-            if (mappings.sport.id === 'sr:sport:1') {
-                speech = await soccerNextMatch(mappings)
+
+            switch (mappings.sport.id) {
+                // soccer
+                case 'sr:sport:1': {
+                    speech = await soccerNextMatch(mappings)
+                    break
+                }
+                // basketball
+                case 'sport:1': {
+                    speech = await nbaNextMatch(mappings)
+                    break
+                }
             }
 
             logger.info(speech)
