@@ -59,13 +59,17 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
         try {
             let speech: string = ''
             
-            // Soccer
-            if (mappings.sport.id === 'sr:sport:1') {
-                speech = await soccerTournamentStanding(mappings)
-            }
-            // Basketball
-            else if (mappings.sport.id === 'sport:1') {
-                speech = await nbaTournamentStanding(mappings)
+            switch (mappings.sport.id) {
+                // soccer
+                case 'sr:sport:1': {
+                    speech = await soccerTournamentStanding(mappings)
+                    break
+                }
+                // basketball
+                case 'sport:1': {
+                    speech = await nbaTournamentStanding(mappings)
+                    break
+                }
             }
 
             logger.info(speech)        

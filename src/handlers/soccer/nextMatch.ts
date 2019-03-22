@@ -1,4 +1,4 @@
-import { translation } from '../../utils'
+import { soccerTranslation } from '../../utils/sports/soccer'
 import { i18nFactory } from '../../factories'
 import {
     TeamSchedulePayload,
@@ -19,7 +19,7 @@ export const soccerNextMatch = async function(mappings: Mappings): Promise<strin
     // tournament only
     if (mappings.teams.length === 0) {
         tournamentSchedule = await getTournamentSchedule(mappings.tournament.id)
-        speech += translation.tournamentScheduleToSpeech(tournamentSchedule)
+        speech += soccerTranslation.tournamentScheduleToSpeech(tournamentSchedule)
     }
     
     // one team + optional tournament
@@ -37,7 +37,7 @@ export const soccerNextMatch = async function(mappings: Mappings): Promise<strin
             if (inTournamentSchedules.length > 0) {
                 teamSchedule.schedule = inTournamentSchedules
             } else {
-                speech += i18n('sports.dialog.teamWillNeverParticipateInTournament', {
+                speech += i18n('sports.soccer.dialog.teamWillNeverParticipateInTournament', {
                     team: mappings.teams[0].name,
                     tournament: mappings.tournament.name
                 })
@@ -45,7 +45,7 @@ export const soccerNextMatch = async function(mappings: Mappings): Promise<strin
             }
         }
 
-        speech += translation.teamScheduleToSpeech(teamSchedule, mappings.teams[0].id)
+        speech += soccerTranslation.teamScheduleToSpeech(teamSchedule, mappings.teams[0].id)
     } 
 
     // two teams + optional tournament
@@ -60,7 +60,7 @@ export const soccerNextMatch = async function(mappings: Mappings): Promise<strin
         )
 
         if (nextSchedules.length === 0) {
-            speech = i18n('sports.dialog.teamsWillNeverMeet')
+            speech = i18n('sports.soccer.dialog.teamsWillNeverMeet')
         } else {
             teamSchedule.schedule = nextSchedules
 
@@ -72,14 +72,14 @@ export const soccerNextMatch = async function(mappings: Mappings): Promise<strin
                 if (inTournamentSchedules.length > 0) {
                     teamSchedule.schedule = inTournamentSchedules
                 } else {
-                    speech += i18n('sports.dialog.teamsWillNeverMeetInTournament', {
+                    speech += i18n('sports.soccer.dialog.teamsWillNeverMeetInTournament', {
                         tournament: mappings.tournament.name
                     })
                     speech += ' '
                 }
             }
 
-            speech += translation.teamScheduleToSpeech(teamSchedule, mappings.teams[0].id)
+            speech += soccerTranslation.teamScheduleToSpeech(teamSchedule, mappings.teams[0].id)
         }
     }
 

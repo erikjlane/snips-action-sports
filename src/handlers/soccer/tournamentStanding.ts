@@ -1,4 +1,4 @@
-import { translation } from '../../utils'
+import { soccerTranslation } from '../../utils/sports/soccer'
 import { helpers } from '../../utils/sports'
 import {
     getTournamentStandings,
@@ -28,9 +28,9 @@ export const soccerTournamentStanding = async function(mappings: Mappings): Prom
             )
 
             if (inTournamentResults.length > 0) {
-                return translation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
+                return soccerTranslation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
             } else {
-                speech += i18n('sports.dialog.teamDoesntParticipateInTournament', {
+                speech += i18n('sports.soccer.dialog.teamDoesntParticipateInTournament', {
                     team: mappings.teams[0].name,
                     tournament: mappings.tournament.name
                 })
@@ -38,7 +38,7 @@ export const soccerTournamentStanding = async function(mappings: Mappings): Prom
             }
         }
 
-        speech += translation.tournamentStandingsToSpeech(tournamentStandings)
+        speech += soccerTranslation.tournamentStandingsToSpeech(tournamentStandings)
     }
 
     // group phases
@@ -50,9 +50,9 @@ export const soccerTournamentStanding = async function(mappings: Mappings): Prom
             )
 
             if (inTournamentResults.length > 0) {
-                return translation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
+                return soccerTranslation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
             } else {
-                speech += i18n('sports.dialog.teamDoesntParticipateInTournament', {
+                speech += i18n('sports.soccer.dialog.teamDoesntParticipateInTournament', {
                     team: mappings.teams[0].name,
                     tournament: mappings.tournament.name
                 })
@@ -60,7 +60,7 @@ export const soccerTournamentStanding = async function(mappings: Mappings): Prom
             }
         }
 
-        speech += translation.tournamentStandingsToSpeech(tournamentStandings)
+        speech += soccerTranslation.tournamentStandingsToSpeech(tournamentStandings)
     }
 
     return speech

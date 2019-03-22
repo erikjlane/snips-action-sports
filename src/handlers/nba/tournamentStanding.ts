@@ -1,5 +1,4 @@
-import { translation } from '../../utils'
-import { helpers } from '../../utils/sports'
+import { nbaTranslation } from '../../utils/sports/nba'
 import {
     getRankings
 } from '../../api/nba'
@@ -13,7 +12,7 @@ export const nbaTournamentStanding = async function(mappings: Mappings): Promise
 
     const rankings = await getRankings()
 
-    speech = 'I understood Basketball'
+    speech += nbaTranslation.rankingsToSpeech(rankings)
 
     return speech
 }

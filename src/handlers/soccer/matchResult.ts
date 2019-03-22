@@ -1,4 +1,4 @@
-import { translation } from '../../utils'
+import { soccerTranslation } from '../../utils/sports/soccer'
 import { i18nFactory } from '../../factories'
 import {
     getTeamResults,
@@ -26,7 +26,7 @@ export const soccerMatchResult = async function(mappings: Mappings): Promise<str
             r => r.sport_event_status.match_status === 'ended'
         )
 
-        speech += translation.tournamentResultsToSpeech(tournamentResults)
+        speech += soccerTranslation.tournamentResultsToSpeech(tournamentResults)
     }
     
     // one team + optional tournament
@@ -44,7 +44,7 @@ export const soccerMatchResult = async function(mappings: Mappings): Promise<str
             if (inTournamentResults.length > 0) {
                 teamResults.results = inTournamentResults
             } else {
-                speech += i18n('sports.dialog.teamNeverParticipatedInTournament', {
+                speech += i18n('sports.soccer.dialog.teamNeverParticipatedInTournament', {
                     team: mappings.teams[0].name,
                     tournament: mappings.tournament.name
                 })
@@ -52,7 +52,7 @@ export const soccerMatchResult = async function(mappings: Mappings): Promise<str
             }
         }
 
-        speech += translation.teamResultToSpeech(teamResults.results[0], mappings.teams[0].id)
+        speech += soccerTranslation.teamResultToSpeech(teamResults.results[0], mappings.teams[0].id)
     } 
 
     // two teams + optional tournament
@@ -60,7 +60,7 @@ export const soccerMatchResult = async function(mappings: Mappings): Promise<str
         teamsResults = await getTeamVsTeam(mappings.teams[0].id, mappings.teams[1].id)
 
         if (teamsResults.message && teamsResults.message === 'No meetings between these teams.') {
-            speech = i18n('sports.dialog.teamsNeverMet')
+            speech = i18n('sports.soccer.dialog.teamsNeverMet')
         } else {
             teamsResults.last_meetings.results = teamsResults.last_meetings.results.filter(
                 r => r.sport_event_status.match_status === 'ended'
@@ -74,14 +74,14 @@ export const soccerMatchResult = async function(mappings: Mappings): Promise<str
                 if (inTournamentResults.length > 0) {
                     teamsResults.last_meetings.results = inTournamentResults
                 } else {
-                    speech += i18n('sports.dialog.teamsNeverMetInTournament', {
+                    speech += i18n('sports.soccer.dialog.teamsNeverMetInTournament', {
                         tournament: mappings.tournament.name
                     })
                     speech += ' '
                 }
             }
 
-            speech += translation.teamResultToSpeech(teamsResults.last_meetings.results[0], mappings.teams[0].id)
+            speech += soccerTranslation.teamResultToSpeech(teamsResults.last_meetings.results[0], mappings.teams[0].id)
         }
     }
 

@@ -14,76 +14,84 @@
     },
     "sports": {
         "dialog": {
-            "noTournament": "I'm sorry, can you repeat for which tournament you want the standings?",
-            "periodDoesntMatch": "This match did not take place within the requested period.",
-            "teamsNeverMet": "In my memory, these teams never played against each other.",
-            "teamDoesntParticipateInTournament": "{{- team }} doesn't participate in the {{- tournament }}.",
-            "teamNeverParticipatedInTournament": "In my memory, {{- team }} has never participated in the {{- tournament}}.",
-            "teamWillNeverParticipateInTournament": "{{- team }} will never participate in the {{- tournament }}.",
-            "teamsNeverMetInTournament": "In my memory, these teams never played against each other in the {{- tournament }}.",
-            "teamsWillNeverMeet": "I think these teams will never play against each other.",
-            "teamsWillNeverMeetInTournament": "These teams will never play against each other in the {{- tournament }}.",
-            "tournamentOver": "{{- tournament }} seems to be over.",
-            "noScheduledGames": "I'm sorry, I found no scheduled game for {{- team }}."
+            "noTournament": "I'm sorry, can you repeat for which tournament you want the standings?"
         },
-        "tournamentStandings": {
-            "rank": "{{- team }} occupies rank {{ rank }} in the {{- tournament }}.",
-            "rankInGroup": "{{- team }} occupies rank {{ rank }} of group {{ group }} in the {{- tournament }}.",
-            "standings": {
-                "1": [
-                    "{{- team }} is at the top of the table with {{ points }} points.",
-                    "{{- team }} occupies the first place with {{ points }} points.",
-                    "{{- team }} are in first place with {{ points }} points."
-                ],
-                "2": [
-                    "{{- team }} follows with {{ points }} points.",
-                    "Followed by {{- team }} with {{ points }} points."
-                ],
-                "3": [
-                    "{{- team }} occupies the third position with {{ points }} points.",
-                    "{{- team }} are in third place with {{ points }} points."
-                ],
-                "4": [
-                    "{{- team }} follows with {{ points }} points.",
-                    "{{- team }} are in fourth place with {{ points }} points."
-                ],
-                "5": [
-                    "And {{- team }} has {{ points }} points.",
-                    "Finally, {{- team }} has {{ points }} points."
+        "soccer": {
+            "dialog": {
+                "teamsNeverMet": "In my memory, these teams never played against each other.",
+                "teamDoesntParticipateInTournament": "{{- team }} doesn't participate in the {{- tournament }}.",
+                "teamNeverParticipatedInTournament": "In my memory, {{- team }} has never participated in the {{- tournament}}.",
+                "teamWillNeverParticipateInTournament": "{{- team }} will never participate in the {{- tournament }}.",
+                "teamsNeverMetInTournament": "In my memory, these teams never played against each other in the {{- tournament }}.",
+                "teamsWillNeverMeet": "I think these teams will never play against each other.",
+                "teamsWillNeverMeetInTournament": "These teams will never play against each other in the {{- tournament }}.",
+                "tournamentOver": "{{- tournament }} seems to be over.",
+                "noScheduledGames": "I'm sorry, I found no scheduled game for {{- team }}."
+            },
+            "tournamentStandings": {
+                "rank": "{{- team }} occupies rank {{ rank }} in the {{- tournament }}.",
+                "rankInGroup": "{{- team }} occupies rank {{ rank }} of group {{ group }} in the {{- tournament }}.",
+                "standings": {
+                    "1": [
+                        "{{- team }} is at the top of the table with {{ points }} points.",
+                        "{{- team }} occupies the first place with {{ points }} points.",
+                        "{{- team }} are in first place with {{ points }} points."
+                    ],
+                    "2": [
+                        "{{- team }} follows with {{ points }} points.",
+                        "Followed by {{- team }} with {{ points }} points."
+                    ],
+                    "3": [
+                        "{{- team }} occupies the third position with {{ points }} points.",
+                        "{{- team }} are in third place with {{ points }} points."
+                    ],
+                    "4": [
+                        "{{- team }} follows with {{ points }} points.",
+                        "{{- team }} are in fourth place with {{ points }} points."
+                    ],
+                    "5": [
+                        "And {{- team }} has {{ points }} points.",
+                        "Finally, {{- team }} has {{ points }} points."
+                    ]
+                },
+                "standingInGroup": "{{- team }} lead group {{ group }} with {{ points }} points."
+            },
+            "teamStanding": {
+                "lostFinalPhases": "They lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }} in {{ round }}.",
+                "wonFinalPhases": "They beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in {{ round }}.",
+                "tiedFinalPhases": "They tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in {{ round }}."
+            },
+            "matchResults": {
+                "teamLost": "On {{ date }}, {{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }} in a {{- tournament }} match.",
+                "teamWon": "On {{ date }}, {{- team_1 }} beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{- tournament }} match.",
+                "teamTied": "On {{ date }}, {{- team_1 }} tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{- tournament }} match.",
+                "lastMatchForTeam": "The {{- tournament }} match {{- team_1 }} versus {{- team_2 }} on {{ date }} final score was {{ team_1_score }} to {{ team_2_score }}."
+            },
+            "tournamentResults": {
+                "introduction": "Here are the results of the {{- tournament }}.",
+                "introductionRound": "Here are the results of the {{- tournament }} day {{ day }}.",
+                "teamLost": "{{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }}.",
+                "teamWon": "{{- team_1 }} beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}.",
+                "teamTied": "{{- team_1 }} tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}."
+            },
+            "tournamentSchedule": {
+                "introduction": "The next {{- tournament }} matches will be played on {{ date }}.",
+                "match": [
+                    "{{- team_1 }} will play {{- team_2 }} at {{ time }}.",
+                    "{{- team_1 }} will meet {{- team_2 }} at {{ time }}."
                 ]
             },
-            "standingsInGroups": "{{- team }} lead group {{ group }} with {{ points }} points."
+            "teamSchedule": {
+                "nextMatch": "{{- team_1 }} will play in a {{- tournament }} match against {{- team_2 }} on {{ date }} at {{ time }}."
+            },
+            "finalPhases": {
+                "roundOf16": "round of 16"
+            }
         },
-        "teamStanding": {
-            "lostFinalPhases": "They lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }} in {{ round }}.",
-            "wonFinalPhases": "They beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in {{ round }}.",
-            "tiedFinalPhases": "They tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in {{ round }}."
-        },
-        "matchResults": {
-            "teamLost": "On {{ date }}, {{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }} in a {{- tournament }} match.",
-            "teamWon": "On {{ date }}, {{- team_1 }} beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{- tournament }} match.",
-            "teamTied": "On {{ date }}, {{- team_1 }} tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{- tournament }} match.",
-            "lastMatchForTeam": "The {{- tournament }} match {{- team_1 }} versus {{- team_2 }} on {{ date }} final score was {{ team_1_score }} to {{ team_2_score }}."
-        },
-        "tournamentResults": {
-            "introduction": "Here are the results of the {{- tournament }}.",
-            "introductionRound": "Here are the results of the {{- tournament }} day {{ day }}.",
-            "teamLost": "{{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }}.",
-            "teamWon": "{{- team_1 }} beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}.",
-            "teamTied": "{{- team_1 }} tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}."
-        },
-        "tournamentSchedule": {
-            "introduction": "The next {{- tournament }} matches will be played on {{ date }}.",
-            "match": [
-                "{{- team_1 }} will play {{- team_2 }} at {{ time }}.",
-                "{{- team_1 }} will meet {{- team_2 }} at {{ time }}."
-            ]
-        },
-        "teamSchedule": {
-            "nextMatch": "{{- team_1 }} will play in a {{- tournament }} match against {{- team_2 }} on {{ date }} at {{ time }}."
-        },
-        "finalPhases": {
-            "roundOf16": "round of 16"
+        "nba": {
+            "tournamentStandings": {
+                "standingsInConferences": "In the {{- conference }}, the {{- team_1 }} are first, the {{- team_2 }} are second, the {{- team_3 }} are third."
+            }
         }
     }
 }

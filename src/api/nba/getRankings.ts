@@ -1,8 +1,9 @@
 import { httpFactory, configFactory } from '../../factories'
 import { LANGUAGE_MAPPINGS } from '../../constants'
 import { logger } from '../../utils'
+import { RankingsPayload } from './types'
 
-export async function getRankings () {
+export async function getRankings(): Promise<RankingsPayload> {
     const config = configFactory.get()
 
     const http = httpFactory.get().query({
@@ -20,10 +21,10 @@ export async function getRankings () {
                 throw new Error('APIRequest')
             // Other error
             throw new Error('APIResponse')
-        })
+        }) as RankingsPayload
 
     if (results) {
-        logger.debug(results)
+        //logger.debug(results)
     } else {
         throw new Error('APIResponse')
     }
