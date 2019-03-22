@@ -7,7 +7,7 @@ import {
     TournamentResultsPayload,
     getTeamVsTeam,
     TeamVsTeamPayload
-} from '../../api'
+} from '../../api/soccer'
 import { Mappings } from '../../utils/sports'
 
 export const soccerMatchResult = async function(mappings: Mappings): Promise<string> {

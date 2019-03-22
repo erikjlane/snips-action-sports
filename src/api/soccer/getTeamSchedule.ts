@@ -1,13 +1,16 @@
-import { httpFactory, configFactory } from '../factories'
-import { LANGUAGE_MAPPINGS } from '../constants'
+import { httpFactory, configFactory } from '../../factories'
+import { LANGUAGE_MAPPINGS } from '../../constants'
 import { TeamSchedulePayload } from './types'
 
 export async function getTeamSchedule (teamId: string): Promise<TeamSchedulePayload> {
-    const http = httpFactory.get()
     const config = configFactory.get()
 
+    const http = httpFactory.get().query({
+        api_key: configFactory.get().soccerApiKey
+    })
+
     const results = await http
-        .url(`/${ LANGUAGE_MAPPINGS[config.locale] }/teams/${ teamId }/schedule.json`)
+        .url(`/soccer-t3/eu/${ LANGUAGE_MAPPINGS[config.locale] }/teams/${ teamId }/schedule.json`)
         .get()
         .json()
         .catch(error => {
@@ -19,7 +22,7 @@ export async function getTeamSchedule (teamId: string): Promise<TeamSchedulePayl
         }) as TeamSchedulePayload
 
     if (results) {
-        //TODO
+        //logger.debug(results)
     } else {
         throw new Error('APIResponse')
     }

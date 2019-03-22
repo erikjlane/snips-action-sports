@@ -5,6 +5,7 @@ import { soccerTournamentStanding } from './soccer'
 import { INTENT_FILTER_PROBABILITY_THRESHOLD } from '../constants'
 import { reader } from '../utils/sports'
 import { i18nFactory } from '../factories'
+import { nbaTournamentStanding } from './nba'
 
 export const tournamentStandingHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
     const i18n = i18nFactory.get()
@@ -61,6 +62,10 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
             // Soccer
             if (mappings.sport.id === 'sr:sport:1') {
                 speech = await soccerTournamentStanding(mappings)
+            }
+            // Basketball
+            else if (mappings.sport.id === 'sport:1') {
+                speech = await nbaTournamentStanding(mappings)
             }
 
             logger.info(speech)        

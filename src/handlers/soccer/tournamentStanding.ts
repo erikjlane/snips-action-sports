@@ -3,7 +3,7 @@ import { helpers } from '../../utils/sports'
 import {
     getTournamentStandings,
     getTournamentResults
-} from '../../api'
+} from '../../api/soccer'
 import { Mappings } from '../../utils/sports/reader'
 import { i18nFactory } from '../../factories'
 

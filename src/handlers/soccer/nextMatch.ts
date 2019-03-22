@@ -5,7 +5,7 @@ import {
     TournamentSchedulePayload,
     getTournamentSchedule,
     getTeamSchedule
-} from '../../api'
+} from '../../api/soccer'
 import { Mappings } from '../../utils/sports'
 
 export const soccerNextMatch = async function(mappings: Mappings): Promise<string> {

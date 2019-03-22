@@ -1,8 +1,7 @@
 import wretch, { Wretcher } from 'wretch'
 import { dedupe } from 'wretch-middlewares'
-import { configFactory } from './configFactory'
 
-const BASE_URL = 'https://api.sportradar.us/soccer-t3/eu'
+const BASE_URL = 'https://api.sportradar.us'
 
 let http = wretch(BASE_URL)
     .middlewares([
@@ -12,8 +11,6 @@ let http = wretch(BASE_URL)
 function init(httpOptions = { mock: false }) {
     http = http.polyfills({
         fetch: httpOptions.mock || require('node-fetch')
-    }).query({
-        api_key: configFactory.get().apiKey
     })
 
     if (!httpOptions.mock) {

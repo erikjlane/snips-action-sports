@@ -1,5 +1,5 @@
 # snips-action-sports
-#### Action code for the Snips sports skill
+#### Snips action code for the Sports app
 
 ## Setup
 

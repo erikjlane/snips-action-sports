@@ -1,14 +1,17 @@
-import { httpFactory, configFactory } from '../factories'
-import { LANGUAGE_MAPPINGS } from '../constants'
+import { httpFactory, configFactory } from '../../factories'
+import { LANGUAGE_MAPPINGS } from '../../constants'
 import { TournamentStandingsPayload } from './types'
-import { logger } from '../utils'
+import { logger } from '../../utils'
 
 export async function getTournamentStandings (tournamentId: string): Promise<TournamentStandingsPayload> {
-    const http = httpFactory.get()
     const config = configFactory.get()
 
+    const http = httpFactory.get().query({
+        api_key: configFactory.get().soccerApiKey
+    })
+
     const results = await http
-        .url(`/${ LANGUAGE_MAPPINGS[config.locale] }/tournaments/${ tournamentId }/standings.json`)
+        .url(`/soccer-t3/eu/${ LANGUAGE_MAPPINGS[config.locale] }/tournaments/${ tournamentId }/standings.json`)
         .get()
         .json()
         .catch(error => {

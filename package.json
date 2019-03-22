@@ -1,7 +1,7 @@
 {
   "name": "snips-action-sports",
   "version": "0.0.1",
-  "description": "Action code for the Snips sports skill",
+  "description": "Snips action code for the Sports app",
   "main": "dist/index.js",
   "scripts": {
     "start": "npm run lint && npm run build && npm run test",

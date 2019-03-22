@@ -2,4 +2,5 @@
 locale=english
 
 [secret]
-api_key=
+soccer_api_key=
+nba_api_key=
