@@ -1,6 +1,6 @@
 import { i18nFactory } from '../../../factories/i18nFactory'
 import { beautify } from '../../beautify'
-import { RankingsPayload, Team, SchedulePayload } from '../../../api/nba'
+import { RankingsPayload, Team, SchedulePayload, Game } from '../../../api/nba'
 import { time } from '../../time'
 import { translation } from '../../translation'
 
@@ -94,6 +94,57 @@ export const nbaTranslation = {
             date: beautify.date(scheduled),
             time: beautify.time(scheduled)
         })
+
+        return tts
+    },
+
+    teamResultToSpeech(game: Game, firstTeamId: string, longTts = true): string {
+        const i18n = i18nFactory.get()
+
+        let tts: string = ''
+
+        const team1 = (game.home.sr_id === firstTeamId) ? game.home : game.away
+        const team2 = (game.home.sr_id === firstTeamId) ? game.away : game.home
+
+        const team1Score = (team1.sr_id === game.home.sr_id) ? game.home_points : game.away_points
+        const team2Score = (team2.sr_id === game.home.sr_id) ? game.home_points : game.away_points
+
+        const key = (team1Score === team2Score)
+            ? 'teamTied'
+            : ((team1Score < team2Score) ? 'teamLost' : 'teamWon')
+
+        tts += i18n((longTts ? 'sports.nba.matchResults.' : 'sports.nba.tournamentResults.') + key, {
+            team_1: team1.name,
+            team_2: team2.name,
+            date: beautify.date(new Date(game.scheduled)),
+            team_1_score: team1Score,
+            team_2_score: team2Score
+        })
+
+        return tts
+    },
+
+    tournamentResultsToSpeech(schedule: SchedulePayload): string {
+        const i18n = i18nFactory.get()
+
+        let tts: string = ''
+
+        const day = new Date(schedule.games[schedule.games.length - 1].scheduled)
+
+        tts += i18n('sports.nba.tournamentResults.introduction', {
+            date: beautify.date(day)
+        })
+        tts += ' '
+
+        // printing games played the same day
+        schedule.games = schedule.games.filter(
+            g => time.areSameDays(day, new Date(g.scheduled))
+        )
+
+        for (let game of schedule.games) {
+            tts += nbaTranslation.teamResultToSpeech(game, game.home.sr_id, false)
+            tts += ' '
+        }
 
         return tts
     }

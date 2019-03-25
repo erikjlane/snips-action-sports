@@ -167,7 +167,9 @@ export const soccerTranslation = {
             tts += ' '
 
             // printing games played the same day
-            results = results.filter(result => time.areSameDays(day, new Date(result.sport_event.scheduled)))
+            results = results.filter(
+                r => time.areSameDays(day, new Date(r.sport_event.scheduled))
+            )
         }
 
         for (let result of results) {

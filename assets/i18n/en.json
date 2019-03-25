@@ -57,7 +57,7 @@
                 "standingInGroup": "{{- team }} lead group {{ group }} with {{ points }} points."
             },
             "tournamentResults": {
-                "introduction": "Here are the results of the {{- tournament }}.",
+                "introduction": "Here are the last results of the {{- tournament }}.",
                 "introductionRound": "Here are the results of the {{- tournament }} day {{ day }}.",
                 "teamLost": "{{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }}.",
                 "teamWon": "{{- team_1 }} beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}.",
@@ -99,12 +99,23 @@
                 "rank": "The {{- team }} occupies rank {{ rank }} of the {{- conference }}.",
                 "standingsInConferences": "In the {{- conference }}, the {{- team_1 }} are first, the {{- team_2 }} are second, the {{- team_3 }} are third."
             },
+            "tournamentResults": {
+                "introduction": "Here are the results of the NBA games on {{ date }}.",
+                "teamLost": "The {{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against the {{- team_2 }}.",
+                "teamWon": "The {{- team_1 }} beat the {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}.",
+                "teamTied": "The {{- team_1 }} tied against the {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}."
+            },
             "tournamentSchedule": {
                 "introduction": "The next NBA games will be played on {{ date }}.",
                 "game": [
                     "{{- team_1 }} will play {{- team_2 }} at {{ time }}.",
                     "{{- team_1 }} will meet {{- team_2 }} at {{ time }}."
                 ]
+            },
+            "matchResults": {
+                "teamLost": "On {{ date }}, the {{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against the {{- team_2 }}.",
+                "teamWon": "On {{ date }}, the {{- team_1 }} beat the {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}.",
+                "teamTied": "On {{ date }}, the {{- team_1 }} tied against the {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}."
             },
             "teamSchedule": {
                 "nextMatch": "The {{- team_1 }} will play in a NBA game against the {{- team_2 }} on {{ date }} at {{ time }}."
