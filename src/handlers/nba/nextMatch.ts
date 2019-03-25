@@ -5,7 +5,7 @@ import {
 import { Mappings } from '../../utils/sports/reader'
 import { i18nFactory } from '../../factories'
 
-async function handleTournamentNextMatches(mappings: Mappings): Promise<string> {
+async function handleTournamentNextMatches(): Promise<string> {
     const i18n = i18nFactory.get()
     const now = new Date()
 
@@ -33,7 +33,7 @@ export const nbaNextMatch = async function(mappings: Mappings): Promise<string> 
     switch (mappings.teams.length) {
         // one tournament
         case 0: {
-            speech += await handleTournamentNextMatches(mappings)
+            speech += await handleTournamentNextMatches()
             break
         }
         // one team + optional tournament
