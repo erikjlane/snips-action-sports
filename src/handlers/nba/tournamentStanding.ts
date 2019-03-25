@@ -12,8 +12,20 @@ export const nbaTournamentStanding = async function(mappings: Mappings): Promise
 
     const rankings = await getRankings()
 
+    // tournament and team
     if (mappings.teams.length > 0) {
-        return nbaTranslation.teamRankingToSpeech(rankings, mappings.teams[0].id)
+        const inRankingsTeam = rankings.conferences.filter(
+            c => c.divisions.filter(d => d.teams.find(t => t.sr_id === mappings.teams[0].id)).length !== 0
+        )
+
+        if (inRankingsTeam.length === 0) {
+            speech += i18n('sports.nba.dialog.teamDoesntParticipateInTournament', {
+                team: mappings.teams[0].name
+            })
+            speech += ' '
+        } else {
+            return nbaTranslation.teamRankingToSpeech(rankings, mappings.teams[0].id)
+        }
     }
 
     speech += nbaTranslation.tournamentRankingsToSpeech(rankings)

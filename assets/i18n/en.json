@@ -56,17 +56,6 @@
                 },
                 "standingInGroup": "{{- team }} lead group {{ group }} with {{ points }} points."
             },
-            "teamStanding": {
-                "lostFinalPhases": "They lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }} in {{ round }}.",
-                "wonFinalPhases": "They beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in {{ round }}.",
-                "tiedFinalPhases": "They tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in {{ round }}."
-            },
-            "matchResults": {
-                "teamLost": "On {{ date }}, {{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }} in a {{- tournament }} match.",
-                "teamWon": "On {{ date }}, {{- team_1 }} beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{- tournament }} match.",
-                "teamTied": "On {{ date }}, {{- team_1 }} tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{- tournament }} match.",
-                "lastMatchForTeam": "The {{- tournament }} match {{- team_1 }} versus {{- team_2 }} on {{ date }} final score was {{ team_1_score }} to {{ team_2_score }}."
-            },
             "tournamentResults": {
                 "introduction": "Here are the results of the {{- tournament }}.",
                 "introductionRound": "Here are the results of the {{- tournament }} day {{ day }}.",
@@ -81,6 +70,17 @@
                     "{{- team_1 }} will meet {{- team_2 }} at {{ time }}."
                 ]
             },
+            "matchResults": {
+                "teamLost": "On {{ date }}, {{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }} in a {{- tournament }} match.",
+                "teamWon": "On {{ date }}, {{- team_1 }} beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{- tournament }} match.",
+                "teamTied": "On {{ date }}, {{- team_1 }} tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{- tournament }} match.",
+                "lastMatchForTeam": "The {{- tournament }} match {{- team_1 }} versus {{- team_2 }} on {{ date }} final score was {{ team_1_score }} to {{ team_2_score }}."
+            },
+            "teamStanding": {
+                "lostFinalPhases": "They lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }} in {{ round }}.",
+                "wonFinalPhases": "They beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in {{ round }}.",
+                "tiedFinalPhases": "They tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in {{ round }}."
+            },
             "teamSchedule": {
                 "nextMatch": "{{- team_1 }} will play in a {{- tournament }} match against {{- team_2 }} on {{ date }} at {{ time }}."
             },
@@ -89,9 +89,20 @@
             }
         },
         "nba": {
+            "dialog": {
+                "teamDoesntParticipateInTournament": "{{- team }} doesn't participate in the NBA.",
+                "tournamentOver": "The NBA season seems to be over."
+            },
             "tournamentStandings": {
                 "rank": "The {{- team }} occupies rank {{ rank }} of the {{- conference }}.",
                 "standingsInConferences": "In the {{- conference }}, the {{- team_1 }} are first, the {{- team_2 }} are second, the {{- team_3 }} are third."
+            },
+            "tournamentSchedule": {
+                "introduction": "The next NBA games will be played on {{ date }}.",
+                "game": [
+                    "{{- team_1 }} will play {{- team_2 }} at {{ time }}.",
+                    "{{- team_1 }} will meet {{- team_2 }} at {{ time }}."
+                ]
             }
         }
     }

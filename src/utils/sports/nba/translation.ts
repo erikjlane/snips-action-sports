@@ -1,11 +1,14 @@
 import { i18nFactory } from '../../../factories/i18nFactory'
-import { RankingsPayload, Team } from '../../../api/nba'
+import { beautify } from '../../beautify'
+import { RankingsPayload, Team, SchedulePayload } from '../../../api/nba'
+import { time } from '../../time'
+import { translation } from '../../translation'
 
 export const nbaTranslation = {
     tournamentRankingsToSpeech(rankings: RankingsPayload): string {
         const i18n = i18nFactory.get()
 
-        let speech: string = ''
+        let tts: string = ''
 
         for (let conference of rankings.conferences) {
             let teams: Team[] = []
@@ -16,22 +19,22 @@ export const nbaTranslation = {
 
             teams.sort((t1, t2) => t1.rank.conference - t2.rank.conference)
 
-            speech += i18n('sports.nba.tournamentStandings.standingsInConferences', {
+            tts += i18n('sports.nba.tournamentStandings.standingsInConferences', {
                 conference: conference.name,
                 team_1: teams[0].name,
                 team_2: teams[1].name,
                 team_3: teams[2].name
             })
-            speech += ' '
+            tts += ' '
         }
 
-        return speech
+        return tts
     },
 
     teamRankingToSpeech(rankings: RankingsPayload, teamId: string): string {
         const i18n = i18nFactory.get()
 
-        let speech: string = ''
+        let tts: string = ''
 
         for (let conference of rankings.conferences) {
             for (let division of conference.divisions) {
@@ -47,6 +50,33 @@ export const nbaTranslation = {
             }
         } 
 
-        return speech
+        return tts
+    },
+
+    tournamentScheduleToSpeech(schedule: SchedulePayload): string {
+        const i18n = i18nFactory.get()
+
+        let tts: string = ''
+
+        const nextDate = new Date(schedule.games[0].scheduled)
+        const games = schedule.games.filter(
+            g => time.areSameDays(new Date(g.scheduled), nextDate)
+        )
+
+        tts += i18n('sports.nba.tournamentSchedule.introduction', {
+            date: beautify.date(new Date(games[0].scheduled))
+        })
+        tts += ' '
+
+        for (let game of games) {
+            tts += translation.randomTranslation('sports.nba.tournamentSchedule.game', {
+                team_1: game.home.name,
+                team_2: game.away.name,
+                time: beautify.time(new Date(game.scheduled))
+            })
+            tts += ' '
+        }
+
+        return tts
     }
 }

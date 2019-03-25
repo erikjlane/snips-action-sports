@@ -8,78 +8,133 @@ import {
 } from '../../api/soccer'
 import { Mappings } from '../../utils/sports'
 
-export const soccerNextMatch = async function(mappings: Mappings): Promise<string> {
+async function handleTournamentNextMatches(mappings: Mappings): Promise<string> {
     const i18n = i18nFactory.get()
+    const now = new Date()
 
-    let speech: string = ''
+    let speech = ''
+    let tournamentSchedule: TournamentSchedulePayload = await getTournamentSchedule(mappings.tournament.id)
 
-    let teamSchedule: TeamSchedulePayload
-    let tournamentSchedule: TournamentSchedulePayload
+    // filtering future events
+    tournamentSchedule.sport_events = tournamentSchedule.sport_events.filter(
+        e => new Date(e.scheduled) > now
+    )
 
-    // tournament only
-    if (mappings.teams.length === 0) {
-        tournamentSchedule = await getTournamentSchedule(mappings.tournament.id)
+    if (tournamentSchedule.sport_events.length === 0) {
+        speech += i18n('sports.soccer.dialog.tournamentOver', {
+            tournament: mappings.tournament.name
+        })
+    } else {
         speech += soccerTranslation.tournamentScheduleToSpeech(tournamentSchedule)
     }
-    
-    // one team + optional tournament
-    else if (mappings.teams.length === 1) {
-        teamSchedule = await getTeamSchedule(mappings.teams[0].id)
-        teamSchedule.schedule = teamSchedule.schedule.filter(
-            s => new Date(s.scheduled) > new Date()
+
+    return speech
+}
+
+async function handleTeamNextMatches(mappings: Mappings): Promise<string> {
+    const i18n = i18nFactory.get()
+    const now = new Date()
+
+    let speech = ''
+    let teamSchedule: TeamSchedulePayload = await getTeamSchedule(mappings.teams[0].id)
+
+    // filtering future events
+    teamSchedule.schedule = teamSchedule.schedule.filter(
+        s => new Date(s.scheduled) > now
+    )
+
+    // is a tournament provided?
+    if (mappings.tournament) {
+        const scheduleInTournament = teamSchedule.schedule.filter(
+            s => s.tournament.id === mappings.tournament.id
         )
 
+        if (scheduleInTournament.length > 0) {
+            teamSchedule.schedule = scheduleInTournament
+        } else {
+            speech += i18n('sports.soccer.dialog.teamWillNeverParticipateInTournament', {
+                team: mappings.teams[0].name,
+                tournament: mappings.tournament.name
+            })
+            speech += ' '
+        }
+    }
+
+    if (teamSchedule.schedule.length === 0) {
+        speech += i18n('sports.soccer.dialog.noScheduledGames')
+    } else {
+        speech += soccerTranslation.teamScheduleToSpeech(teamSchedule, mappings.teams[0].id)
+    }
+
+    return speech
+}
+
+async function handleTeamsNextMatches(mappings: Mappings): Promise<string> {
+    const i18n = i18nFactory.get()
+    const now = new Date()
+
+    let speech: string = ''
+    let teamSchedule: TeamSchedulePayload = await getTeamSchedule(mappings.teams[0].id)
+
+    // filtering future events
+    teamSchedule.schedule = teamSchedule.schedule.filter(
+        s => new Date(s.scheduled) > now
+    )
+
+    const commonSchedule = teamSchedule.schedule.filter(
+        s => s.competitors.filter(c => c.id === mappings.teams[1].id).length === 1
+    )
+
+    if (commonSchedule.length === 0) {
+        speech += i18n('sports.soccer.dialog.teamsWillNeverMeet')
+    } else {
+        teamSchedule.schedule = commonSchedule
+
+        // is a tournament provided?
         if (mappings.tournament) {
-            const inTournamentSchedules = teamSchedule.schedule.filter(
+            // filtering scheduled games in this tournament
+            const sheduleInTournament = teamSchedule.schedule.filter(
                 s => s.tournament.id === mappings.tournament.id
             )
 
-            if (inTournamentSchedules.length > 0) {
-                teamSchedule.schedule = inTournamentSchedules
+            if (sheduleInTournament.length > 0) {
+                teamSchedule.schedule = sheduleInTournament
             } else {
-                speech += i18n('sports.soccer.dialog.teamWillNeverParticipateInTournament', {
-                    team: mappings.teams[0].name,
+                speech += i18n('sports.soccer.dialog.teamsWillNeverMeetInTournament', {
                     tournament: mappings.tournament.name
                 })
                 speech += ' '
             }
         }
 
-        speech += soccerTranslation.teamScheduleToSpeech(teamSchedule, mappings.teams[0].id)
-    } 
-
-    // two teams + optional tournament
-    else {
-        teamSchedule = await getTeamSchedule(mappings.teams[0].id)
-        teamSchedule.schedule = teamSchedule.schedule.filter(
-            s => new Date(s.scheduled) > new Date()
-        )
-
-        const nextSchedules = teamSchedule.schedule.filter(
-            s => s.competitors.filter(c => c.id === mappings.teams[1].id).length === 1
-        )
-
-        if (nextSchedules.length === 0) {
-            speech = i18n('sports.soccer.dialog.teamsWillNeverMeet')
+        if (teamSchedule.schedule.length === 0) {
+            speech += i18n('sports.soccer.dialog.noScheduledGames')
         } else {
-            teamSchedule.schedule = nextSchedules
-
-            if (mappings.tournament) {
-                const inTournamentSchedules = teamSchedule.schedule.filter(
-                    s => s.tournament.id === mappings.tournament.id
-                )
-
-                if (inTournamentSchedules.length > 0) {
-                    teamSchedule.schedule = inTournamentSchedules
-                } else {
-                    speech += i18n('sports.soccer.dialog.teamsWillNeverMeetInTournament', {
-                        tournament: mappings.tournament.name
-                    })
-                    speech += ' '
-                }
-            }
-
             speech += soccerTranslation.teamScheduleToSpeech(teamSchedule, mappings.teams[0].id)
+        }
+    }
+
+    return speech
+}
+
+export const soccerNextMatch = async function(mappings: Mappings): Promise<string> {
+    let speech: string = ''
+
+    switch (mappings.teams.length) {
+        // one tournament
+        case 0: {
+            speech += await handleTournamentNextMatches(mappings)
+            break
+        }
+        // one team + optional tournament
+        case 1: {
+            speech += await handleTeamNextMatches(mappings)
+            break
+        }
+        // two teams + optional tournament
+        case 2: {
+            speech += await handleTeamsNextMatches(mappings)
+            break
         }
     }
 
