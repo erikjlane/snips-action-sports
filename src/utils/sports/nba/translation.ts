@@ -78,5 +78,23 @@ export const nbaTranslation = {
         }
 
         return tts
+    },
+
+    teamScheduleToSpeech(schedule: SchedulePayload, firstTeamId: string): string {
+        const i18n = i18nFactory.get()
+
+        let tts: string = ''
+            
+        const scheduledGame = schedule.games[0]
+        const scheduled = new Date(scheduledGame.scheduled)
+
+        tts += i18n('sports.nba.teamSchedule.nextMatch', {
+            team_1: (scheduledGame.home.sr_id === firstTeamId) ? scheduledGame.home.name : scheduledGame.away.name,
+            team_2: (scheduledGame.home.sr_id === firstTeamId) ? scheduledGame.away.name : scheduledGame.home.name,
+            date: beautify.date(scheduled),
+            time: beautify.time(scheduled)
+        })
+
+        return tts
     }
 }

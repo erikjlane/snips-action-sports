@@ -91,7 +91,9 @@
         "nba": {
             "dialog": {
                 "teamDoesntParticipateInTournament": "{{- team }} doesn't participate in the NBA.",
-                "tournamentOver": "The NBA season seems to be over."
+                "teamsWillNeverMeet": "At the moment, it is not expected that these teams will play against each other.",
+                "tournamentOver": "The NBA season seems to be over.",
+                "noScheduledGames": "I'm sorry, I found no scheduled game for the {{- team }}."
             },
             "tournamentStandings": {
                 "rank": "The {{- team }} occupies rank {{ rank }} of the {{- conference }}.",
@@ -103,6 +105,9 @@
                     "{{- team_1 }} will play {{- team_2 }} at {{ time }}.",
                     "{{- team_1 }} will meet {{- team_2 }} at {{ time }}."
                 ]
+            },
+            "teamSchedule": {
+                "nextMatch": "The {{- team_1 }} will play in a NBA game against the {{- team_2 }} on {{ date }} at {{ time }}."
             }
         }
     }

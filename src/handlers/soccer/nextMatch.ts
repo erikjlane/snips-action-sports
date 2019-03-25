@@ -81,12 +81,14 @@ async function handleTeamsNextMatches(mappings: Mappings): Promise<string> {
         s => new Date(s.scheduled) > now
     )
 
+    // filtering common matches
     const commonSchedule = teamSchedule.schedule.filter(
         s => s.competitors.filter(c => c.id === mappings.teams[1].id).length === 1
     )
 
     if (commonSchedule.length === 0) {
         speech += i18n('sports.soccer.dialog.teamsWillNeverMeet')
+        speech += ' '
     } else {
         teamSchedule.schedule = commonSchedule
 
@@ -106,12 +108,12 @@ async function handleTeamsNextMatches(mappings: Mappings): Promise<string> {
                 speech += ' '
             }
         }
+    }
 
-        if (teamSchedule.schedule.length === 0) {
-            speech += i18n('sports.soccer.dialog.noScheduledGames')
-        } else {
-            speech += soccerTranslation.teamScheduleToSpeech(teamSchedule, mappings.teams[0].id)
-        }
+    if (teamSchedule.schedule.length === 0) {
+        speech += i18n('sports.soccer.dialog.noScheduledGames')
+    } else {
+        speech += soccerTranslation.teamScheduleToSpeech(teamSchedule, mappings.teams[0].id)
     }
 
     return speech
