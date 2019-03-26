@@ -14,7 +14,10 @@
     },
     "sports": {
         "dialog": {
-            "noTournament": "I'm sorry, can you repeat for which tournament you want the standings?"
+            "noTournament": "I'm sorry, can you repeat for which tournament you want the standings?",
+            "teamsDifferentSports": "These teams don't seem to practice the same sport.",
+            "teamDifferentSportFromTournament": "This team doesn't participate in this tournament.",
+            "teamsDifferentSportFromTournament": "These teams don't participate in this tournament."
         },
         "soccer": {
             "dialog": {

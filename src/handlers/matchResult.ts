@@ -3,7 +3,7 @@ import { Handler } from './index'
 import commonHandler, { KnownSlots } from './common'
 import { soccerMatchResult } from './soccer'
 import { nbaMatchResult } from './nba'
-import { reader } from '../utils/sports'
+import { reader, Mappings } from '../utils/sports'
 
 export const matchResultHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
     logger.info('MatchResult')
@@ -17,13 +17,21 @@ export const matchResultHandler: Handler = async function (msg, flow, knownSlots
         throw new Error('intentNotRecognized')
     } else {
         const now: number = Date.now()
+        const mappings: Mappings = reader(teams, tournament)
 
-        const mappings = reader(teams, tournament)
+        if (!mappings.homogeneousness.homogeneous) {
+            flow.end()
+            return mappings.homogeneousness.message
+        }
 
         try {
             let speech: string = ''
 
-            switch (mappings.sport.id) {
+            const sportId = (mappings.tournament)
+                ? mappings.tournament.sport.id
+                : mappings.teams[0].sport.id
+
+            switch (sportId) {
                 // soccer
                 case 'sr:sport:1': {
                     speech = await soccerMatchResult(mappings)

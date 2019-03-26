@@ -4,7 +4,7 @@ import commonHandler, { KnownSlots } from './common'
 import { soccerTournamentStanding } from './soccer'
 import { nbaTournamentStanding } from './nba'
 import { INTENT_FILTER_PROBABILITY_THRESHOLD } from '../constants'
-import { reader } from '../utils/sports'
+import { reader, Mappings } from '../utils/sports'
 import { i18nFactory } from '../factories'
 
 export const tournamentStandingHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
@@ -53,13 +53,21 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
         return i18n('sports.dialog.noTournament')
     } else {
         const now: number = Date.now()
+        const mappings: Mappings = reader(teams, tournament)
 
-        const mappings = reader(teams, tournament)
+        if (!mappings.homogeneousness.homogeneous) {
+            flow.end()
+            return mappings.homogeneousness.message
+        }
 
         try {
             let speech: string = ''
+
+            const sportId = (mappings.tournament)
+                ? mappings.tournament.sport.id
+                : mappings.teams[0].sport.id
             
-            switch (mappings.sport.id) {
+            switch (sportId) {
                 // soccer
                 case 'sr:sport:1': {
                     speech = await soccerTournamentStanding(mappings)

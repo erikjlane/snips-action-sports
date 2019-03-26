@@ -1,5 +1,6 @@
 import { slot } from '../slot'
 import { logger } from '../logger'
+import { i18nFactory } from '../../factories';
 const mapping = require('../../../assets/mappings.json')
 
 export type SportMapping = {
@@ -19,22 +20,58 @@ export type TournamentMapping = {
     sport:  SportMapping
 }
 
-export class Mappings {
-    teams:      TeamMapping[];
-    tournament: TournamentMapping;
-    sport:      SportMapping;
+export class SportHomogeneousness {
+    homogeneous:    boolean;
+    message:        string;
 
-    constructor(teams: TeamMapping[], tournament: TournamentMapping, sport: SportMapping) {
+    constructor(homegeneous: boolean, message: string) {
+        this.homogeneous = homegeneous
+        this.message = message
+    }
+}
+
+export class Mappings {
+    teams:              TeamMapping[];
+    tournament:         TournamentMapping;
+    homogeneousness:    SportHomogeneousness;
+
+    constructor(teams: TeamMapping[], tournament: TournamentMapping) {
         this.teams = teams
         this.tournament = tournament
-        this.sport = sport
+        this.homogeneousness = this.checkSportHomogeneousness()
+    }
+
+    checkSportHomogeneousness(): SportHomogeneousness {
+        const i18n = i18nFactory.get()
+
+        let homogeneous = true
+        let message: string = null
+
+        switch (this.teams.length) {
+            case 1:
+                if (this.tournament && this.teams[0].sport.id !== this.tournament.sport.id) {
+                    homogeneous = false
+                    message = i18n('sports.dialog.teamDifferentSportFromTournament')
+                }
+                break
+            case 2:
+                if (this.teams[0].sport.id !== this.teams[1].sport.id) {
+                    homogeneous = false
+                    message = i18n('sports.dialog.teamsDifferentSports')
+                }
+                if (this.tournament && this.teams[0].sport.id !== this.tournament.sport.id) {
+                    homogeneous = false
+                    message = i18n('sports.dialog.teamsDifferentSportFromTournament')
+                }
+        }
+    
+        return new SportHomogeneousness(homogeneous, message)
     }
 }
 
 export const reader = function (teamNames: string[], tournamentName: string): Mappings {
     let teams: TeamMapping[] = []
     let tournament: TournamentMapping
-    let sport: SportMapping
 
     // Searching for the teams ids
     if (!slot.missing(teamNames)) {
@@ -66,11 +103,5 @@ export const reader = function (teamNames: string[], tournamentName: string): Ma
         logger.debug(tournament)
     }
 
-    if (teams.length > 0) {
-        sport = teams[0].sport
-    } else {
-        sport = tournament.sport
-    }
-
-    return new Mappings(teams, tournament, sport)
+    return new Mappings(teams, tournament)
 }
