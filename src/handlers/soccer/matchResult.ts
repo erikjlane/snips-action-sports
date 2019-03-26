@@ -63,7 +63,10 @@ async function handleTeamsMatchResults(mappings: Mappings): Promise<string> {
     let teamsResults: TeamVsTeamPayload = await getTeamVsTeam(mappings.teams[0].id, mappings.teams[1].id)
 
     if (teamsResults.message && teamsResults.message === 'No meetings between these teams.') {
-        speech = i18n('sports.soccer.dialog.teamsNeverMet')
+        speech = i18n('sports.soccer.dialog.teamsNeverMet', {
+            team_1: mappings.teams[0].name,
+            team_2: mappings.teams[1].name
+        })
     } else {
         // keeping ended matches only
         teamsResults.last_meetings.results = teamsResults.last_meetings.results.filter(
@@ -79,6 +82,8 @@ async function handleTeamsMatchResults(mappings: Mappings): Promise<string> {
                 teamsResults.last_meetings.results = inTournamentResults
             } else {
                 speech += i18n('sports.soccer.dialog.teamsNeverMetInTournament', {
+                    team_1: mappings.teams[0].name,
+                    team_2: mappings.teams[1].name,
                     tournament: mappings.tournament.name
                 })
                 speech += ' '

@@ -61,7 +61,10 @@ async function handleTeamsMatchResults(mappings: Mappings): Promise<string> {
     )
 
     if (commonSchedule.length === 0) {
-        speech += i18n('sports.nba.dialog.teamsNeverMet')
+        speech += i18n('sports.nba.dialog.teamsNeverMet', {
+            team_1: mappings.teams[0].name,
+            team_2: mappings.teams[1].name
+        })
         speech += ' '
     } else {
         schedule.games = commonSchedule
