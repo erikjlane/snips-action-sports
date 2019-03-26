@@ -46,7 +46,9 @@ async function handleTeamNextMatch(mappings: Mappings): Promise<string> {
     )
 
     if (schedule.games.length === 0) {
-        speech += i18n('sports.nba.dialog.noScheduledGames')
+        speech += i18n('sports.nba.dialog.noScheduledGames', {
+            team: mappings.teams[0].name
+        })
     } else {
         speech += nbaTranslation.teamScheduleToSpeech(schedule, mappings.teams[0].id)
     }
@@ -85,7 +87,9 @@ async function handleTeamsNextMatch(mappings: Mappings): Promise<string> {
     }
 
     if (schedule.games.length === 0) {
-        speech += i18n('sports.nba.dialog.noScheduledGames')
+        speech += i18n('sports.nba.dialog.noScheduledGames', {
+            team: mappings.teams[0].name
+        })
     } else {
         speech += nbaTranslation.teamScheduleToSpeech(schedule, mappings.teams[0].id)
     }

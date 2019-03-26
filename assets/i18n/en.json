@@ -90,6 +90,7 @@
         },
         "nba": {
             "dialog": {
+                "teamsNeverMet": "In my memory, these teams never played against each other in the NBA.",
                 "teamDoesntParticipateInTournament": "{{- team }} doesn't participate in the NBA.",
                 "teamsWillNeverMeet": "At the moment, it is not expected that these teams will play against each other.",
                 "tournamentOver": "The NBA season seems to be over.",
@@ -113,9 +114,9 @@
                 ]
             },
             "matchResults": {
-                "teamLost": "On {{ date }}, the {{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against the {{- team_2 }}.",
-                "teamWon": "On {{ date }}, the {{- team_1 }} beat the {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}.",
-                "teamTied": "On {{ date }}, the {{- team_1 }} tied against the {{- team_2 }} {{ team_1_score }} to {{ team_2_score }}."
+                "teamLost": "On {{ date }}, the {{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against the {{- team_2 }} in the NBA.",
+                "teamWon": "On {{ date }}, the {{- team_1 }} beat the {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in the NBA.",
+                "teamTied": "On {{ date }}, the {{- team_1 }} tied against the {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in the NBA."
             },
             "teamSchedule": {
                 "nextMatch": "The {{- team_1 }} will play in a NBA game against the {{- team_2 }} on {{ date }} at {{ time }}."
