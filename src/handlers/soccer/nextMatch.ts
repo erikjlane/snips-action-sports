@@ -72,6 +72,10 @@ async function handleTeamNextMatches(mappings: Mappings): Promise<string> {
 }
 
 async function handleTeamsNextMatches(mappings: Mappings): Promise<string> {
+    if (mappings.teams[0].id === mappings.teams[1].id) {
+        return handleTeamNextMatches(mappings)
+    }
+
     const i18n = i18nFactory.get()
     const now = new Date()
 
