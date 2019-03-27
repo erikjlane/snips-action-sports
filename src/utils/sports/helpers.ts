@@ -13,11 +13,15 @@ export const helpers = {
         return false
     },
 
-    isRegularSeason: (standings: TournamentResultsPayload | TournamentStandingsPayload): boolean => {
+    isLeague: (standings: TournamentResultsPayload | TournamentStandingsPayload): boolean => {
         if (standings.hasOwnProperty('standings')) {
             return (standings as TournamentStandingsPayload).standings[0].groups.length === 1
         }
 
         return (standings as TournamentResultsPayload).results.find(result => result.sport_event.tournament_round.phase !== 'regular season') === undefined
+    },
+
+    isCup: (standings: TournamentResultsPayload | TournamentStandingsPayload): boolean => {
+        return !helpers.isLeague(standings)
     }
 }

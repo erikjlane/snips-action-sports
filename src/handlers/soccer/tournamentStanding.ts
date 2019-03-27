@@ -9,7 +9,7 @@ import {
 import { Mappings } from '../../utils/sports/reader'
 import { i18nFactory } from '../../factories'
 
-async function handleRegularSeasonStandings(mappings: Mappings, tournamentStandings: TournamentStandingsPayload, tournamentResults: TournamentResultsPayload): Promise<string> {
+async function handleLeagueStandings(mappings: Mappings, tournamentStandings: TournamentStandingsPayload, tournamentResults: TournamentResultsPayload): Promise<string> {
     const i18n = i18nFactory.get()
 
     let speech: string = ''
@@ -35,7 +35,7 @@ async function handleRegularSeasonStandings(mappings: Mappings, tournamentStandi
     return speech
 }
 
-async function handleFinalPhasesStandings(mappings: Mappings, tournamentStandings: TournamentStandingsPayload, tournamentResults: TournamentResultsPayload): Promise<string> {
+async function handleCupStandings(mappings: Mappings, tournamentStandings: TournamentStandingsPayload, tournamentResults: TournamentResultsPayload): Promise<string> {
     const i18n = i18nFactory.get()
 
     let speech: string = ''
@@ -69,10 +69,10 @@ export const soccerTournamentStanding = async function(mappings: Mappings): Prom
     await new Promise(resolve => setTimeout(resolve, 1000))
     const tournamentResults = await getTournamentResults(mappings.tournament.id)
 
-    if (helpers.isRegularSeason(tournamentResults)) {
-        speech += await handleRegularSeasonStandings(mappings, tournamentStandings, tournamentResults)
+    if (helpers.isLeague(tournamentResults)) {
+        speech += await handleLeagueStandings(mappings, tournamentStandings, tournamentResults)
     } else {
-        speech += await handleFinalPhasesStandings(mappings, tournamentStandings, tournamentResults)
+        speech += await handleCupStandings(mappings, tournamentStandings, tournamentResults)
     }
 
     return speech

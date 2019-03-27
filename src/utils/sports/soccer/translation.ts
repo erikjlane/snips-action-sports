@@ -45,8 +45,8 @@ export const soccerTranslation = {
     tournamentStandingsToSpeech(standings: TournamentStandingsPayload): string {
         let tts: string = ''
 
-        // regular season
-        if (helpers.isRegularSeason(standings)) {
+        // league
+        if (helpers.isLeague(standings)) {
             const teamStandings: TeamStanding[] = standings.standings[0].groups[0].team_standings
 
             for (let i = 0; i < Math.min(teamStandings.length, 5); i++) {
@@ -57,7 +57,7 @@ export const soccerTranslation = {
                 tts += ' '
             }
         }
-        // group phases
+        // cup
         else {
             const groups: Group[] = standings.standings[0].groups
 
@@ -86,15 +86,15 @@ export const soccerTranslation = {
         )
         const teamStandings = group.team_standings.find(team => team.team.id === teamId)
 
-        // regular season
-        if (helpers.isRegularSeason(standings)) {
+        // league
+        if (helpers.isLeague(standings)) {
             tts += i18n('sports.soccer.tournamentStandings.rank', {
                 team: teamStandings.team.name,
                 tournament: standings.tournament.name,
                 rank: teamStandings.rank
             })
         }
-        // group phases
+        // cup
         else {
             tts += i18n('sports.soccer.tournamentStandings.rankInGroup', {
                 team: teamStandings.team.name,
@@ -145,8 +145,8 @@ export const soccerTranslation = {
         let results = tournamentResults.results
         let tts: string = ''
 
-        // regular season
-        if (helpers.isRegularSeason(tournamentResults)) {
+        // league
+        if (helpers.isLeague(tournamentResults)) {
             const round = results[results.length - 1].sport_event.tournament_round.number
 
             tts += i18n('sports.soccer.tournamentResults.introductionRound', {
@@ -157,7 +157,7 @@ export const soccerTranslation = {
 
             results = results.filter(result => result.sport_event.tournament_round.number === round)
         }
-        // group phases
+        // cup
         else {
             const day = new Date(results[results.length - 1].sport_event.scheduled)
 

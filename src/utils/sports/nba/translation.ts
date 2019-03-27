@@ -19,12 +19,21 @@ export const nbaTranslation = {
 
             teams.sort((t1, t2) => t1.rank.conference - t2.rank.conference)
 
-            tts += i18n('sports.nba.tournamentStandings.standingsInConferences', {
+            tts += i18n('sports.nba.tournamentStandings.standingsInConference', {
                 conference: conference.name,
                 team_1: teams[0].name,
                 team_2: teams[1].name,
                 team_3: teams[2].name
             })
+            tts += ' '
+
+            for (let division of conference.divisions) {
+                tts += i18n('sports.nba.tournamentStandings.standingInDivision', {
+                    team: division.teams[0].name,
+                    division: division.name
+                })
+                tts += ' '
+            }
             tts += ' '
         }
 
