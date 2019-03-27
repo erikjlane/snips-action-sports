@@ -100,9 +100,10 @@
                 "noScheduledGames": "I'm sorry, I found no scheduled game for the {{- team }}."
             },
             "tournamentStandings": {
-                "rank": "The {{- team }} occupies rank {{ rank }} of the {{- conference }}.",
+                "standingInConference": "The {{- team }} occupies rank {{ rank }} of the {{- conference }}.",
+                "standingInDivision": "They currently rank {{ rank }} in the {{- division }} division.",
                 "standingsInConference": "In the {{- conference }}, the {{- team_1 }} are first, the {{- team_2 }} are second, the {{- team_3 }} are third.",
-                "standingInDivision": "The {{- team }} are in first place in the {{- division }} division."
+                "firstInDivision": "The {{- team }} are in first place in the {{- division }} division."
             },
             "tournamentResults": {
                 "introduction": "Here are the results of the NBA games on {{ date }}.",

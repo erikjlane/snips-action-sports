@@ -28,7 +28,7 @@ export const nbaTranslation = {
             tts += ' '
 
             for (let division of conference.divisions) {
-                tts += i18n('sports.nba.tournamentStandings.standingInDivision', {
+                tts += i18n('sports.nba.tournamentStandings.firstInDivision', {
                     team: division.teams[0].name,
                     division: division.name
                 })
@@ -50,10 +50,17 @@ export const nbaTranslation = {
                 let team = division.teams.find(t => t.sr_id === teamId)
 
                 if (team) {
-                    return i18n('sports.nba.tournamentStandings.rank', {
+                    tts += i18n('sports.nba.tournamentStandings.standingInConference', {
                         team: team.name,
                         rank: team.rank.conference,
                         conference: conference.name
+                    })
+                    tts += ' '
+
+                    tts += i18n('sports.nba.tournamentStandings.standingInDivision', {
+                        team: team.name,
+                        rank: team.rank.division,
+                        division: division.name
                     })
                 }
             }

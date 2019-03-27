@@ -1,5 +1,5 @@
 import { soccerTranslation } from '../../utils/sports/soccer'
-import { helpers } from '../../utils/sports'
+import { helpers } from '../../utils/sports/soccer'
 import {
     getTournamentStandings,
     getTournamentResults,
@@ -52,11 +52,19 @@ async function handleCupStandings(mappings: Mappings, tournamentStandings: Tourn
             })
             speech += ' '
         } else {
-            return soccerTranslation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
+            if (helpers.finalPhasesStarted(tournamentResults)) {
+                return 'final phases started, team'
+            } else {
+                return soccerTranslation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
+            }
         }
     }
 
-    speech += soccerTranslation.tournamentStandingsToSpeech(tournamentStandings)
+    if (helpers.finalPhasesStarted(tournamentResults)) {
+        speech += 'final phases started, tournament'
+    } else {
+        speech += soccerTranslation.tournamentStandingsToSpeech(tournamentStandings)
+    }
 
     return speech
 }

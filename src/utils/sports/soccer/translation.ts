@@ -9,7 +9,7 @@ import {
     TournamentSchedulePayload,
     TeamSchedulePayload
 } from '../../../api/soccer'
-import { helpers } from '../helpers'
+import { helpers } from './helpers'
 import { time } from '../../time'
 import { translation } from '../../translation'
 

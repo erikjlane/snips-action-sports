@@ -1,4 +1,4 @@
-import { TournamentStandingsPayload, TournamentResultsPayload } from '../../api'
+import { TournamentStandingsPayload, TournamentResultsPayload } from '../../../api'
 
 export const helpers = {
     isTournamentEnded: (standings: TournamentStandingsPayload): boolean => {
@@ -18,10 +18,15 @@ export const helpers = {
             return (standings as TournamentStandingsPayload).standings[0].groups.length === 1
         }
 
-        return (standings as TournamentResultsPayload).results.find(result => result.sport_event.tournament_round.phase !== 'regular season') === undefined
+        // a league contains only one group
+        return (standings as TournamentResultsPayload).results.find(result => result.sport_event.tournament_round.type !== 'group') === undefined
     },
 
     isCup: (standings: TournamentResultsPayload | TournamentStandingsPayload): boolean => {
         return !helpers.isLeague(standings)
+    },
+
+    finalPhasesStarted: (results: TournamentResultsPayload): boolean => {
+        return helpers.isCup(results) && results.results.filter(r => r.sport_event.tournament_round.type === 'cup').length !== 0
     }
 }
