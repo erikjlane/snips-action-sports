@@ -31,7 +31,7 @@ async function handleLeagueStandings(mappings: Mappings, standings: TournamentSt
     return speech
 }
 
-async function handleCupStandings(mappings: Mappings, standings: TournamentStandingsPayload, results: TournamentResultsPayload): Promise<string> {
+async function handleGroupsStandings(mappings: Mappings, standings: TournamentStandingsPayload, results: TournamentResultsPayload): Promise<string> {
     const i18n = i18nFactory.get()
 
     let speech: string = ''
@@ -45,15 +45,7 @@ async function handleCupStandings(mappings: Mappings, standings: TournamentStand
             speech += ' '
         } else {
             if (helpers.finalPhaseStarted(results)) {
-                const round = helpers.getHighestFinalPhase(results)
-                const resultsInRound = helpers.getResultsFromRound(results.results, round)
-                results.results = helpers.getResultsFromTeam(resultsInRound, mappings.teams[0].id)
-
-                const result = (results.results.length !== 0)
-                    ? results.results[results.results.length - 1]
-                    : null
-
-                return soccerTranslation.teamStandingFinalPhaseToSpeech(result, round, mappings.teams[0].id)
+                return await handleCupStandings(mappings, results)
             } else {
                 return soccerTranslation.teamStandingToSpeech(standings, results, mappings.teams[0].id)
             }
@@ -61,13 +53,42 @@ async function handleCupStandings(mappings: Mappings, standings: TournamentStand
     }
 
     if (helpers.finalPhaseStarted(results)) {
-        const round = helpers.getHighestFinalPhase(results)
-        results.results = helpers.getResultsFromRound(results.results, round)
-
-        speech += soccerTranslation.tournamentStandingsFinalPhaseToSpeech(results, round)
+        speech += await handleCupStandings(mappings, results)
     } else {
         speech += soccerTranslation.tournamentStandingsToSpeech(standings)
     }
+
+    return speech
+}
+
+async function handleCupStandings(mappings: Mappings, results: TournamentResultsPayload) : Promise<string> {
+    const i18n = i18nFactory.get()
+
+    let speech: string = ''
+
+    const round = helpers.getHighestFinalPhase(results)
+
+    if (mappings.teams.length > 0) {
+        if (helpers.noResultFromTeam(results.results, mappings.teams[0].id)) {
+            speech += i18n('sports.soccer.dialog.teamDoesntParticipateInTournament', {
+                team: mappings.teams[0].name,
+                tournament: mappings.tournament.name
+            })
+            speech += ' '
+        } else {
+            const resultsInRound = helpers.getResultsFromRound(results.results, round)
+            results.results = helpers.getResultsFromTeam(resultsInRound, mappings.teams[0].id)
+
+            const result = (results.results.length !== 0)
+                ? results.results[results.results.length - 1]
+                : null
+
+            return soccerTranslation.teamStandingFinalPhaseToSpeech(result, round, mappings.teams[0].id)
+        }
+    }
+
+    results.results = helpers.getResultsFromRound(results.results, round)
+    speech += soccerTranslation.tournamentStandingsFinalPhaseToSpeech(results, round)
 
     return speech
 }
@@ -83,7 +104,7 @@ export const soccerTournamentStanding = async function(mappings: Mappings): Prom
     if (helpers.isLeague(results)) {
         speech += await handleLeagueStandings(mappings, standings, results)
     } else {
-        speech += await handleCupStandings(mappings, standings, results)
+        speech += await handleGroupsStandings(mappings, standings, results)
     }
 
     return speech

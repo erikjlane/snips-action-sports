@@ -13,7 +13,6 @@ import {
 import { helpers } from './helpers'
 import { time } from '../../time'
 import { translation } from '../../translation'
-import { stringify } from 'ini';
 
 export const soccerTranslation = {
     tournamentStandingsToSpeech(standings: TournamentStandingsPayload): string {

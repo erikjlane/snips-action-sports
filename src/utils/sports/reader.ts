@@ -1,6 +1,6 @@
 import { slot } from '../slot'
 import { logger } from '../logger'
-import { i18nFactory } from '../../factories';
+import { i18nFactory } from '../../factories'
 const mapping = require('../../../assets/mappings.json')
 
 export type SportMapping = {
