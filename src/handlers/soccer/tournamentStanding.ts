@@ -9,61 +9,60 @@ import {
 import { Mappings } from '../../utils/sports/reader'
 import { i18nFactory } from '../../factories'
 
-async function handleLeagueStandings(mappings: Mappings, tournamentStandings: TournamentStandingsPayload, tournamentResults: TournamentResultsPayload): Promise<string> {
+async function handleLeagueStandings(mappings: Mappings, standings: TournamentStandingsPayload, results: TournamentResultsPayload): Promise<string> {
     const i18n = i18nFactory.get()
 
     let speech: string = ''
 
     if (mappings.teams.length > 0) {
-        const inTournamentResults = tournamentResults.results.filter(
-            r => r.sport_event.competitors.filter(c => c.id === mappings.teams[0].id).length === 1
-        )
-
-        if (inTournamentResults.length === 0) {
+        if (helpers.getMatchesFromTeam(results, mappings.teams[0].id).results.length === 0) {
             speech += i18n('sports.soccer.dialog.teamDoesntParticipateInTournament', {
                 team: mappings.teams[0].name,
                 tournament: mappings.tournament.name
             })
             speech += ' '
         } else {
-            return soccerTranslation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
+            return soccerTranslation.teamStandingToSpeech(standings, results, mappings.teams[0].id)
         }
     }
 
-    speech += soccerTranslation.tournamentStandingsToSpeech(tournamentStandings)
+    speech += soccerTranslation.tournamentStandingsToSpeech(standings)
 
     return speech
 }
 
-async function handleCupStandings(mappings: Mappings, tournamentStandings: TournamentStandingsPayload, tournamentResults: TournamentResultsPayload): Promise<string> {
+async function handleCupStandings(mappings: Mappings, standings: TournamentStandingsPayload, results: TournamentResultsPayload): Promise<string> {
     const i18n = i18nFactory.get()
 
     let speech: string = ''
 
     if (mappings.teams.length > 0) {
-        const inTournamentResults = tournamentResults.results.filter(
-            r => r.sport_event.competitors.filter(c => c.id === mappings.teams[0].id).length === 1
-        )
-
-        if (inTournamentResults.length === 0) {
+        if (helpers.getMatchesFromTeam(results, mappings.teams[0].id).results.length === 0) {
             speech += i18n('sports.soccer.dialog.teamDoesntParticipateInTournament', {
                 team: mappings.teams[0].name,
                 tournament: mappings.tournament.name
             })
             speech += ' '
         } else {
-            if (helpers.finalPhasesStarted(tournamentResults)) {
-                return 'final phases started, team'
+            if (helpers.finalPhaseStarted(results)) {
+                const round = helpers.getHighestFinalPhase(results)
+                const finalPhaseResults = helpers.getMatchesFromRound(results, round)
+                const teamResults = helpers.getMatchesFromTeam(finalPhaseResults, mappings.teams[0].id)
+
+                return soccerTranslation.teamStandingFinalPhaseToSpeech(teamResults.results[teamResults.results.length - 1], round, mappings.teams[0].id)
             } else {
-                return soccerTranslation.teamStandingToSpeech(tournamentStandings, tournamentResults, mappings.teams[0].id)
+                return soccerTranslation.teamStandingToSpeech(standings, results, mappings.teams[0].id)
             }
         }
     }
 
-    if (helpers.finalPhasesStarted(tournamentResults)) {
-        speech += 'final phases started, tournament'
+    if (helpers.finalPhaseStarted(results)) {
+        const round = helpers.getHighestFinalPhase(results)
+        const finalPhaseResults = helpers.getMatchesFromRound(results, round)
+
+        speech += soccerTranslation.tournamentStandingsFinalPhaseToSpeech(finalPhaseResults, round)
     } else {
-        speech += soccerTranslation.tournamentStandingsToSpeech(tournamentStandings)
+        speech += soccerTranslation.tournamentStandingsToSpeech(standings)
     }
 
     return speech

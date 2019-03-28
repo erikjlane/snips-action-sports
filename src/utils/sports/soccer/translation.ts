@@ -7,39 +7,13 @@ import {
     Group,
     TournamentResultsPayload,
     TournamentSchedulePayload,
-    TeamSchedulePayload
+    TeamSchedulePayload,
+    TournamentRound
 } from '../../../api/soccer'
 import { helpers } from './helpers'
 import { time } from '../../time'
 import { translation } from '../../translation'
-
-function buildFinalPhasesTts(results: Result[], teamId: string): string {
-    const i18n = i18nFactory.get()
-    const result = results[results.length - 1]
-
-    let tts: string = ''
-
-    const team1 = result.sport_event.competitors.find(competitor => competitor.id === teamId)
-    const team2 = result.sport_event.competitors.find(competitor => competitor.id !== teamId)
-
-    const team1Score = result.sport_event_status[team1.qualifier + '_score']
-    const team2Score = result.sport_event_status[team2.qualifier + '_score']
-
-    if (result.sport_event_status.match_status === 'ended') {
-        const key = (team1Score === team2Score)
-            ? 'tiedFinalPhases'
-            : ((team1Score < team2Score) ? 'lostFinalPhases' : 'wonFinalPhases')
-
-        tts += i18n('sports.soccer.teamStanding.' + key, {
-            team_2: team2.name,
-            team_1_score: team1Score,
-            team_2_score: team2Score,
-            round: i18n('sports.soccer.finalPhases.roundOf16')
-        })
-    }
-
-    return tts
-}
+import { stringify } from 'ini';
 
 export const soccerTranslation = {
     tournamentStandingsToSpeech(standings: TournamentStandingsPayload): string {
@@ -76,6 +50,26 @@ export const soccerTranslation = {
         return tts
     },
 
+    tournamentStandingsFinalPhaseToSpeech(results: TournamentResultsPayload, round: TournamentRound): string {
+        const i18n = i18nFactory.get()
+
+        let tts: string = ''
+
+        tts += i18n('sports.soccer.tournamentStandings.finalPhase.currentStage', {
+            tournament: results.tournament.name,
+            round: round.cup_round_match_number,
+            stage: i18n('sports.soccer.finalPhase.' + round.name)
+        })
+        tts += ' '
+
+        for (let result of results.results) {
+            tts += soccerTranslation.teamResultToSpeech(result, result.sport_event.competitors[0].id, false)
+            tts += ' '
+        }
+
+        return tts
+    },
+
     teamStandingToSpeech(standings: TournamentStandingsPayload, results: TournamentResultsPayload, teamId: string): string {
         const i18n = i18nFactory.get()
 
@@ -102,12 +96,24 @@ export const soccerTranslation = {
                 rank: teamStandings.rank,
                 group: group.name
             })
-
-            tts += ' '
-            tts += buildFinalPhasesTts(results.results.filter(
-                r => r.sport_event.competitors.filter(c => c.id === teamId).length === 1
-            ), teamId)
         }
+
+        return tts
+    },
+
+    teamStandingFinalPhaseToSpeech(result: Result, round: TournamentRound, firstTeamId: string): string {
+        const i18n = i18nFactory.get()
+
+        let tts: string = ''
+
+        tts += i18n('sports.soccer.tournamentStandings.finalPhase.currentStage', {
+            tournament: result.sport_event.tournament.name,
+            round: round.cup_round_match_number,
+            stage: i18n('sports.soccer.finalPhase.' + round.name)
+        })
+        tts += ' '
+
+        tts += soccerTranslation.teamResultToSpeech(result, firstTeamId, false)
 
         return tts
     },
