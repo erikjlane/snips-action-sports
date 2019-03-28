@@ -1,4 +1,4 @@
-import { soccerTranslation } from '../../utils/sports/soccer'
+import { soccerTranslation, helpers } from '../../utils/sports/soccer'
 import { i18nFactory } from '../../factories'
 import {
     TeamSchedulePayload,
@@ -10,22 +10,19 @@ import { Mappings } from '../../utils/sports'
 
 async function handleTournamentNextMatches(mappings: Mappings): Promise<string> {
     const i18n = i18nFactory.get()
-    const now = new Date()
 
     let speech = ''
-    let tournamentSchedule: TournamentSchedulePayload = await getTournamentSchedule(mappings.tournament.id)
+    let schedule: TournamentSchedulePayload = await getTournamentSchedule(mappings.tournament.id)
 
     // filtering future events
-    tournamentSchedule.sport_events = tournamentSchedule.sport_events.filter(
-        e => new Date(e.scheduled) > now
-    )
+    schedule = helpers.getTournamentFutureEvents(schedule)
 
-    if (tournamentSchedule.sport_events.length === 0) {
+    if (schedule.sport_events.length === 0) {
         speech += i18n('sports.soccer.dialog.tournamentOver', {
             tournament: mappings.tournament.name
         })
     } else {
-        speech += soccerTranslation.tournamentScheduleToSpeech(tournamentSchedule)
+        speech += soccerTranslation.tournamentScheduleToSpeech(schedule)
     }
 
     return speech
@@ -33,24 +30,21 @@ async function handleTournamentNextMatches(mappings: Mappings): Promise<string> 
 
 async function handleTeamNextMatches(mappings: Mappings): Promise<string> {
     const i18n = i18nFactory.get()
-    const now = new Date()
 
     let speech = ''
-    let teamSchedule: TeamSchedulePayload = await getTeamSchedule(mappings.teams[0].id)
+    let schedule: TeamSchedulePayload = await getTeamSchedule(mappings.teams[0].id)
 
     // filtering future events
-    teamSchedule.schedule = teamSchedule.schedule.filter(
-        s => new Date(s.scheduled) > now
-    )
+    schedule = helpers.getTeamFutureEvents(schedule)
 
     // is a tournament provided?
     if (mappings.tournament) {
-        const scheduleInTournament = teamSchedule.schedule.filter(
+        const scheduleInTournament = schedule.schedule.filter(
             s => s.tournament.id === mappings.tournament.id
         )
 
         if (scheduleInTournament.length > 0) {
-            teamSchedule.schedule = scheduleInTournament
+            schedule.schedule = scheduleInTournament
         } else {
             speech += i18n('sports.soccer.dialog.teamWillNeverParticipateInTournament', {
                 team: mappings.teams[0].name,
@@ -60,12 +54,12 @@ async function handleTeamNextMatches(mappings: Mappings): Promise<string> {
         }
     }
 
-    if (teamSchedule.schedule.length === 0) {
+    if (schedule.schedule.length === 0) {
         speech += i18n('sports.soccer.dialog.noScheduledGames', {
             team: mappings.teams[0].name
         })
     } else {
-        speech += soccerTranslation.teamScheduleToSpeech(teamSchedule, mappings.teams[0].id)
+        speech += soccerTranslation.teamScheduleToSpeech(schedule, mappings.teams[0].id)
     }
 
     return speech
@@ -77,18 +71,15 @@ async function handleTeamsNextMatches(mappings: Mappings): Promise<string> {
     }
 
     const i18n = i18nFactory.get()
-    const now = new Date()
 
     let speech: string = ''
-    let teamSchedule: TeamSchedulePayload = await getTeamSchedule(mappings.teams[0].id)
+    let schedule: TeamSchedulePayload = await getTeamSchedule(mappings.teams[0].id)
 
     // filtering future events
-    teamSchedule.schedule = teamSchedule.schedule.filter(
-        s => new Date(s.scheduled) > now
-    )
+    schedule = helpers.getTeamFutureEvents(schedule)
 
     // filtering common matches
-    const commonSchedule = teamSchedule.schedule.filter(
+    const commonSchedule = schedule.schedule.filter(
         s => s.competitors.filter(c => c.id === mappings.teams[1].id).length === 1
     )
 
@@ -99,17 +90,17 @@ async function handleTeamsNextMatches(mappings: Mappings): Promise<string> {
         })
         speech += ' '
     } else {
-        teamSchedule.schedule = commonSchedule
+        schedule.schedule = commonSchedule
 
         // is a tournament provided?
         if (mappings.tournament) {
             // filtering scheduled games in this tournament
-            const sheduleInTournament = teamSchedule.schedule.filter(
+            const sheduleInTournament = schedule.schedule.filter(
                 s => s.tournament.id === mappings.tournament.id
             )
 
             if (sheduleInTournament.length > 0) {
-                teamSchedule.schedule = sheduleInTournament
+                schedule.schedule = sheduleInTournament
             } else {
                 speech += i18n('sports.soccer.dialog.teamsWillNeverMeetInTournament', {
                     team_1: mappings.teams[0].name,
@@ -121,12 +112,12 @@ async function handleTeamsNextMatches(mappings: Mappings): Promise<string> {
         }
     }
 
-    if (teamSchedule.schedule.length === 0) {
+    if (schedule.schedule.length === 0) {
         speech += i18n('sports.soccer.dialog.noScheduledGames', {
             team: mappings.teams[0].name
         })
     } else {
-        speech += soccerTranslation.teamScheduleToSpeech(teamSchedule, mappings.teams[0].id)
+        speech += soccerTranslation.teamScheduleToSpeech(schedule, mappings.teams[0].id)
     }
 
     return speech

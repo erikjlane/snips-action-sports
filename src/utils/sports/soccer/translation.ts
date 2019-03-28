@@ -113,7 +113,11 @@ export const soccerTranslation = {
         })
         tts += ' '
 
-        tts += soccerTranslation.teamResultToSpeech(result, firstTeamId, false)
+        if (result) {
+            tts += soccerTranslation.teamResultToSpeech(result, firstTeamId, false)
+        } else {
+            tts += i18n('sports.soccer.tournamentStandings.finalPhase.didntPlayYet')
+        }
 
         return tts
     },

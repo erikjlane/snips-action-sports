@@ -1,4 +1,11 @@
-import { TournamentStandingsPayload, TournamentResultsPayload, TournamentRound } from '../../../api'
+import {
+    TournamentStandingsPayload,
+    TournamentResultsPayload,
+    TournamentRound,
+    TeamSchedulePayload,
+    TournamentSchedulePayload,
+    Result
+} from '../../../api'
 
 export const helpers = {
     isTournamentEnded: (standings: TournamentStandingsPayload): boolean => {
@@ -13,15 +20,35 @@ export const helpers = {
         return false
     },
 
+    getTournamentFutureEvents: (schedule: TournamentSchedulePayload): TournamentSchedulePayload => {
+        const now = new Date()
+
+        schedule.sport_events = schedule.sport_events.filter(
+            e => new Date(e.scheduled) > now
+        )
+
+        return schedule
+    },
+
+    getTeamFutureEvents: (schedule: TeamSchedulePayload): TeamSchedulePayload => {
+        const now = new Date()
+
+        schedule.schedule = schedule.schedule.filter(
+            s => new Date(s.scheduled) > now
+        )
+
+        return schedule
+    },
+
     isLeague: (standings: TournamentResultsPayload | TournamentStandingsPayload): boolean => {
         if (standings.hasOwnProperty('standings')) {
             return (standings as TournamentStandingsPayload).standings[0].groups.length === 1
+        } else {
+            // a league contains only one group
+            return (standings as TournamentResultsPayload).results.find(
+                r => r.sport_event.tournament_round.type !== 'group'
+            ) === undefined
         }
-
-        // a league contains only one group
-        return (standings as TournamentResultsPayload).results.find(
-            r => r.sport_event.tournament_round.type !== 'group'
-        ) === undefined
     },
 
     isCup: (standings: TournamentResultsPayload | TournamentStandingsPayload): boolean => {
@@ -58,22 +85,34 @@ export const helpers = {
         return finalPhase
     },
 
-    getMatchesFromRound: (results: TournamentResultsPayload, round: TournamentRound): TournamentResultsPayload => {
-        results.results = results.results.filter(
+    getResultsFromRound: (results: Result[], round: TournamentRound): Result[] => {
+        return results.filter(
             r => {
                 const currentRound = r.sport_event.tournament_round
                 return currentRound.type === round.type && currentRound.phase === round.phase && currentRound.cup_round_match_number === round.cup_round_match_number
             }
         )
-
-        return results
     },
 
-    getMatchesFromTeam: (results: TournamentResultsPayload, teamId: string): TournamentResultsPayload => {
-        results.results = results.results.filter(
+    getResultsFromTeam: (results: Result[], teamId: string): Result[] => {
+        return results.filter(
             r => r.sport_event.competitors.filter(c => c.id === teamId).length === 1
         )
+    },
 
-        return results
+    noResultFromTeam: (results: Result[], teamId: string): boolean => {
+        return helpers.getResultsFromTeam(results, teamId).length === 0
+    },
+
+    getResultsFromTournament: (results: Result[], tournamentId: string): Result[] => {
+        return results.filter(
+            r => r.sport_event.tournament.id === tournamentId
+        )
+    },
+
+    getEndedResults: (results: Result[]): Result[] => {
+        return results.filter(
+            r => r.sport_event_status.match_status === 'ended'
+        )
     }
 }
