@@ -15,41 +15,81 @@ import { time } from '../../time'
 import { translation } from '../../translation'
 
 export const soccerTranslation = {
-    tournamentStandingsToSpeech(standings: TournamentStandingsPayload): string {
+    leagueStandingsToSpeech(standings: TournamentStandingsPayload): string {
         let tts: string = ''
 
-        // league
-        if (helpers.isLeague(standings)) {
-            const teamStandings: TeamStanding[] = standings.standings[0].groups[0].team_standings
+        const teamStandings: TeamStanding[] = standings.standings[0].groups[0].team_standings
 
-            for (let i = 0; i < Math.min(teamStandings.length, 5); i++) {
-                tts += translation.randomTranslation('sports.soccer.tournamentStandings.standings.' + (i + 1), {
-                    team: teamStandings[i].team.name,
-                    points: teamStandings[i].points
-                })
-                tts += ' '
-            }
-        }
-        // cup
-        else {
-            const groups: Group[] = standings.standings[0].groups
-
-            for (let group of groups) {
-                const teamStandings: TeamStanding[] = group.team_standings
-
-                tts += translation.randomTranslation('sports.soccer.tournamentStandings.standingInGroup', {
-                    team: teamStandings[0].team.name,
-                    group: group.name,
-                    points: teamStandings[0].points
-                })
-                tts += ' '
-            }
+        for (let i = 0; i < Math.min(teamStandings.length, 5); i++) {
+            tts += translation.randomTranslation('sports.soccer.tournamentStandings.standings.' + (i + 1), {
+                team: teamStandings[i].team.name,
+                points: teamStandings[i].points
+            })
+            tts += ' '
         }
 
         return tts
     },
 
-    tournamentStandingsFinalPhaseToSpeech(results: TournamentResultsPayload, round: TournamentRound): string {
+    leagueTeamStandingToSpeech(standings: TournamentStandingsPayload, teamId: string): string {
+        const i18n = i18nFactory.get()
+
+        let tts: string = ''
+
+        const group = standings.standings[0].groups.find(
+            g => g.team_standings.some(team => team.team.id === teamId)
+        )
+        const teamStandings = group.team_standings.find(team => team.team.id === teamId)
+
+        tts += i18n('sports.soccer.tournamentStandings.rank', {
+            team: teamStandings.team.name,
+            tournament: standings.tournament.name,
+            rank: teamStandings.rank
+        })
+
+        return tts
+    },
+
+    groupsStandingsToSpeech(standings: TournamentStandingsPayload): string {
+        let tts: string = ''
+
+        const groups: Group[] = standings.standings[0].groups
+
+        for (let group of groups) {
+            const teamStandings: TeamStanding[] = group.team_standings
+
+            tts += translation.randomTranslation('sports.soccer.tournamentStandings.standingInGroup', {
+                team: teamStandings[0].team.name,
+                group: group.name,
+                points: teamStandings[0].points
+            })
+            tts += ' '
+        }
+
+        return tts
+    },
+
+    groupsTeamStandingToSpeech(standings: TournamentStandingsPayload, teamId: string): string {
+        const i18n = i18nFactory.get()
+
+        let tts: string = ''
+
+        const group = standings.standings[0].groups.find(
+            g => g.team_standings.some(team => team.team.id === teamId)
+        )
+        const teamStandings = group.team_standings.find(team => team.team.id === teamId)
+
+        tts += i18n('sports.soccer.tournamentStandings.rankInGroup', {
+            team: teamStandings.team.name,
+            tournament: standings.tournament.name,
+            rank: teamStandings.rank,
+            group: group.name
+        })
+
+        return tts
+    },
+
+    cupStandingsToSpeech(results: TournamentResultsPayload, round: TournamentRound): string {
         const i18n = i18nFactory.get()
 
         let tts: string = ''
@@ -69,38 +109,7 @@ export const soccerTranslation = {
         return tts
     },
 
-    teamStandingToSpeech(standings: TournamentStandingsPayload, results: TournamentResultsPayload, teamId: string): string {
-        const i18n = i18nFactory.get()
-
-        let tts: string = ''
-
-        const group = standings.standings[0].groups.find(
-            g => g.team_standings.some(team => team.team.id === teamId)
-        )
-        const teamStandings = group.team_standings.find(team => team.team.id === teamId)
-
-        // league
-        if (helpers.isLeague(standings)) {
-            tts += i18n('sports.soccer.tournamentStandings.rank', {
-                team: teamStandings.team.name,
-                tournament: standings.tournament.name,
-                rank: teamStandings.rank
-            })
-        }
-        // cup
-        else {
-            tts += i18n('sports.soccer.tournamentStandings.rankInGroup', {
-                team: teamStandings.team.name,
-                tournament: standings.tournament.name,
-                rank: teamStandings.rank,
-                group: group.name
-            })
-        }
-
-        return tts
-    },
-
-    teamStandingFinalPhaseToSpeech(result: Result, round: TournamentRound, firstTeamId: string): string {
+    cupTeamStandingToSpeech(result: Result, round: TournamentRound, firstTeamId: string): string {
         const i18n = i18nFactory.get()
 
         let tts: string = ''

@@ -9,6 +9,12 @@ import {
 import { Mappings } from '../../utils/sports/reader'
 import { i18nFactory } from '../../factories'
 
+/**
+ * 
+ * @param mappings 
+ * @param standings 
+ * @param results 
+ */
 async function handleLeagueStandings(mappings: Mappings, standings: TournamentStandingsPayload, results: TournamentResultsPayload): Promise<string> {
     const i18n = i18nFactory.get()
 
@@ -22,15 +28,21 @@ async function handleLeagueStandings(mappings: Mappings, standings: TournamentSt
             })
             speech += ' '
         } else {
-            return soccerTranslation.teamStandingToSpeech(standings, results, mappings.teams[0].id)
+            return soccerTranslation.leagueTeamStandingToSpeech(standings, mappings.teams[0].id)
         }
     }
 
-    speech += soccerTranslation.tournamentStandingsToSpeech(standings)
+    speech += soccerTranslation.leagueStandingsToSpeech(standings)
 
     return speech
 }
 
+/**
+ * 
+ * @param mappings 
+ * @param standings 
+ * @param results 
+ */
 async function handleGroupsStandings(mappings: Mappings, standings: TournamentStandingsPayload, results: TournamentResultsPayload): Promise<string> {
     const i18n = i18nFactory.get()
 
@@ -47,7 +59,7 @@ async function handleGroupsStandings(mappings: Mappings, standings: TournamentSt
             if (helpers.finalPhaseStarted(results)) {
                 return await handleCupStandings(mappings, results)
             } else {
-                return soccerTranslation.teamStandingToSpeech(standings, results, mappings.teams[0].id)
+                return soccerTranslation.groupsTeamStandingToSpeech(standings, mappings.teams[0].id)
             }
         }
     }
@@ -55,18 +67,22 @@ async function handleGroupsStandings(mappings: Mappings, standings: TournamentSt
     if (helpers.finalPhaseStarted(results)) {
         speech += await handleCupStandings(mappings, results)
     } else {
-        speech += soccerTranslation.tournamentStandingsToSpeech(standings)
+        speech += soccerTranslation.groupsStandingsToSpeech(standings)
     }
 
     return speech
 }
 
+/**
+ * 
+ * @param mappings 
+ * @param results 
+ */
 async function handleCupStandings(mappings: Mappings, results: TournamentResultsPayload) : Promise<string> {
     const i18n = i18nFactory.get()
+    const round = helpers.getHighestFinalPhase(results)
 
     let speech: string = ''
-
-    const round = helpers.getHighestFinalPhase(results)
 
     if (mappings.teams.length > 0) {
         if (helpers.noResultFromTeam(results.results, mappings.teams[0].id)) {
@@ -83,12 +99,12 @@ async function handleCupStandings(mappings: Mappings, results: TournamentResults
                 ? results.results[results.results.length - 1]
                 : null
 
-            return soccerTranslation.teamStandingFinalPhaseToSpeech(result, round, mappings.teams[0].id)
+            return soccerTranslation.cupTeamStandingToSpeech(result, round, mappings.teams[0].id)
         }
     }
 
     results.results = helpers.getResultsFromRound(results.results, round)
-    speech += soccerTranslation.tournamentStandingsFinalPhaseToSpeech(results, round)
+    speech += soccerTranslation.cupStandingsToSpeech(results, round)
 
     return speech
 }
