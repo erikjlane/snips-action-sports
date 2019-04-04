@@ -6,9 +6,128 @@
         "intentNotRecognized": "Désolé, je n'ai pas compris votre requête.",
         "APIResponse": "Désolé, une erreur s'est produite avec le service de météo.",
         "APIRequest": "Désolé, le service de météo est injoignable.",
-        "unspecific": "Oups, quelque chose s'est mal passé."
+        "unspecific": "Oups, quelque chose s'est mal passé.",
+        "team": "Désolé, je ne connais pas cette équipe.",
+        "tournament": "Désolé, je ne connais pas cette compétition.",
+        "teamsNotCompetitors": "Désolé, je ne me souviens pas que ces équipes aient joué l'une contre l'autre."
     },
-    "pokemon": {
-        "info": "Le pokémon {{ name }} pèse {{ weight }} kilos et mesure {{ height }} centimètres."
+    "sports": {
+        "dialog": {
+            "noTournament": "Désolé, pouvez-vous répéter pour quelle compétition vous voulez le classment ?",
+            "teamsDifferentSports": "Il me semble que ces deux équipes ne pratiquent pas le même sport.",
+            "teamDifferentSportFromTournament": "Cette équipe ne participe pas à cette compétition.",
+            "teamsDifferentSportFromTournament": "Ces équipes ne participent pas à cette compétition."
+        },
+        "soccer": {
+            "dialog": {
+                "teamsNeverMet": "Il ne me semble pas que {{- team_1 }} et {{- team_2 }} se soient déjà rencontrées.",
+                "teamDoesntParticipateInTournament": "{{- team }} ne participe pas à {{- tournament }}.",
+                "teamNeverParticipatedInTournament": "Il ne me semble pas que {{- team }} ait déjà participé à {{- tournament}}.",
+                "teamWillNeverParticipateInTournament": "Pour le moment, il n'est pas prévu que {{- team }} participe à {{- tournament }}.",
+                "teamsNeverMetInTournament": "Il ne me semble pas que {{- team_1 }} et {{- team_2 }} se soient déjà rencontrées dans {{- tournament }}.",
+                "teamsWillNeverMeet": "Pour le moment, il n'est pas prévu que {{- team_1 }} et {{- team_2 }} se rencontrent.",
+                "teamsWillNeverMeetInTournament": "Pour le moment, il n'est pas prévu que {{- team_1 }} et {{- team_2 }} se rencontrent dans {{- tournament }}.",
+                "tournamentOver": "{{- tournament }} semble être terminé.",
+                "noScheduledGames": "Désolé, je n'ai pas trouvé de matchs programmés pour {{- team }}."
+            },
+            "tournamentStandings": {
+                "rank": "{{- team }} occupe la place numéro {{ rank }} de {{- tournament }}.",
+                "rankInGroup": "{{- team }} occupe la place numéro {{ rank }} du groupe {{ group }} de {{- tournament }}.",
+                "standings": {
+                    "1": [
+                        "{{- team }} est à la tête du classement avec {{ points }} points.",
+                        "{{- team }} occupe la première place avec {{ points }} points.",
+                        "{{- team }} occupe la première ligne du tableau avec {{ points }} points."
+                    ],
+                    "2": [
+                        "{{- team }} suit avec {{ points }} points."
+                    ],
+                    "3": [
+                        "{{- team }} occupe la troisième position avec {{ points }} points.",
+                        "{{- team }} sont troisième avec {{ points }} points."
+                    ],
+                    "4": [
+                        "À la quatrième place, {{- team }} a {{ points }} points.",
+                        "{{- team }} sont en quatrème position avec {{ points }} points."
+                    ],
+                    "5": [
+                        "{{- team }} a {{ points }} points.",
+                        "Enfin, {{- team }} a {{ points }} points."
+                    ]
+                },
+                "standingInGroup": "{{- team }} mène le groupe {{ group }} avec {{ points }} points.",
+                "finalPhase": {
+                    "currentStage": "Nous en sommes au round {{ round }} de la phase {{ stage }} de {{- tournament }}.",
+                    "didntPlayYet": "Cette équipe n'a pas encore joué son match dans cette phase."
+                }
+            },
+            "tournamentResults": {
+                "introduction": "Voici les derniers résultats de {{- tournament }}.",
+                "introductionRound": "Voici les résultats de la journée {{ day }} de {{- tournament }}.",
+                "teamLost": "{{- team_1 }} ont perdu {{ team_1_score }} à {{ team_2_score }} contre {{- team_2 }}.",
+                "teamWon": "{{- team_1 }} ont battu {{- team_2 }} {{ team_1_score }} à {{ team_2_score }}.",
+                "teamTied": "{{- team_1 }} ont fait match nul contre {{- team_2 }} {{ team_1_score }} à {{ team_2_score }}."
+            },
+            "tournamentSchedule": {
+                "introduction": "Les prochains matchs de {{- tournament }} seront joués le {{ date }}.",
+                "match": [
+                    "{{- team_1 }} va jouer contre {{- team_2 }} à {{ time }}.",
+                    "{{- team_1 }} va rencontrer {{- team_2 }} à {{ time }}."
+                ]
+            },
+            "matchResults": {
+                "teamLost": "Le {{ date }}, {{- team_1 }} ont perdu {{ team_1_score }} à {{ team_2_score }} contre {{- team_2 }} dans un match de {{- tournament }}.",
+                "teamWon": "Le {{ date }}, {{- team_1 }} ont battu {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} dans un match de {{- tournament }}.",
+                "teamTied": "Le {{ date }}, {{- team_1 }} ont fait match nul contre {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} dans un match de {{- tournament }}.",
+                "lastMatchForTeam": "Le score final du match de {{- tournament }} opposant {{- team_1 }} à {{- team_2 }} le {{ date }} est de {{ team_1_score }} à {{ team_2_score }}."
+            },
+            "teamStanding": {
+                "lostFinalPhases": "Ils ont perdu {{ team_1_score }} à {{ team_2_score }} contre {{- team_2 }} lors du round {{ round }}.",
+                "wonFinalPhases": "Ils ont battu {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} lors du round {{ round }}.",
+                "tiedFinalPhases": "Ils ont fait match nul contre {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in {{ round }}."
+            },
+            "teamSchedule": {
+                "nextMatch": "{{- team_1 }} vont jouer dans un match de {{- tournament }} contre {{- team_2 }} le {{ date }} à {{ time }}."
+            },
+            "finalPhase": {
+                "round_of_16": "huitièmes de finale"
+            }
+        },
+        "nba": {
+            "dialog": {
+                "teamsNeverMet": "Il ne me semble pas que les {{- team_1 }} et les {{- team_2 }} se soient déjà rencontrés en NBA.",
+                "teamDoesntParticipateInTournament": "Les {{- team }} ne participents pas à la NBA.",
+                "teamsWillNeverMeet": "Pour le moment, il n'est pas prévu que les {{- team_1 }} et les {{- team_2 }} se rencontrent en NBA.",
+                "tournamentOver": "La saison de NBA est terminée.",
+                "noScheduledGames": "Désolé, je n'ai pas trouvé de matchs de NBA programmés pour {{- team }}."
+            },
+            "tournamentStandings": {
+                "standingInConference": "Les {{- team }} occupent la place {{ rank }} de la conférence {{- conference }}.",
+                "standingInDivision": "Ils occupent la place {{ rank }} de la division {{- division }}.",
+                "standingsInConference": "Dans la conférence {{- conference }}, les {{- team_1 }} sont premiers, les {{- team_2 }} seconds, les {{- team_3 }} troisièmes.",
+                "firstInDivision": "Les {{- team }} mènent la division {{- division }}."
+            },
+            "tournamentResults": {
+                "introduction": "Voici les résultats de NBA du {{ date }}.",
+                "teamLost": "Les {{- team_1 }} ont perdu {{ team_1_score }} à {{ team_2_score }} contre les {{- team_2 }}.",
+                "teamWon": "Les {{- team_1 }} ont battu les {{- team_2 }} {{ team_1_score }} à {{ team_2_score }}.",
+                "teamTied": "Les {{- team_1 }} ont fait match nul contre les {{- team_2 }} {{ team_1_score }} à {{ team_2_score }}."
+            },
+            "tournamentSchedule": {
+                "introduction": "Les prochains matchs de NBA vont être joués le {{ date }}.",
+                "game": [
+                    "Les {{- team_1 }} vont jouer contre les {{- team_2 }} à {{ time }}.",
+                    "Les {{- team_1 }} vont rencontrer les {{- team_2 }} à {{ time }}."
+                ]
+            },
+            "matchResults": {
+                "teamLost": "Le {{ date }}, les {{- team_1 }} ont perdu {{ team_1_score }} à {{ team_2_score }} contre les {{- team_2 }} en NBA.",
+                "teamWon": "Le {{ date }}, les {{- team_1 }} ont battu les {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} en NBA.",
+                "teamTied": "Le {{ date }}, les {{- team_1 }} ont fait match nul contre les {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} en NBA."
+            },
+            "teamSchedule": {
+                "nextMatch": "Les {{- team_1 }} vont jouer dans un match de NBA contre les {{- team_2 }} le {{ date }} à {{ time }}."
+            }
+        }
     }
 }
