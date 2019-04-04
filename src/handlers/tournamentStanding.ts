@@ -6,6 +6,7 @@ import { nbaTournamentStanding } from './nba'
 import { INTENT_FILTER_PROBABILITY_THRESHOLD } from '../constants'
 import { reader, Mappings } from '../utils/sports'
 import { i18nFactory } from '../factories'
+import { IntentMessage, IntentNotRecognizedMessage } from 'hermes-javascript'
 
 export const tournamentStandingHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
     const i18n = i18nFactory.get()
@@ -29,18 +30,16 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
             return tournamentStandingHandler(msg, flow, knownSlots)
         })
         */
-        
-        flow.continue('snips-assistant:TournamentStanding', (msg, flow) => {
+       
+        flow.continue('snips-assistant:ElicitTournament', (msg, flow) => {
             if (msg.intent.confidenceScore < INTENT_FILTER_PROBABILITY_THRESHOLD) {
                 throw new Error('intentNotRecognized')
             }
-            
-            let slotsToBeSent = {
+
+            return tournamentStandingHandler(msg, flow, {
                 teams,
                 depth: knownSlots.depth - 1
-            }
-
-            return tournamentStandingHandler(msg, flow, slotsToBeSent)
+            })
         })
 
         flow.continue('snips-assistant:Cancel', (_, flow) => {
@@ -51,46 +50,46 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
         })
 
         return i18n('sports.dialog.noTournament')
-    } else {
-        const now: number = Date.now()
-        const mappings: Mappings = reader(teams, tournament)
+    }
 
-        if (!mappings.homogeneousness.homogeneous) {
-            flow.end()
-            return mappings.homogeneousness.message
+    const now: number = Date.now()
+    const mappings: Mappings = reader(teams, tournament)
+
+    if (!mappings.homogeneousness.homogeneous) {
+        flow.end()
+        return mappings.homogeneousness.message
+    }
+
+    try {
+        let speech: string = ''
+
+        const sportId = (mappings.tournament)
+            ? mappings.tournament.sport.id
+            : mappings.teams[0].sport.id
+        
+        switch (sportId) {
+            // soccer
+            case 'sr:sport:1': {
+                speech = await soccerTournamentStanding(mappings)
+                break
+            }
+            // basketball
+            case 'sport:1': {
+                speech = await nbaTournamentStanding(mappings)
+                break
+            }
         }
 
-        try {
-            let speech: string = ''
+        logger.info(speech)        
 
-            const sportId = (mappings.tournament)
-                ? mappings.tournament.sport.id
-                : mappings.teams[0].sport.id
-            
-            switch (sportId) {
-                // soccer
-                case 'sr:sport:1': {
-                    speech = await soccerTournamentStanding(mappings)
-                    break
-                }
-                // basketball
-                case 'sport:1': {
-                    speech = await nbaTournamentStanding(mappings)
-                    break
-                }
-            }
-
-            logger.info(speech)        
-
-            flow.end()
-            if (Date.now() - now < 4000) {
-                return speech
-            } else {
-                tts.say(speech)
-            }
-        } catch (error) {
-            logger.error(error)
-            throw new Error('APIResponse')
+        flow.end()
+        if (Date.now() - now < 4000) {
+            return speech
+        } else {
+            tts.say(speech)
         }
+    } catch (error) {
+        logger.error(error)
+        throw new Error('APIResponse')
     }
 }
