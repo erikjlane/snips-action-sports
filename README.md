@@ -1,12 +1,18 @@
 # snips-action-sports
 #### Snips action code for the Sports app
 
+At the moment, only a limited number of soccer tournaments and the NBA are supported.
+
 ## Setup
 
 ```sh
 # Install the dependencies, builds the action and creates the config.ini file.
 sh setup.sh
 ```
+
+Don't forget to edit the `config.ini` file.
+
+To be able to make calls to the API, you must have a [Sportradar Soccer Extended v3 API key](https://developer.sportradar.com/docs/read/football_soccer/Soccer_Extended_v3) as well as a [Sportradar NBA v5 API key](https://developer.sportradar.com/docs/read/basketball/NBA_v5).
 
 ## Run
 
@@ -22,13 +28,13 @@ npm run dev
 ```sh
 # 1) Lint, transpile and test.
 npm start
-# 2) Run the action.
-node action-snips.js
+# 2) Compile and run the action.
+tsc && node action-sports.js
 ```
 
 ## Debug
 
-In the `action-snips.js` file:
+In the `action-sports.js` file:
 
 ```js
 // Uncomment this line to print everything
