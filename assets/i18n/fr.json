@@ -4,8 +4,8 @@
         "config": "Désolé, une erreur s'est produite avec votre fichier de configuration.",
         "locale": "Désolé, une erreur s'est produite avec vos paramètres de localisation.",
         "intentNotRecognized": "Désolé, je n'ai pas compris votre requête.",
-        "APIResponse": "Désolé, une erreur s'est produite avec le service de météo.",
-        "APIRequest": "Désolé, le service de météo est injoignable.",
+        "APIResponse": "Désolé, une erreur s'est produite avec le service de résultats sportifs.",
+        "APIRequest": "Désolé, le service de résultats sportifs est injoignable.",
         "unspecific": "Oups, quelque chose s'est mal passé.",
         "team": "Désolé, je ne connais pas cette équipe.",
         "tournament": "Désolé, je ne connais pas cette compétition.",
@@ -13,18 +13,18 @@
     },
     "sports": {
         "dialog": {
-            "noTournament": "Désolé, pouvez-vous répéter pour quelle compétition vous voulez le classment ?",
-            "teamsDifferentSports": "Il me semble que ces deux équipes ne pratiquent pas le même sport.",
+            "noTournament": "Désolé, pouvez-vous répéter pour quelle compétition vous voulez le classement ?",
+            "teamsDifferentSports": "Il ne me semble pas que ces deux équipes pratiquent le même sport.",
             "teamDifferentSportFromTournament": "Cette équipe ne participe pas à cette compétition.",
             "teamsDifferentSportFromTournament": "Ces équipes ne participent pas à cette compétition."
         },
         "soccer": {
             "dialog": {
-                "teamsNeverMet": "Il ne me semble pas que {{- team_1 }} et {{- team_2 }} se soient déjà rencontrées.",
+                "teamsNeverMet": "Il ne me semble pas que {{- team_1 }} et {{- team_2 }} se soient déjà rencontrés.",
                 "teamDoesntParticipateInTournament": "{{- team }} ne participe pas à {{- tournament }}.",
                 "teamNeverParticipatedInTournament": "Il ne me semble pas que {{- team }} ait déjà participé à {{- tournament}}.",
                 "teamWillNeverParticipateInTournament": "Pour le moment, il n'est pas prévu que {{- team }} participe à {{- tournament }}.",
-                "teamsNeverMetInTournament": "Il ne me semble pas que {{- team_1 }} et {{- team_2 }} se soient déjà rencontrées dans {{- tournament }}.",
+                "teamsNeverMetInTournament": "Il ne me semble pas que {{- team_1 }} et {{- team_2 }} se soient déjà rencontrés dans {{- tournament }}.",
                 "teamsWillNeverMeet": "Pour le moment, il n'est pas prévu que {{- team_1 }} et {{- team_2 }} se rencontrent.",
                 "teamsWillNeverMeetInTournament": "Pour le moment, il n'est pas prévu que {{- team_1 }} et {{- team_2 }} se rencontrent dans {{- tournament }}.",
                 "tournamentOver": "{{- tournament }} semble être terminé.",
@@ -44,7 +44,7 @@
                     ],
                     "3": [
                         "{{- team }} occupe la troisième position avec {{ points }} points.",
-                        "{{- team }} sont troisième avec {{ points }} points."
+                        "{{- team }} sont troisièmes avec {{ points }} points."
                     ],
                     "4": [
                         "À la quatrième place, {{- team }} a {{ points }} points.",
