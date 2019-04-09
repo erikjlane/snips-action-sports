@@ -96,7 +96,7 @@
         "nba": {
             "dialog": {
                 "teamsNeverMet": "Il ne me semble pas que les {{- team_1 }} et les {{- team_2 }} se soient déjà rencontrés en NBA.",
-                "teamDoesntParticipateInTournament": "Les {{- team }} ne participents pas à la NBA.",
+                "teamDoesntParticipateInTournament": "Les {{- team }} ne participent pas à la NBA.",
                 "teamsWillNeverMeet": "Pour le moment, il n'est pas prévu que les {{- team_1 }} et les {{- team_2 }} se rencontrent en NBA.",
                 "tournamentOver": "La saison de NBA est terminée.",
                 "noScheduledGames": "Désolé, je n'ai pas trouvé de matchs de NBA programmés pour {{- team }}."
