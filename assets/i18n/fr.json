@@ -57,7 +57,7 @@
                 },
                 "standingInGroup": "{{- team }} mène le groupe {{ group }} avec {{ points }} points.",
                 "finalPhase": {
-                    "currentStage": "Nous en sommes au round {{ round }} de la phase {{ stage }} de {{- tournament }}.",
+                    "currentStage": "Nous en sommes au round {{ round }} des {{ stage }} de {{- tournament }}.",
                     "didntPlayYet": "Cette équipe n'a pas encore joué son match dans cette phase."
                 }
             },

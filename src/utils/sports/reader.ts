@@ -1,28 +1,28 @@
 import { slot } from '../slot'
 import { logger } from '../logger'
-import { i18nFactory } from '../../factories'
-const mapping = require('../../../assets/mappings.json')
+import { i18nFactory, configFactory } from '../../factories'
+import { LANGUAGE_MAPPINGS } from '../../constants'
 
 export type SportMapping = {
-    id:     string,
-    name:   string
+    id: string,
+    name: string
 }
 
 export type TeamMapping = {
-    id:     string,
-    name:   string,
-    sport:  SportMapping
+    id: string,
+    name: string,
+    sport: SportMapping
 }
 
 export type TournamentMapping = {
-    id:     string,
-    name:   string,
-    sport:  SportMapping
+    id: string,
+    name: string,
+    sport: SportMapping
 }
 
 export class SportHomogeneousness {
-    homogeneous:    boolean;
-    message:        string;
+    homogeneous: boolean;
+    message: string;
 
     constructor(homegeneous: boolean, message: string) {
         this.homogeneous = homegeneous
@@ -31,9 +31,9 @@ export class SportHomogeneousness {
 }
 
 export class Mappings {
-    teams:              TeamMapping[];
-    tournament:         TournamentMapping;
-    homogeneousness:    SportHomogeneousness;
+    teams: TeamMapping[];
+    tournament: TournamentMapping;
+    homogeneousness: SportHomogeneousness;
 
     constructor(teams: TeamMapping[], tournament: TournamentMapping) {
         this.teams = teams
@@ -70,6 +70,9 @@ export class Mappings {
 }
 
 export const reader = function (teamNames: string[], tournamentName: string): Mappings {
+    const config = configFactory.get()
+    const mapping = require(`../../../assets/mappings/${ LANGUAGE_MAPPINGS[config.locale] }.json`)
+
     let teams: TeamMapping[] = []
     let tournament: TournamentMapping
 
