@@ -51,7 +51,6 @@
                         "{{- team }} sont en quatrème position avec {{ points }} points."
                     ],
                     "5": [
-                        "{{- team }} a {{ points }} points.",
                         "Enfin, {{- team }} a {{ points }} points."
                     ]
                 },
