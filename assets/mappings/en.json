@@ -1048,6 +1048,14 @@
     ],
     "tournaments": [
         {
+            "id": "sr:tournament:1",
+            "name": "UEFA European Championship",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
             "id": "sr:tournament:7",
             "name": "UEFA Champions League",
             "sport": {
@@ -1057,7 +1065,7 @@
         },
         {
             "id": "sr:tournament:8",
-            "name": "Primera Division",
+            "name": "Spanish Football League",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1065,7 +1073,7 @@
         },
         {
             "id": "sr:tournament:17",
-            "name": "Premier League",
+            "name": "English Football League",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1073,7 +1081,7 @@
         },
         {
             "id": "sr:tournament:23",
-            "name": "Serie A",
+            "name": "Italian Football League",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1081,7 +1089,7 @@
         },
         {
             "id": "sr:tournament:34",
-            "name": "Ligue 1",
+            "name": "French Football League",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1089,7 +1097,7 @@
         },
         {
             "id": "sr:tournament:35",
-            "name": "Bundesliga",
+            "name": "German Football League",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1097,7 +1105,7 @@
         },
         {
             "id": "sr:tournament:37",
-            "name": "Eredivisie",
+            "name": "Dutch Football League",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1105,7 +1113,7 @@
         },
         {
             "id": "sr:tournament:38",
-            "name": "Pro League",
+            "name": "Belgian Football League",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1113,7 +1121,7 @@
         },
         {
             "id": "sr:tournament:52",
-            "name": "Super Lig",
+            "name": "Turkish Football League",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1121,7 +1129,7 @@
         },
         {
             "id": "sr:tournament:185",
-            "name": "Super League",
+            "name": "Greek Football League",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1129,7 +1137,7 @@
         },
         {
             "id": "sr:tournament:203",
-            "name": "Premier League",
+            "name": "Russian Football League",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1162,14 +1170,6 @@
         {
             "id": "sr:tournament:679",
             "name": "UEFA Europa League",
-            "sport": {
-                "id": "sr:sport:1",
-                "name": "Soccer"
-            }
-        },
-        {
-            "id": "sr:tournament:2324",
-            "name": "UEFA Youth League",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"

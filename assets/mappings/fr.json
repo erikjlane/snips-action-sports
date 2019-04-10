@@ -1049,7 +1049,7 @@
     "tournaments": [
         {
             "id": "sr:tournament:1",
-            "name": "Championnat d'Europe",
+            "name": "Championnat d'Europe de l'UEFA",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1169,7 +1169,7 @@
         },
         {
             "id": "sr:tournament:679",
-            "name": "Ligue Europa",
+            "name": "Ligue Europa de l'UEFA",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
