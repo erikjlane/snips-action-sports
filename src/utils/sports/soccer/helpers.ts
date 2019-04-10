@@ -65,7 +65,8 @@ export const helpers = {
         let finalPhase: TournamentRound
 
         const phases = [
-            'round_of_16'
+            'round_of_16',
+            'quarterfinal'
         ]
 
         for (let result of results.results) {
@@ -73,8 +74,8 @@ export const helpers = {
 
             if (round.type === 'cup' && round.phase === 'final_phase') {
                 if (
-                    finalPhase === undefined ||
-                    (phases.indexOf(round.name) >   phases.indexOf(finalPhase.name)) ||
+                    !finalPhase ||
+                    (phases.indexOf(round.name) > phases.indexOf(finalPhase.name)) ||
                     (phases.indexOf(round.name) === phases.indexOf(finalPhase.name) && round.cup_round_match_number > finalPhase.cup_round_match_number)
                 ) {
                     finalPhase = round
@@ -88,8 +89,8 @@ export const helpers = {
     getResultsFromRound: (results: Result[], round: TournamentRound): Result[] => {
         return results.filter(
             r => {
-                const currentRound = r.sport_event.tournament_round
-                return currentRound.type === round.type && currentRound.phase === round.phase && currentRound.cup_round_match_number === round.cup_round_match_number
+                const cr = r.sport_event.tournament_round
+                return cr.type === round.type && cr.name === round.name && cr.phase === round.phase && cr.cup_round_match_number === round.cup_round_match_number
             }
         )
     },

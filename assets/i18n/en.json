@@ -92,7 +92,8 @@
                 "nextMatch": "{{- team_1 }} will play in a {{- tournament }} match against {{- team_2 }} on {{ date }} at {{ time }}."
             },
             "finalPhase": {
-                "round_of_16": "round of 16"
+                "round_of_16": "round of 16",
+                "quarterfinal": "quarter finals"
             }
         },
         "nba": {
