@@ -1048,6 +1048,14 @@
     ],
     "tournaments": [
         {
+            "id": "sr:tournament:1",
+            "name": "Championnat d'Europe",
+            "sport": {
+                "id": "sr:sport:1",
+                "name": "Soccer"
+            }
+        },
+        {
             "id": "sr:tournament:7",
             "name": "Ligue des champions de l'UEFA",
             "sport": {
@@ -1057,7 +1065,7 @@
         },
         {
             "id": "sr:tournament:8",
-            "name": "Primera Division",
+            "name": "Championnat d'Espagne",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1065,7 +1073,7 @@
         },
         {
             "id": "sr:tournament:17",
-            "name": "Premier League",
+            "name": "Championnat d'Angleterre",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1073,7 +1081,7 @@
         },
         {
             "id": "sr:tournament:23",
-            "name": "Serie A",
+            "name": "Championnat d'Italie",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1081,7 +1089,7 @@
         },
         {
             "id": "sr:tournament:34",
-            "name": "Ligue 1",
+            "name": "Championnat de France",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1089,7 +1097,7 @@
         },
         {
             "id": "sr:tournament:35",
-            "name": "Bundesliga",
+            "name": "Championnat d'Allemagne",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1097,7 +1105,7 @@
         },
         {
             "id": "sr:tournament:37",
-            "name": "Eredivisie",
+            "name": "Championnat des Pays-Bas",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1105,7 +1113,7 @@
         },
         {
             "id": "sr:tournament:38",
-            "name": "Pro League",
+            "name": "Championnat de Belgique",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1113,7 +1121,7 @@
         },
         {
             "id": "sr:tournament:52",
-            "name": "Super Lig",
+            "name": "Championnat de Turquie",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1121,7 +1129,7 @@
         },
         {
             "id": "sr:tournament:185",
-            "name": "Super League",
+            "name": "Championnat de Grèce",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1129,7 +1137,7 @@
         },
         {
             "id": "sr:tournament:203",
-            "name": "Premier League",
+            "name": "Championnat de Russie",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1137,7 +1145,7 @@
         },
         {
             "id": "sr:tournament:218",
-            "name": "Premier League",
+            "name": "Championnat d'Ukraine",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1145,7 +1153,7 @@
         },
         {
             "id": "sr:tournament:238",
-            "name": "Primeira Liga",
+            "name": "Championnat du Portugal",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1153,7 +1161,7 @@
         },
         {
             "id": "sr:tournament:465",
-            "name": "UEFA Super Cup",
+            "name": "Supercoupe de l'UEFA",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1161,15 +1169,7 @@
         },
         {
             "id": "sr:tournament:679",
-            "name": "UEFA Europa League",
-            "sport": {
-                "id": "sr:sport:1",
-                "name": "Soccer"
-            }
-        },
-        {
-            "id": "sr:tournament:2324",
-            "name": "UEFA Youth League",
+            "name": "Ligue Europa",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
@@ -1177,7 +1177,7 @@
         },
         {
             "id": "sr:tournament:23755",
-            "name": "UEFA Nations League",
+            "name": "Ligue des nations de l'UEFA",
             "sport": {
                 "id": "sr:sport:1",
                 "name": "Soccer"
