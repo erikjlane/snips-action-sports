@@ -38,7 +38,7 @@
                     "1": [
                         "{{- team }} is at the top of the table with {{ points }} points.",
                         "{{- team }} occupies the first place with {{ points }} points.",
-                        "{{- team }} are in first place with {{ points }} points."
+                        "{{- team }} is in first place with {{ points }} points."
                     ],
                     "2": [
                         "{{- team }} follows with {{ points }} points.",
@@ -46,18 +46,18 @@
                     ],
                     "3": [
                         "{{- team }} occupies the third position with {{ points }} points.",
-                        "{{- team }} are in third place with {{ points }} points."
+                        "{{- team }} is in third place with {{ points }} points."
                     ],
                     "4": [
                         "{{- team }} follows with {{ points }} points.",
-                        "{{- team }} are in fourth place with {{ points }} points."
+                        "{{- team }} is in fourth place with {{ points }} points."
                     ],
                     "5": [
                         "And {{- team }} has {{ points }} points.",
                         "Finally, {{- team }} has {{ points }} points."
                     ]
                 },
-                "standingInGroup": "{{- team }} lead group {{ group }} with {{ points }} points.",
+                "standingInGroup": "{{- team }} leads group {{ group }} with {{ points }} points.",
                 "finalPhase": {
                     "currentStage": "We are currently in the round {{ round }} of the {{ stage }} stage of the {{- tournament }}.",
                     "didntPlayYet": "This team didn't play their match in this stage yet."
