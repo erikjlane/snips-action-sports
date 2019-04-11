@@ -2,7 +2,7 @@
     "error": {
         "mqtt": "Désolé, une erreur s'est produite lors de la communication avec la plateforme Snips",
         "config": "Désolé, une erreur s'est produite avec votre fichier de configuration.",
-        "locale": "Désolé, une erreur s'est produite avec vos paramètres de localisation.",
+        "locale": "Désolé, une erreur s'est produite avec vos paramètres de langue.",
         "intentNotRecognized": "Désolé, je n'ai pas compris votre requête.",
         "APIResponse": "Désolé, une erreur s'est produite avec le service de résultats sportifs.",
         "APIRequest": "Désolé, le service de résultats sportifs est injoignable.",
@@ -44,11 +44,11 @@
                     ],
                     "3": [
                         "{{- team }} occupe la troisième position avec {{ points }} points.",
-                        "{{- team }} sont troisièmes avec {{ points }} points."
+                        "{{- team }} est troisième avec {{ points }} points."
                     ],
                     "4": [
                         "À la quatrième place, {{- team }} a {{ points }} points.",
-                        "{{- team }} sont en quatrème position avec {{ points }} points."
+                        "{{- team }} est en quatrième position avec {{ points }} points."
                     ],
                     "5": [
                         "Enfin, {{- team }} a {{ points }} points."
@@ -63,9 +63,9 @@
             "tournamentResults": {
                 "introduction": "Voici les derniers résultats de {{- tournament }}.",
                 "introductionRound": "Voici les résultats de la journée {{ day }} de {{- tournament }}.",
-                "teamLost": "{{- team_1 }} ont perdu {{ team_1_score }} à {{ team_2_score }} contre {{- team_2 }}.",
-                "teamWon": "{{- team_1 }} ont battu {{- team_2 }} {{ team_1_score }} à {{ team_2_score }}.",
-                "teamTied": "{{- team_1 }} ont fait match nul contre {{- team_2 }} {{ team_1_score }} à {{ team_2_score }}."
+                "teamLost": "{{- team_1 }} a perdu {{ team_1_score }} à {{ team_2_score }} contre {{- team_2 }}.",
+                "teamWon": "{{- team_1 }} a battu {{- team_2 }} {{ team_1_score }} à {{ team_2_score }}.",
+                "teamTied": "{{- team_1 }} a fait match nul contre {{- team_2 }} {{ team_1_score }} à {{ team_2_score }}."
             },
             "tournamentSchedule": {
                 "introduction": "Les prochains matchs de {{- tournament }} seront joués le {{ date }}.",
@@ -75,9 +75,9 @@
                 ]
             },
             "matchResults": {
-                "teamLost": "Le {{ date }}, {{- team_1 }} ont perdu {{ team_1_score }} à {{ team_2_score }} contre {{- team_2 }} dans un match de {{- tournament }}.",
-                "teamWon": "Le {{ date }}, {{- team_1 }} ont battu {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} dans un match de {{- tournament }}.",
-                "teamTied": "Le {{ date }}, {{- team_1 }} ont fait match nul contre {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} dans un match de {{- tournament }}.",
+                "teamLost": "Le {{ date }}, {{- team_1 }} a perdu {{ team_1_score }} à {{ team_2_score }} contre {{- team_2 }} dans un match de {{- tournament }}.",
+                "teamWon": "Le {{ date }}, {{- team_1 }} a battu {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} dans un match de {{- tournament }}.",
+                "teamTied": "Le {{ date }}, {{- team_1 }} a fait match nul contre {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} dans un match de {{- tournament }}.",
                 "lastMatchForTeam": "Le score final du match de {{- tournament }} opposant {{- team_1 }} à {{- team_2 }} le {{ date }} est de {{ team_1_score }} à {{ team_2_score }}."
             },
             "teamStanding": {
@@ -86,7 +86,7 @@
                 "tiedFinalPhases": "Ils ont fait match nul contre {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in {{ round }}."
             },
             "teamSchedule": {
-                "nextMatch": "{{- team_1 }} vont jouer dans un match de {{- tournament }} contre {{- team_2 }} le {{ date }} à {{ time }}."
+                "nextMatch": "{{- team_1 }} va jouer dans un match de {{- tournament }} contre {{- team_2 }} le {{ date }} à {{ time }}."
             },
             "finalPhase": {
                 "round_of_16": "huitièmes de finale",
