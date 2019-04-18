@@ -4,6 +4,7 @@
         "config": "Désolé, une erreur s'est produite avec votre fichier de configuration.",
         "locale": "Désolé, une erreur s'est produite avec vos paramètres de langue.",
         "intentNotRecognized": "Désolé, je n'ai pas compris votre requête.",
+        "slotsNotRecognized": "Désolé, je n'ai pas compris votre requête.",
         "APIResponse": "Désolé, une erreur s'est produite avec le service de résultats sportifs.",
         "APIRequest": "Désolé, le service de résultats sportifs est injoignable.",
         "unspecific": "Oups, quelque chose s'est mal passé.",
@@ -68,17 +69,17 @@
                 "teamTied": "{{- team_1 }} a fait match nul contre {{- team_2 }} {{ team_1_score }} à {{ team_2_score }}."
             },
             "tournamentSchedule": {
-                "introduction": "Les prochains matchs de {{- tournament }} seront joués le {{ date }}.",
+                "introduction": "Les prochains matchs de {{- tournament }} seront joués {{- date }}.",
                 "match": [
                     "{{- team_1 }} va jouer contre {{- team_2 }} à {{ time }}.",
                     "{{- team_1 }} va rencontrer {{- team_2 }} à {{ time }}."
                 ]
             },
             "matchResults": {
-                "teamLost": "Le {{ date }}, {{- team_1 }} a perdu {{ team_1_score }} à {{ team_2_score }} contre {{- team_2 }} dans un match de {{- tournament }}.",
-                "teamWon": "Le {{ date }}, {{- team_1 }} a battu {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} dans un match de {{- tournament }}.",
-                "teamTied": "Le {{ date }}, {{- team_1 }} a fait match nul contre {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} dans un match de {{- tournament }}.",
-                "lastMatchForTeam": "Le score final du match de {{- tournament }} opposant {{- team_1 }} à {{- team_2 }} le {{ date }} est de {{ team_1_score }} à {{ team_2_score }}."
+                "teamLost": "{{- date }}, {{- team_1 }} a perdu {{ team_1_score }} à {{ team_2_score }} contre {{- team_2 }} dans un match de {{- tournament }}.",
+                "teamWon": "{{- date }}, {{- team_1 }} a battu {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} dans un match de {{- tournament }}.",
+                "teamTied": "{{- date }}, {{- team_1 }} a fait match nul contre {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} dans un match de {{- tournament }}.",
+                "lastMatchForTeam": "Le score final du match de {{- tournament }} opposant {{- team_1 }} à {{- team_2 }} {{- date }} est de {{ team_1_score }} à {{ team_2_score }}."
             },
             "teamStanding": {
                 "lostFinalPhases": "Ils ont perdu {{ team_1_score }} à {{ team_2_score }} contre {{- team_2 }} lors du round {{ round }}.",
@@ -86,7 +87,7 @@
                 "tiedFinalPhases": "Ils ont fait match nul contre {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in {{ round }}."
             },
             "teamSchedule": {
-                "nextMatch": "{{- team_1 }} va jouer dans un match de {{- tournament }} contre {{- team_2 }} le {{ date }} à {{ time }}."
+                "nextMatch": "{{- team_1 }} va jouer dans un match de {{- tournament }} contre {{- team_2 }} {{- date }} à {{ time }}."
             },
             "finalPhase": {
                 "round_of_16": "huitièmes de finale",
@@ -108,26 +109,35 @@
                 "firstInDivision": "Les {{- team }} mènent la division {{- division }}."
             },
             "tournamentResults": {
-                "introduction": "Voici les résultats de NBA du {{ date }}.",
+                "introduction": "Voici les résultats de NBA de {{- date }}.",
                 "teamLost": "Les {{- team_1 }} ont perdu {{ team_1_score }} à {{ team_2_score }} contre les {{- team_2 }}.",
                 "teamWon": "Les {{- team_1 }} ont battu les {{- team_2 }} {{ team_1_score }} à {{ team_2_score }}.",
                 "teamTied": "Les {{- team_1 }} ont fait match nul contre les {{- team_2 }} {{ team_1_score }} à {{ team_2_score }}."
             },
             "tournamentSchedule": {
-                "introduction": "Les prochains matchs de NBA vont être joués le {{ date }}.",
+                "introduction": "Les prochains matchs de NBA vont être joués {{- date }}.",
                 "game": [
                     "Les {{- team_1 }} vont jouer contre les {{- team_2 }} à {{ time }}.",
                     "Les {{- team_1 }} vont rencontrer les {{- team_2 }} à {{ time }}."
                 ]
             },
             "matchResults": {
-                "teamLost": "Le {{ date }}, les {{- team_1 }} ont perdu {{ team_1_score }} à {{ team_2_score }} contre les {{- team_2 }} en NBA.",
-                "teamWon": "Le {{ date }}, les {{- team_1 }} ont battu les {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} en NBA.",
-                "teamTied": "Le {{ date }}, les {{- team_1 }} ont fait match nul contre les {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} en NBA."
+                "teamLost": "{{- date }}, les {{- team_1 }} ont perdu {{ team_1_score }} à {{ team_2_score }} contre les {{- team_2 }} en NBA.",
+                "teamWon": "{{- date }}, les {{- team_1 }} ont battu les {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} en NBA.",
+                "teamTied": "{{- date }}, les {{- team_1 }} ont fait match nul contre les {{- team_2 }} {{ team_1_score }} à {{ team_2_score }} en NBA."
             },
             "teamSchedule": {
-                "nextMatch": "Les {{- team_1 }} vont jouer dans un match de NBA contre les {{- team_2 }} le {{ date }} à {{ time }}."
+                "nextMatch": "Les {{- team_1 }} vont jouer dans un match de NBA contre les {{- team_2 }} {{- date }} à {{ time }}."
             }
         }
+    },
+    "moment": {
+        "lastDay": "[hier]",
+        "sameDay": "[aujourd'hui]",
+        "nextDay": "[demain]",
+        "nextWeek": "dddd",
+        "lastWeek": "dddd [dernier]",
+        "sameElse": "[le] D MMMM",
+        "time": "H [heures] m"
     }
 }

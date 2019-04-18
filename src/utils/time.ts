@@ -7,6 +7,7 @@ export const time = {
 
         return date1.getTime() === date2.getTime()
     },
+
     wasThisWeek (date: Date) {
         const today = new Date()
         today.setHours(0, 0, 0, 0)

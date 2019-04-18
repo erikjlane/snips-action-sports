@@ -6,7 +6,6 @@ import { nbaTournamentStanding } from './nba'
 import { INTENT_FILTER_PROBABILITY_THRESHOLD } from '../constants'
 import { reader, Mappings } from '../utils/sports'
 import { i18nFactory } from '../factories'
-import { IntentMessage, IntentNotRecognizedMessage } from 'hermes-javascript'
 
 export const tournamentStandingHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
     const i18n = i18nFactory.get()
