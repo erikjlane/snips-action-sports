@@ -8,5 +8,5 @@ export default async function (bootstrapOptions: {[key: string]: any}) {
     const language = LANGUAGE_MAPPINGS[config.locale]
     await i18nFactory.init(language, bootstrapOptions.i18n)
     httpFactory.init(bootstrapOptions.http)
-    cronFactory.init(bootstrapOptions.cron)
+    cronFactory.init()
 }

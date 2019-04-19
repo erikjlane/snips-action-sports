@@ -3,14 +3,30 @@ import {
 } from '../api/nba'
 import fs from 'fs'
 import cron from 'node-cron'
+import { DAY_MILLISECONDS } from '../constants'
+import { logger } from '../utils'
 
-type Cacheable = {
+const CACHE_DIR = __dirname + '/../../cache'
+
+export type Cacheable = {
     generated: Date
 }
 
-function init(cronOptions = {}) {
+function isValid(cached: Cacheable) {
+    return cached && cached.generated && new Date(cached.generated).getTime() + DAY_MILLISECONDS > new Date().getTime()
+}
+
+function init() {
+    if (!fs.existsSync(CACHE_DIR)){
+        fs.mkdirSync(CACHE_DIR);
+    }
+
+    cronGetNBASchedule()
+}
+
+function cronGetNBASchedule() {
     // fetching the NBA schedule everyday at 10 AM and writing it in the cache
-    const expression = '* * * * *'
+    const expression = '0 10 * * *'
     if (!cron.validate(expression)) {
         throw new Error('cron')
     }
@@ -19,8 +35,8 @@ function init(cronOptions = {}) {
         getSchedule(true).then((data: SchedulePayload & Cacheable) => {
             // adding a date attribute
             data.generated = new Date()
-            fs.writeFile('cache/nba_schedule.json', JSON.stringify(data), 'utf8', err => {
-                console.log(err || 'CRON task executed')
+            fs.writeFile(CACHE_DIR + '/nba_schedule.json', JSON.stringify(data), 'utf8', err => {
+                logger.debug(err || 'CRON task executed')
             })
         })
     }, {
@@ -29,5 +45,6 @@ function init(cronOptions = {}) {
 }
 
 export const cronFactory = {
-    init
+    init,
+    isValid
 }
