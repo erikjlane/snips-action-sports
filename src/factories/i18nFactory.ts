@@ -8,7 +8,7 @@ let i18n: (key: string | string[], options?: {[key: string]: any}) => string & s
 async function init(language = DEFAULT_LANGUAGE, i18nOptions = { mock: false }) {
     try {
         // If we are mocking.
-        if(i18nOptions.mock) {
+        if (i18nOptions.mock) {
             // Stringify the key and options instead of using i18next.
             i18n = function (key, options) {
                 return JSON.stringify({
