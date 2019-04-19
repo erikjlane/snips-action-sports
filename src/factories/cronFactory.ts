@@ -24,6 +24,17 @@ function init() {
     cronGetNBASchedule()
 }
 
+function writeNBAScheduleToCache(data: SchedulePayload & Cacheable) {
+    data.generated = new Date()
+    fs.writeFile(CACHE_DIR + '/nba_schedule.json', JSON.stringify(data), 'utf8', err => {
+        if (err) {
+            logger.error(err)
+        } else {
+            logger.debug('NBA schedule written to cache')
+        }
+    })
+}
+
 function cronGetNBASchedule() {
     // fetching the NBA schedule everyday at 10 AM and writing it in the cache
     const expression = '0 10 * * *'
@@ -32,13 +43,8 @@ function cronGetNBASchedule() {
     }
 
     cron.schedule(expression, () => {
-        getSchedule(true).then((data: SchedulePayload & Cacheable) => {
-            // adding a date attribute
-            data.generated = new Date()
-            fs.writeFile(CACHE_DIR + '/nba_schedule.json', JSON.stringify(data), 'utf8', err => {
-                logger.debug(err || 'CRON task executed')
-            })
-        })
+        getSchedule(true).then(data => writeNBAScheduleToCache(data as SchedulePayload & Cacheable))
+        logger.debug('CRON task executed')
     }, {
         timezone: 'America/New_York'
     })
@@ -46,5 +52,6 @@ function cronGetNBASchedule() {
 
 export const cronFactory = {
     init,
-    isValid
+    isValid,
+    writeNBAScheduleToCache
 }

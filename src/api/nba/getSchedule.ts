@@ -12,12 +12,15 @@ export async function getSchedule(forceRefresh: boolean = false): Promise<Schedu
         if (!forceRefresh && cached) {
             const results: SchedulePayload & Cacheable = JSON.parse(cached)
             if (cronFactory.isValid(results)) {
+                logger.debug('Reading from cache')
                 return results
             }
         }
     } catch (err) {
         logger.error(err)
     }
+
+    logger.debug('No cache used')
 
     const http = httpFactory.get().query({
         api_key: configFactory.get().nbaApiKey
@@ -37,6 +40,9 @@ export async function getSchedule(forceRefresh: boolean = false): Promise<Schedu
         }) as SchedulePayload
 
     if (results) {
+        if (!forceRefresh) {
+            cronFactory.writeNBAScheduleToCache(results as SchedulePayload & Cacheable)
+        }
         //logger.debug(results)
     } else {
         throw new Error('APIResponse')
