@@ -81,7 +81,7 @@
                 "teamLost": "{{- date }}, {{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }} in a {{- tournament }} match.",
                 "teamWon": "{{- date }}, {{- team_1 }} beat {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{- tournament }} match.",
                 "teamTied": "{{- date }}, {{- team_1 }} tied against {{- team_2 }} {{ team_1_score }} to {{ team_2_score }} in a {{- tournament }} match.",
-                "lastMatchForTeam": "{{- date }}, the {{- tournament }} match {{- team_1 }} versus {{- team_2 }} final score was {{ team_1_score }} to {{ team_2_score }}.",
+                "lastMatchForTeam": "{{- date }}, the {{- tournament }} match {{- team_1 }} versus {{- team_2 }} final score was {{ team_1_score }} to {{ team_2_score }}."
             },
             "teamStanding": {
                 "lostFinalPhases": "They lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }} in {{ round }}.",

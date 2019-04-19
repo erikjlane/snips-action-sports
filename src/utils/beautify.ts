@@ -24,18 +24,9 @@ export const beautify = {
         const config = configFactory.get()
         const language = LANGUAGE_MAPPINGS[config.locale]
 
-        if (config.locale === 'french') {
-            // French
-            return moment(date)
-                .locale(language)
-                .format(i18n('moment.time'))
-                .replace(' 0', '')
-        } else {
-            // English
-            return moment(date)
-                .locale(language)
-                .format(i18n('moment.time'))
-                .replace(' 0', '')
-        }
+        return moment(date)
+            .locale(language)
+            .format(i18n('moment.time'))
+            .replace(' 0', '')
     }
 }
