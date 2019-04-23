@@ -4,8 +4,9 @@ import commonHandler, { KnownSlots } from './common'
 import { soccerNextMatch } from './soccer'
 import { nbaNextMatch } from './nba'
 import { reader, Mappings } from '../utils/sports'
+import { Hermes } from 'hermes-javascript'
 
-export const nextMatchHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
+export const nextMatchHandler: Handler = async function (msg, flow, hermes: Hermes, knownSlots: KnownSlots = { depth: 2 }) {
     logger.info('NextMatch')
 
     const {
@@ -51,7 +52,7 @@ export const nextMatchHandler: Handler = async function (msg, flow, knownSlots: 
         if (Date.now() - now < 4000) {
             return speech
         } else {
-            tts.say(speech)
+            tts.say(hermes, speech)
         }
     } catch (error) {
         logger.error(error)

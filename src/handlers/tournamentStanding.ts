@@ -6,8 +6,9 @@ import { nbaTournamentStanding } from './nba'
 import { INTENT_FILTER_PROBABILITY_THRESHOLD } from '../constants'
 import { reader, Mappings } from '../utils/sports'
 import { i18nFactory } from '../factories'
+import { Hermes } from 'hermes-javascript'
 
-export const tournamentStandingHandler: Handler = async function (msg, flow, knownSlots: KnownSlots = { depth: 2 }) {
+export const tournamentStandingHandler: Handler = async function (msg, flow, hermes: Hermes, knownSlots: KnownSlots = { depth: 2 }) {
     const i18n = i18nFactory.get()
 
     logger.info('TournamentStanding')
@@ -35,7 +36,7 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
                 throw new Error('intentNotRecognized')
             }
 
-            return tournamentStandingHandler(msg, flow, {
+            return tournamentStandingHandler(msg, flow, hermes, {
                 teams,
                 depth: knownSlots.depth - 1
             })
@@ -85,7 +86,7 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, kno
         if (Date.now() - now < 4000) {
             return speech
         } else {
-            tts.say(speech)
+            tts.say(hermes, speech)
         }
     } catch (error) {
         logger.error(error)

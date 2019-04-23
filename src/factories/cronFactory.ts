@@ -18,7 +18,7 @@ function isValid(cached: Cacheable) {
 
 function init() {
     if (!fs.existsSync(CACHE_DIR)){
-        fs.mkdirSync(CACHE_DIR);
+        fs.mkdirSync(CACHE_DIR)
     }
 
     cronGetNBASchedule()

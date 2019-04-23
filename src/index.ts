@@ -19,15 +19,15 @@ export default function ({
                 dialog.flows([
                     {
                         intent: 'snips-assistant:NextMatch',
-                        action: handlers.nextMatch
+                        action: (msg, flow) => handlers.nextMatch(msg, flow, hermes)
                     },
                     {
                         intent: 'snips-assistant:TournamentStanding',
-                        action: handlers.tournamentStanding
+                        action: (msg, flow) => handlers.tournamentStanding(msg, flow, hermes)
                     },
                     {
                         intent: 'snips-assistant:MatchResult',
-                        action: handlers.matchResult
+                        action: (msg, flow) => handlers.matchResult(msg, flow, hermes)
                     }
                 ])
                 resolve(done)
