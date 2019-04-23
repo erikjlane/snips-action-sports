@@ -1,6 +1,6 @@
 {
   "name": "snips-action-sports",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Snips action code for the Sports app",
   "main": "dist/index.js",
   "scripts": {

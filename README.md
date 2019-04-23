@@ -66,10 +66,14 @@ Get the current standing of the given team in the given tournament
 
 #### Get details about future matches
 
+Get details about future matches of the given team
+> *Hey Snips, when can we see the next match between Manchester City and Manchester United?*
+
 Get details about future matches of the given tournament
 > *Hey Snips, what are the details of the upcoming Bundesliga matches?*
 
-
+Get details about future matches of a team in the given tournament
+> *Hey Snips, when are the Chicago Bulls playing again in the NBA?*
 
 ## Debug
 
