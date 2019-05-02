@@ -1,6 +1,6 @@
 # Project
 config.ini
-cache/
+.cache/
 
 # Logs
 logs

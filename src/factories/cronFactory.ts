@@ -6,7 +6,7 @@ import cron from 'node-cron'
 import { DAY_MILLISECONDS } from '../constants'
 import { logger } from '../utils'
 
-const CACHE_DIR = __dirname + '/../../cache'
+const CACHE_DIR = __dirname + '/../../.cache'
 
 export type Cacheable = {
     generated: Date

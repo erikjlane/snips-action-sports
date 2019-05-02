@@ -61,18 +61,20 @@ export const helpers = {
         ).length !== 0
     },
 
-    getHighestFinalPhase: (results: TournamentResultsPayload): TournamentRound => {
+    getHighestFinalPhase: (results: TournamentResultsPayload): TournamentRound | undefined => {
         let finalPhase: TournamentRound
 
         const phases = [
             'round_of_16',
-            'quarterfinal'
+            'quarterfinal',
+            'semifinal'
         ]
 
         for (let result of results.results) {
             let round = result.sport_event.tournament_round
 
-            if (round.type === 'cup' && round.phase === 'final_phase') {
+            //TODO phase attribute has been deleted in the API
+            if (round.type === 'cup' /*&& round.phase === 'final_phase'*/) {
                 if (
                     !finalPhase ||
                     (phases.indexOf(round.name) > phases.indexOf(finalPhase.name)) ||

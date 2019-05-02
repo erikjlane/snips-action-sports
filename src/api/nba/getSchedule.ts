@@ -8,7 +8,7 @@ export async function getSchedule(forceRefresh: boolean = false): Promise<Schedu
     const config = configFactory.get()
 
     try {
-        const cached = fs.readFileSync('cache/nba_schedule.json', 'utf8')
+        const cached = fs.readFileSync('.cache/nba_schedule.json', 'utf8')
         if (!forceRefresh && cached) {
             const results: SchedulePayload & Cacheable = JSON.parse(cached)
             if (cronFactory.isValid(results)) {
