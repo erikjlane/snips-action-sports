@@ -1,16 +1,13 @@
-import { logger, slot, tts } from '../utils'
-import { Handler } from './index'
+import { slot, tts } from '../utils'
+import { Handler, logger, i18n } from 'snips-toolkit'
 import commonHandler, { KnownSlots } from './common'
 import { soccerTournamentStanding } from './soccer'
 import { nbaTournamentStanding } from './nba'
 import { INTENT_FILTER_PROBABILITY_THRESHOLD } from '../constants'
 import { reader, Mappings } from '../utils/sports'
-import { i18nFactory } from '../factories'
 import { Hermes } from 'hermes-javascript'
 
 export const tournamentStandingHandler: Handler = async function (msg, flow, hermes: Hermes, knownSlots: KnownSlots = { depth: 2 }) {
-    const i18n = i18nFactory.get()
-
     logger.info('TournamentStanding')
 
     const {
@@ -49,7 +46,7 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, her
             flow.end()
         })
 
-        return i18n('sports.dialog.noTournament')
+        return i18n.translate('sports.dialog.noTournament')
     }
 
     const now: number = Date.now()

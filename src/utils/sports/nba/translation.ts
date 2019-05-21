@@ -1,13 +1,10 @@
-import { i18nFactory } from '../../../factories/i18nFactory'
+import { i18n } from 'snips-toolkit'
 import { beautify } from '../../beautify'
 import { RankingsPayload, Team, SchedulePayload, Game } from '../../../api/nba'
 import { time } from '../../time'
-import { translation } from '../../translation'
 
 export const nbaTranslation = {
     tournamentRankingsToSpeech(rankings: RankingsPayload): string {
-        const i18n = i18nFactory.get()
-
         let tts: string = ''
 
         for (let conference of rankings.conferences) {
@@ -19,7 +16,7 @@ export const nbaTranslation = {
 
             teams.sort((t1, t2) => t1.rank.conference - t2.rank.conference)
 
-            tts += i18n('sports.nba.tournamentStandings.standingsInConference', {
+            tts += i18n.translate('sports.nba.tournamentStandings.standingsInConference', {
                 conference: conference.name,
                 team_1: teams[0].name,
                 team_2: teams[1].name,
@@ -28,7 +25,7 @@ export const nbaTranslation = {
             tts += ' '
 
             for (let division of conference.divisions) {
-                tts += i18n('sports.nba.tournamentStandings.firstInDivision', {
+                tts += i18n.translate('sports.nba.tournamentStandings.firstInDivision', {
                     team: division.teams[0].name,
                     division: division.name
                 })
@@ -41,8 +38,6 @@ export const nbaTranslation = {
     },
 
     teamRankingToSpeech(rankings: RankingsPayload, teamId: string): string {
-        const i18n = i18nFactory.get()
-
         let tts: string = ''
 
         for (let conference of rankings.conferences) {
@@ -50,14 +45,14 @@ export const nbaTranslation = {
                 let team = division.teams.find(t => t.sr_id === teamId)
 
                 if (team) {
-                    tts += i18n('sports.nba.tournamentStandings.standingInConference', {
+                    tts += i18n.translate('sports.nba.tournamentStandings.standingInConference', {
                         team: team.name,
                         rank: team.rank.conference,
                         conference: conference.name
                     })
                     tts += ' '
 
-                    tts += i18n('sports.nba.tournamentStandings.standingInDivision', {
+                    tts += i18n.translate('sports.nba.tournamentStandings.standingInDivision', {
                         team: team.name,
                         rank: team.rank.division,
                         division: division.name
@@ -70,8 +65,6 @@ export const nbaTranslation = {
     },
 
     tournamentScheduleToSpeech(schedule: SchedulePayload): string {
-        const i18n = i18nFactory.get()
-
         let tts: string = ''
 
         const nextDate = new Date(schedule.games[0].scheduled)
@@ -79,13 +72,13 @@ export const nbaTranslation = {
             g => time.areSameDays(new Date(g.scheduled), nextDate)
         )
 
-        tts += i18n('sports.nba.tournamentSchedule.introduction', {
+        tts += i18n.translate('sports.nba.tournamentSchedule.introduction', {
             date: beautify.date(new Date(games[0].scheduled))
         })
         tts += ' '
 
         for (let game of games) {
-            tts += translation.randomTranslation('sports.nba.tournamentSchedule.game', {
+            tts += i18n.randomTranslation('sports.nba.tournamentSchedule.game', {
                 team_1: game.home.name,
                 team_2: game.away.name,
                 time: beautify.time(new Date(game.scheduled))
@@ -97,14 +90,12 @@ export const nbaTranslation = {
     },
 
     teamScheduleToSpeech(schedule: SchedulePayload, firstTeamId: string): string {
-        const i18n = i18nFactory.get()
-
         let tts: string = ''
             
         const scheduledGame = schedule.games[0]
         const scheduled = new Date(scheduledGame.scheduled)
 
-        tts += i18n('sports.nba.teamSchedule.nextMatch', {
+        tts += i18n.translate('sports.nba.teamSchedule.nextMatch', {
             team_1: (scheduledGame.home.sr_id === firstTeamId) ? scheduledGame.home.name : scheduledGame.away.name,
             team_2: (scheduledGame.home.sr_id === firstTeamId) ? scheduledGame.away.name : scheduledGame.home.name,
             date: beautify.date(scheduled),
@@ -115,8 +106,6 @@ export const nbaTranslation = {
     },
 
     teamResultToSpeech(game: Game, firstTeamId: string, longTts = true): string {
-        const i18n = i18nFactory.get()
-
         let tts: string = ''
 
         const team1 = (game.home.sr_id === firstTeamId) ? game.home : game.away
@@ -129,7 +118,7 @@ export const nbaTranslation = {
             ? 'teamTied'
             : ((team1Score < team2Score) ? 'teamLost' : 'teamWon')
 
-        tts += i18n((longTts ? 'sports.nba.matchResults.' : 'sports.nba.tournamentResults.') + key, {
+        tts += i18n.translate((longTts ? 'sports.nba.matchResults.' : 'sports.nba.tournamentResults.') + key, {
             team_1: team1.name,
             team_2: team2.name,
             date: beautify.date(new Date(game.scheduled)),
@@ -141,13 +130,11 @@ export const nbaTranslation = {
     },
 
     tournamentResultsToSpeech(schedule: SchedulePayload): string {
-        const i18n = i18nFactory.get()
-
         let tts: string = ''
 
         const day = new Date(schedule.games[schedule.games.length - 1].scheduled)
 
-        tts += i18n('sports.nba.tournamentResults.introduction', {
+        tts += i18n.translate('sports.nba.tournamentResults.introduction', {
             date: beautify.date(day)
         })
         tts += ' '

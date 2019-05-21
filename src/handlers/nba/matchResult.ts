@@ -1,5 +1,5 @@
 import { nbaTranslation } from '../../utils/sports/nba'
-import { i18nFactory } from '../../factories'
+import { i18n } from 'snips-toolkit'
 import {
     getSchedule,
     SchedulePayload
@@ -40,8 +40,6 @@ async function handleTeamMatchResults(mappings: Mappings): Promise<string> {
 }
 
 async function handleTeamsMatchResults(mappings: Mappings): Promise<string> {
-    const i18n = i18nFactory.get()
-
     let speech: string = ''
     let schedule: SchedulePayload = await getSchedule()
 
@@ -61,7 +59,7 @@ async function handleTeamsMatchResults(mappings: Mappings): Promise<string> {
     )
 
     if (commonSchedule.length === 0) {
-        speech += i18n('sports.nba.dialog.teamsNeverMet', {
+        speech += i18n.translate('sports.nba.dialog.teamsNeverMet', {
             team_1: mappings.teams[0].name,
             team_2: mappings.teams[1].name
         })

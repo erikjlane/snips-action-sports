@@ -1,7 +1,5 @@
 import { slot } from '../slot'
-import { logger } from '../logger'
-import { i18nFactory, configFactory } from '../../factories'
-import { LANGUAGE_MAPPINGS } from '../../constants'
+import { i18n, logger, config } from 'snips-toolkit'
 
 export type SportMapping = {
     id: string,
@@ -42,8 +40,6 @@ export class Mappings {
     }
 
     checkSportHomogeneousness(): SportHomogeneousness {
-        const i18n = i18nFactory.get()
-
         let homogeneous = true
         let message: string = null
 
@@ -51,17 +47,17 @@ export class Mappings {
             case 1:
                 if (this.tournament && this.teams[0].sport.id !== this.tournament.sport.id) {
                     homogeneous = false
-                    message = i18n('sports.dialog.teamDifferentSportFromTournament')
+                    message = i18n.translate('sports.dialog.teamDifferentSportFromTournament')
                 }
                 break
             case 2:
                 if (this.teams[0].sport.id !== this.teams[1].sport.id) {
                     homogeneous = false
-                    message = i18n('sports.dialog.teamsDifferentSports')
+                    message = i18n.translate('sports.dialog.teamsDifferentSports')
                 }
                 if (this.tournament && this.teams[0].sport.id !== this.tournament.sport.id) {
                     homogeneous = false
-                    message = i18n('sports.dialog.teamsDifferentSportFromTournament')
+                    message = i18n.translate('sports.dialog.teamsDifferentSportFromTournament')
                 }
         }
     
@@ -70,8 +66,7 @@ export class Mappings {
 }
 
 export const reader = function (teamNames: string[], tournamentName: string): Mappings {
-    const config = configFactory.get()
-    const mapping = require(`../../../assets/mappings/${ LANGUAGE_MAPPINGS[config.locale] }.json`)
+    const mapping = require(`../../../assets/mappings/${ config.get().locale }.json`)
 
     let teams: TeamMapping[] = []
     let tournament: TournamentMapping

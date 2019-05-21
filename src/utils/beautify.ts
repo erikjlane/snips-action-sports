@@ -1,32 +1,23 @@
-import { configFactory, i18nFactory } from '../factories'
-import { LANGUAGE_MAPPINGS } from '../constants'
+import { config, i18n } from 'snips-toolkit'
 import moment from 'moment'
 import 'moment/locale/fr'
 
 export const beautify = {    
     date: (date: Date): string => {
-        const i18n = i18nFactory.get()
-        const config = configFactory.get()
-        const language = LANGUAGE_MAPPINGS[config.locale]
-
-        return moment(date).locale(language).calendar(null, {
-            lastDay: i18n('moment.lastDay'),
-            sameDay: i18n('moment.sameDay'),
-            nextDay: i18n('moment.nextDay'),
-            nextWeek: i18n('moment.nextWeek'),
-            lastWeek: i18n('moment.lastWeek'),
-            sameElse: i18n('moment.sameElse'),
+        return moment(date).locale(config.get().locale).calendar(null, {
+            lastDay: i18n.translate('moment.lastDay'),
+            sameDay: i18n.translate('moment.sameDay'),
+            nextDay: i18n.translate('moment.nextDay'),
+            nextWeek: i18n.translate('moment.nextWeek'),
+            lastWeek: i18n.translate('moment.lastWeek'),
+            sameElse: i18n.translate('moment.sameElse'),
         })
     },
 
     time: (date: Date): string => {
-        const i18n = i18nFactory.get()
-        const config = configFactory.get()
-        const language = LANGUAGE_MAPPINGS[config.locale]
-
         return moment(date)
-            .locale(language)
-            .format(i18n('moment.time'))
+            .locale(config.get().locale)
+            .format(i18n.translate('moment.time'))
             .replace(' 0', '')
     }
 }

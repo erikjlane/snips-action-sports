@@ -1,17 +1,14 @@
-import { httpFactory, configFactory } from '../../factories'
-import { LANGUAGE_MAPPINGS } from '../../constants'
-import { logger } from '../../utils'
+import { config, logger } from 'snips-toolkit'
 import { RankingsPayload } from './types'
+import { request } from '../index'
 
 export async function getRankings(): Promise<RankingsPayload> {
-    const config = configFactory.get()
-
-    const http = httpFactory.get().query({
-        api_key: configFactory.get().nbaApiKey
+    const http = request.query({
+        api_key: config.get().nbaApiKey
     })
 
     const results = await http
-        .url(`/nba/trial/v5/${ LANGUAGE_MAPPINGS[config.locale] }/seasons/2018/REG/rankings.json`)
+        .url(`/nba/trial/v5/${ config.get().locale }/seasons/2018/REG/rankings.json`)
         .get()
         .json()
         .catch(error => {

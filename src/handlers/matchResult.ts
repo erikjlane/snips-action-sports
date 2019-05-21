@@ -1,5 +1,5 @@
-import { logger, slot, tts } from '../utils'
-import { Handler } from './index'
+import { slot, tts } from '../utils'
+import { Handler,logger } from 'snips-toolkit'
 import commonHandler, { KnownSlots } from './common'
 import { soccerMatchResult } from './soccer'
 import { nbaMatchResult } from './nba'

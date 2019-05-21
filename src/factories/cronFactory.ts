@@ -1,10 +1,8 @@
-import {
-    getSchedule, SchedulePayload
-} from '../api/nba'
+import { getSchedule, SchedulePayload } from '../api/nba'
 import fs from 'fs'
 import cron from 'node-cron'
 import { DAY_MILLISECONDS } from '../constants'
-import { logger } from '../utils'
+import { logger } from 'snips-toolkit'
 
 const CACHE_DIR = __dirname + '/../../.cache'
 

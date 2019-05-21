@@ -3,10 +3,9 @@ import {
     getSchedule, SchedulePayload
 } from '../../api/nba'
 import { Mappings } from '../../utils/sports/reader'
-import { i18nFactory } from '../../factories'
+import { i18n } from 'snips-toolkit'
 
 async function handleTournamentNextMatches(): Promise<string> {
-    const i18n = i18nFactory.get()
     const now = new Date()
 
     let speech: string = ''
@@ -19,7 +18,7 @@ async function handleTournamentNextMatches(): Promise<string> {
     )
 
     if (schedule.games.length === 0) {
-        speech += i18n('sports.nba.dialog.tournamentOver')
+        speech += i18n.translate('sports.nba.dialog.tournamentOver')
     } else {
         speech += nbaTranslation.tournamentScheduleToSpeech(schedule)
     }
@@ -28,7 +27,6 @@ async function handleTournamentNextMatches(): Promise<string> {
 }
 
 async function handleTeamNextMatch(mappings: Mappings): Promise<string> {
-    const i18n = i18nFactory.get()
     const now = new Date()
 
     let speech: string = ''
@@ -46,7 +44,7 @@ async function handleTeamNextMatch(mappings: Mappings): Promise<string> {
     )
 
     if (schedule.games.length === 0) {
-        speech += i18n('sports.nba.dialog.noScheduledGames', {
+        speech += i18n.translate('sports.nba.dialog.noScheduledGames', {
             team: mappings.teams[0].name
         })
     } else {
@@ -57,7 +55,6 @@ async function handleTeamNextMatch(mappings: Mappings): Promise<string> {
 }
 
 async function handleTeamsNextMatch(mappings: Mappings): Promise<string> {
-    const i18n = i18nFactory.get()
     const now = new Date()
 
     let speech: string = ''
@@ -80,7 +77,7 @@ async function handleTeamsNextMatch(mappings: Mappings): Promise<string> {
     )
 
     if (commonSchedule.length === 0) {
-        speech += i18n('sports.nba.dialog.teamsWillNeverMeet', {
+        speech += i18n.translate('sports.nba.dialog.teamsWillNeverMeet', {
             team_1: mappings.teams[0].name,
             team_2: mappings.teams[1].name
         })
@@ -90,7 +87,7 @@ async function handleTeamsNextMatch(mappings: Mappings): Promise<string> {
     }
 
     if (schedule.games.length === 0) {
-        speech += i18n('sports.nba.dialog.noScheduledGames', {
+        speech += i18n.translate('sports.nba.dialog.noScheduledGames', {
             team: mappings.teams[0].name
         })
     } else {

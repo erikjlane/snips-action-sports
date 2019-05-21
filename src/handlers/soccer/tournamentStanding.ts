@@ -1,5 +1,4 @@
-import { soccerTranslation } from '../../utils/sports/soccer'
-import { helpers } from '../../utils/sports/soccer'
+import { helpers, soccerTranslation } from '../../utils/sports/soccer'
 import {
     getTournamentStandings,
     getTournamentResults,
@@ -7,7 +6,7 @@ import {
     TournamentResultsPayload
 } from '../../api/soccer'
 import { Mappings } from '../../utils/sports/reader'
-import { i18nFactory } from '../../factories'
+import { i18n } from 'snips-toolkit'
 
 /**
  * 
@@ -16,13 +15,11 @@ import { i18nFactory } from '../../factories'
  * @param results 
  */
 async function handleLeagueStandings(mappings: Mappings, standings: TournamentStandingsPayload, results: TournamentResultsPayload): Promise<string> {
-    const i18n = i18nFactory.get()
-
     let speech: string = ''
 
     if (mappings.teams.length > 0) {
         if (helpers.noResultFromTeam(results.results, mappings.teams[0].id)) {
-            speech += i18n('sports.soccer.dialog.teamDoesntParticipateInTournament', {
+            speech += i18n.translate('sports.soccer.dialog.teamDoesntParticipateInTournament', {
                 team: mappings.teams[0].name,
                 tournament: mappings.tournament.name
             })
@@ -44,13 +41,11 @@ async function handleLeagueStandings(mappings: Mappings, standings: TournamentSt
  * @param results 
  */
 async function handleGroupsStandings(mappings: Mappings, standings: TournamentStandingsPayload, results: TournamentResultsPayload): Promise<string> {
-    const i18n = i18nFactory.get()
-
     let speech: string = ''
 
     if (mappings.teams.length > 0) {
         if (helpers.noResultFromTeam(results.results, mappings.teams[0].id)) {
-            speech += i18n('sports.soccer.dialog.teamDoesntParticipateInTournament', {
+            speech += i18n.translate('sports.soccer.dialog.teamDoesntParticipateInTournament', {
                 team: mappings.teams[0].name,
                 tournament: mappings.tournament.name
             })
@@ -79,14 +74,13 @@ async function handleGroupsStandings(mappings: Mappings, standings: TournamentSt
  * @param results 
  */
 async function handleCupStandings(mappings: Mappings, results: TournamentResultsPayload) : Promise<string> {
-    const i18n = i18nFactory.get()
     const round = helpers.getHighestFinalPhase(results)
 
     let speech: string = ''
 
     if (mappings.teams.length > 0) {
         if (helpers.noResultFromTeam(results.results, mappings.teams[0].id)) {
-            speech += i18n('sports.soccer.dialog.teamDoesntParticipateInTournament', {
+            speech += i18n.translate('sports.soccer.dialog.teamDoesntParticipateInTournament', {
                 team: mappings.teams[0].name,
                 tournament: mappings.tournament.name
             })

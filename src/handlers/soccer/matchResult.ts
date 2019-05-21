@@ -1,5 +1,5 @@
 import { soccerTranslation, helpers } from '../../utils/sports/soccer'
-import { i18nFactory } from '../../factories'
+import { i18n } from 'snips-toolkit'
 import {
     getTeamResults,
     getTournamentResults,
@@ -31,8 +31,6 @@ async function handleTournamentMatchResults(mappings: Mappings): Promise<string>
 }
 
 async function handleTeamMatchResults(mappings: Mappings): Promise<string> {
-    const i18n = i18nFactory.get()
-
     let speech: string = ''
     let results: TeamResultsPayload = await getTeamResults(mappings.teams[0].id)
 
@@ -46,7 +44,7 @@ async function handleTeamMatchResults(mappings: Mappings): Promise<string> {
         if (inTournamentResults.length > 0) {
             results.results = inTournamentResults
         } else {
-            speech += i18n('sports.soccer.dialog.teamNeverParticipatedInTournament', {
+            speech += i18n.translate('sports.soccer.dialog.teamNeverParticipatedInTournament', {
                 team: mappings.teams[0].name,
                 tournament: mappings.tournament.name
             })
@@ -64,13 +62,11 @@ async function handleTeamsMatchResults(mappings: Mappings): Promise<string> {
         return handleTeamMatchResults(mappings)
     }
 
-    const i18n = i18nFactory.get()
-
     let speech: string = ''
     let results: TeamVsTeamPayload = await getTeamVsTeam(mappings.teams[0].id, mappings.teams[1].id)
 
     if (results.message && results.message === 'No meetings between these teams.') {
-        speech = i18n('sports.soccer.dialog.teamsNeverMet', {
+        speech = i18n.translate('sports.soccer.dialog.teamsNeverMet', {
             team_1: mappings.teams[0].name,
             team_2: mappings.teams[1].name
         })
@@ -85,7 +81,7 @@ async function handleTeamsMatchResults(mappings: Mappings): Promise<string> {
             if (inTournamentResults.length > 0) {
                 results.last_meetings.results = inTournamentResults
             } else {
-                speech += i18n('sports.soccer.dialog.teamsNeverMetInTournament', {
+                speech += i18n.translate('sports.soccer.dialog.teamsNeverMetInTournament', {
                     team_1: mappings.teams[0].name,
                     team_2: mappings.teams[1].name,
                     tournament: mappings.tournament.name

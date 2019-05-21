@@ -1,10 +1,4 @@
-export const DEFAULT_LOCALE = 'english'
-export const SUPPORTED_LOCALES = [ 'english', 'french' ]
-export const DEFAULT_LANGUAGE = 'en'
-export const LANGUAGE_MAPPINGS = {
-    english: 'en',
-    french: 'fr'
-}
+export const BASE_URL = 'https://api.sportradar.us'
 export const HOUR_MILLISECONDS = 1000 * 60 * 60
 export const DAY_MILLISECONDS = 1000 * 60 * 60 * 24
 export const WEEK_MILLISECONDS = 1000 * 60 * 60 * 24 * 7

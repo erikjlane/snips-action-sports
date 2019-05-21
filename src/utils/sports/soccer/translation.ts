@@ -1,4 +1,4 @@
-import { i18nFactory } from '../../../factories/i18nFactory'
+import { i18n } from 'snips-toolkit'
 import { beautify } from '../../beautify'
 import {
     Result,
@@ -12,7 +12,6 @@ import {
 } from '../../../api/soccer'
 import { helpers } from './helpers'
 import { time } from '../../time'
-import { translation } from '../../translation'
 
 export const soccerTranslation = {
     leagueStandingsToSpeech(standings: TournamentStandingsPayload): string {
@@ -21,7 +20,7 @@ export const soccerTranslation = {
         const teamStandings: TeamStanding[] = standings.standings[0].groups[0].team_standings
 
         for (let i = 0; i < Math.min(teamStandings.length, 5); i++) {
-            tts += translation.randomTranslation('sports.soccer.tournamentStandings.standings.' + (i + 1), {
+            tts += i18n.randomTranslation('sports.soccer.tournamentStandings.standings.' + (i + 1), {
                 team: teamStandings[i].team.name,
                 points: teamStandings[i].points
             })
@@ -32,8 +31,6 @@ export const soccerTranslation = {
     },
 
     leagueTeamStandingToSpeech(standings: TournamentStandingsPayload, teamId: string): string {
-        const i18n = i18nFactory.get()
-
         let tts: string = ''
 
         const group = standings.standings[0].groups.find(
@@ -41,7 +38,7 @@ export const soccerTranslation = {
         )
         const teamStandings = group.team_standings.find(team => team.team.id === teamId)
 
-        tts += i18n('sports.soccer.tournamentStandings.rank', {
+        tts += i18n.translate('sports.soccer.tournamentStandings.rank', {
             team: teamStandings.team.name,
             tournament: standings.tournament.name,
             rank: teamStandings.rank
@@ -58,7 +55,7 @@ export const soccerTranslation = {
         for (let group of groups) {
             const teamStandings: TeamStanding[] = group.team_standings
 
-            tts += translation.randomTranslation('sports.soccer.tournamentStandings.standingInGroup', {
+            tts += i18n.randomTranslation('sports.soccer.tournamentStandings.standingInGroup', {
                 team: teamStandings[0].team.name,
                 group: group.name,
                 points: teamStandings[0].points
@@ -70,8 +67,6 @@ export const soccerTranslation = {
     },
 
     groupsTeamStandingToSpeech(standings: TournamentStandingsPayload, teamId: string): string {
-        const i18n = i18nFactory.get()
-
         let tts: string = ''
 
         const group = standings.standings[0].groups.find(
@@ -79,7 +74,7 @@ export const soccerTranslation = {
         )
         const teamStandings = group.team_standings.find(team => team.team.id === teamId)
 
-        tts += i18n('sports.soccer.tournamentStandings.rankInGroup', {
+        tts += i18n.translate('sports.soccer.tournamentStandings.rankInGroup', {
             team: teamStandings.team.name,
             tournament: standings.tournament.name,
             rank: teamStandings.rank,
@@ -90,14 +85,12 @@ export const soccerTranslation = {
     },
 
     cupStandingsToSpeech(results: TournamentResultsPayload, round: TournamentRound): string {
-        const i18n = i18nFactory.get()
-
         let tts: string = ''
 
-        tts += i18n('sports.soccer.tournamentStandings.finalPhase.currentStage', {
+        tts += i18n.translate('sports.soccer.tournamentStandings.finalPhase.currentStage', {
             tournament: results.tournament.name,
             round: round.cup_round_match_number,
-            stage: i18n('sports.soccer.finalPhase.' + round.name)
+            stage: i18n.translate('sports.soccer.finalPhase.' + round.name)
         })
         tts += ' '
 
@@ -110,29 +103,25 @@ export const soccerTranslation = {
     },
 
     cupTeamStandingToSpeech(result: Result, round: TournamentRound, firstTeamId: string): string {
-        const i18n = i18nFactory.get()
-
         let tts: string = ''
 
-        tts += i18n('sports.soccer.tournamentStandings.finalPhase.currentStage', {
+        tts += i18n.translate('sports.soccer.tournamentStandings.finalPhase.currentStage', {
             tournament: result.sport_event.tournament.name,
             round: round.cup_round_match_number,
-            stage: i18n('sports.soccer.finalPhase.' + round.name)
+            stage: i18n.translate('sports.soccer.finalPhase.' + round.name)
         })
         tts += ' '
 
         if (result) {
             tts += soccerTranslation.teamResultToSpeech(result, firstTeamId, false)
         } else {
-            tts += i18n('sports.soccer.tournamentStandings.finalPhase.didntPlayYet')
+            tts += i18n.translate('sports.soccer.tournamentStandings.finalPhase.didntPlayYet')
         }
 
         return tts
     },
 
     teamResultToSpeech(result: Result, firstTeamId: string, longTts = true): string {
-        const i18n = i18nFactory.get()
-
         let tts: string = ''
 
         const team1 = result.sport_event.competitors.find(competitor => competitor.id === firstTeamId)
@@ -145,7 +134,7 @@ export const soccerTranslation = {
             ? 'teamTied'
             : ((team1Score < team2Score) ? 'teamLost' : 'teamWon')
 
-        tts += i18n((longTts ? 'sports.soccer.matchResults.' : 'sports.soccer.tournamentResults.') + key, {
+        tts += i18n.translate((longTts ? 'sports.soccer.matchResults.' : 'sports.soccer.tournamentResults.') + key, {
             tournament: result.sport_event.tournament.name,
             team_1: team1.name,
             team_2: team2.name,
@@ -158,8 +147,6 @@ export const soccerTranslation = {
     },
 
     tournamentResultsToSpeech(tournamentResults: TournamentResultsPayload): string {
-        const i18n = i18nFactory.get()
-
         let results = tournamentResults.results
         let tts: string = ''
 
@@ -167,7 +154,7 @@ export const soccerTranslation = {
         if (helpers.isLeague(tournamentResults)) {
             const round = results[results.length - 1].sport_event.tournament_round.number
 
-            tts += i18n('sports.soccer.tournamentResults.introductionRound', {
+            tts += i18n.translate('sports.soccer.tournamentResults.introductionRound', {
                 tournament: tournamentResults.tournament.name,
                 day: round
             })
@@ -179,7 +166,7 @@ export const soccerTranslation = {
         else {
             const day = new Date(results[results.length - 1].sport_event.scheduled)
 
-            tts += i18n('sports.soccer.tournamentResults.introduction', {
+            tts += i18n.translate('sports.soccer.tournamentResults.introduction', {
                 tournament: tournamentResults.tournament.name
             })
             tts += ' '
@@ -199,8 +186,6 @@ export const soccerTranslation = {
     },
 
     tournamentScheduleToSpeech(schedule: TournamentSchedulePayload): string {
-        const i18n = i18nFactory.get()
-
         let tts: string = ''
 
         const nextDate = new Date(schedule.sport_events[0].scheduled)
@@ -208,14 +193,14 @@ export const soccerTranslation = {
             e => time.areSameDays(new Date(e.scheduled), nextDate)
         )
 
-        tts += i18n('sports.soccer.tournamentSchedule.introduction', {
+        tts += i18n.translate('sports.soccer.tournamentSchedule.introduction', {
             tournament: schedule.tournament.name,
             date: beautify.date(new Date(events[0].scheduled))
         })
         tts += ' '
 
         for (let event of events) {
-            tts += translation.randomTranslation('sports.soccer.tournamentSchedule.match', {
+            tts += i18n.randomTranslation('sports.soccer.tournamentSchedule.match', {
                 team_1: event.competitors[0].name,
                 team_2: event.competitors[1].name,
                 time: beautify.time(new Date(event.scheduled))
@@ -227,8 +212,6 @@ export const soccerTranslation = {
     },
 
     teamScheduleToSpeech(schedule: TeamSchedulePayload, firstTeamId: string): string {
-        const i18n = i18nFactory.get()
-
         let tts: string = ''
             
         const scheduledEvent = schedule.schedule[0]
@@ -237,7 +220,7 @@ export const soccerTranslation = {
         const team1 = scheduledEvent.competitors.find(competitor => competitor.id === firstTeamId)
         const team2 = scheduledEvent.competitors.find(competitor => competitor.id !== team1.id)
 
-        tts += i18n('sports.soccer.teamSchedule.nextMatch', {
+        tts += i18n.translate('sports.soccer.teamSchedule.nextMatch', {
             team_1: team1.name,
             team_2: team2.name,
             tournament: scheduledEvent.tournament.name,

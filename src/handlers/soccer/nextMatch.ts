@@ -1,5 +1,5 @@
 import { soccerTranslation, helpers } from '../../utils/sports/soccer'
-import { i18nFactory } from '../../factories'
+import { i18n } from 'snips-toolkit'
 import {
     TeamSchedulePayload,
     TournamentSchedulePayload,
@@ -9,8 +9,6 @@ import {
 import { Mappings } from '../../utils/sports'
 
 async function handleTournamentNextMatches(mappings: Mappings): Promise<string> {
-    const i18n = i18nFactory.get()
-
     let speech = ''
     let schedule: TournamentSchedulePayload = await getTournamentSchedule(mappings.tournament.id)
 
@@ -18,7 +16,7 @@ async function handleTournamentNextMatches(mappings: Mappings): Promise<string> 
     schedule = helpers.getTournamentFutureEvents(schedule)
 
     if (schedule.sport_events.length === 0) {
-        speech += i18n('sports.soccer.dialog.tournamentOver', {
+        speech += i18n.translate('sports.soccer.dialog.tournamentOver', {
             tournament: mappings.tournament.name
         })
     } else {
@@ -29,8 +27,6 @@ async function handleTournamentNextMatches(mappings: Mappings): Promise<string> 
 }
 
 async function handleTeamNextMatches(mappings: Mappings): Promise<string> {
-    const i18n = i18nFactory.get()
-
     let speech = ''
     let schedule: TeamSchedulePayload = await getTeamSchedule(mappings.teams[0].id)
 
@@ -46,7 +42,7 @@ async function handleTeamNextMatches(mappings: Mappings): Promise<string> {
         if (scheduleInTournament.length > 0) {
             schedule.schedule = scheduleInTournament
         } else {
-            speech += i18n('sports.soccer.dialog.teamWillNeverParticipateInTournament', {
+            speech += i18n.translate('sports.soccer.dialog.teamWillNeverParticipateInTournament', {
                 team: mappings.teams[0].name,
                 tournament: mappings.tournament.name
             })
@@ -55,7 +51,7 @@ async function handleTeamNextMatches(mappings: Mappings): Promise<string> {
     }
 
     if (schedule.schedule.length === 0) {
-        speech += i18n('sports.soccer.dialog.noScheduledGames', {
+        speech += i18n.translate('sports.soccer.dialog.noScheduledGames', {
             team: mappings.teams[0].name
         })
     } else {
@@ -70,8 +66,6 @@ async function handleTeamsNextMatches(mappings: Mappings): Promise<string> {
         return handleTeamNextMatches(mappings)
     }
 
-    const i18n = i18nFactory.get()
-
     let speech: string = ''
     let schedule: TeamSchedulePayload = await getTeamSchedule(mappings.teams[0].id)
 
@@ -84,7 +78,7 @@ async function handleTeamsNextMatches(mappings: Mappings): Promise<string> {
     )
 
     if (commonSchedule.length === 0) {
-        speech += i18n('sports.soccer.dialog.teamsWillNeverMeet', {
+        speech += i18n.translate('sports.soccer.dialog.teamsWillNeverMeet', {
             team_1: mappings.teams[0].name,
             team_2: mappings.teams[1].name
         })
@@ -102,7 +96,7 @@ async function handleTeamsNextMatches(mappings: Mappings): Promise<string> {
             if (sheduleInTournament.length > 0) {
                 schedule.schedule = sheduleInTournament
             } else {
-                speech += i18n('sports.soccer.dialog.teamsWillNeverMeetInTournament', {
+                speech += i18n.translate('sports.soccer.dialog.teamsWillNeverMeetInTournament', {
                     team_1: mappings.teams[0].name,
                     team_2: mappings.teams[1].name,
                     tournament: mappings.tournament.name
@@ -113,7 +107,7 @@ async function handleTeamsNextMatches(mappings: Mappings): Promise<string> {
     }
 
     if (schedule.schedule.length === 0) {
-        speech += i18n('sports.soccer.dialog.noScheduledGames', {
+        speech += i18n.translate('sports.soccer.dialog.noScheduledGames', {
             team: mappings.teams[0].name
         })
     } else {

@@ -1,17 +1,14 @@
-import { httpFactory, configFactory } from '../../factories'
-import { LANGUAGE_MAPPINGS } from '../../constants'
 import { TeamResultsPayload } from './types'
-import { logger } from '../../utils'
+import { logger, config } from 'snips-toolkit'
+import { request } from '../index'
 
 export async function getTeamResults (teamId: string): Promise<TeamResultsPayload> {
-    const config = configFactory.get()
-
-    const http = httpFactory.get().query({
-        api_key: configFactory.get().soccerApiKey
+    const http = request.query({
+        api_key: config.get().soccerApiKey
     })
     
     const results = await http
-        .url(`/soccer-t3/eu/${ LANGUAGE_MAPPINGS[config.locale] }/teams/${ teamId }/results.json`)
+        .url(`/soccer-t3/eu/${ config.get().locale }/teams/${ teamId }/results.json`)
         .get()
         .json()
         .catch(error => {

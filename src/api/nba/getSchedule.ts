@@ -1,12 +1,10 @@
-import { httpFactory, configFactory, cronFactory, Cacheable } from '../../factories'
-import { LANGUAGE_MAPPINGS } from '../../constants'
-import { logger } from '../../utils'
+import { cronFactory, Cacheable } from '../../factories'
+import { logger, config } from 'snips-toolkit'
 import { SchedulePayload } from './types'
 import fs from 'fs'
+import { request } from '../index'
 
 export async function getSchedule(forceRefresh: boolean = false): Promise<SchedulePayload> {
-    const config = configFactory.get()
-
     try {
         const cached = fs.readFileSync('.cache/nba_schedule.json', 'utf8')
         if (!forceRefresh && cached) {
@@ -22,16 +20,15 @@ export async function getSchedule(forceRefresh: boolean = false): Promise<Schedu
 
     logger.debug('No cache used')
 
-    const http = httpFactory.get().query({
-        api_key: configFactory.get().nbaApiKey
+    const http = request.query({
+        api_key: config.get().nbaApiKey
     })
 
     const results = await http
-        .url(`/nba/trial/v5/${ LANGUAGE_MAPPINGS[config.locale] }/games/2018/REG/schedule.json`)
+        .url(`/nba/trial/v5/${ config.get().locale }/games/2018/REG/schedule.json`)
         .get()
         .json()
         .catch(error => {
-            logger.error(error)
             // Network error
             if (error.name === 'TypeError')
                 throw new Error('APIRequest')
