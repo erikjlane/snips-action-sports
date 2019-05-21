@@ -95,7 +95,8 @@
             "finalPhase": {
                 "round_of_16": "round of 16",
                 "quarterfinal": "quarter finals",
-                "semifinal": "semi final"
+                "semifinal": "semi final",
+                "final": "final"
             }
         },
         "nba": {

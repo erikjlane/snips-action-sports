@@ -93,7 +93,8 @@
             "finalPhase": {
                 "round_of_16": "huitièmes de finale",
                 "quarterfinal": "quarts de finale",
-                "semifinal": "demi-finale"
+                "semifinal": "demi-finale",
+                "final": "finale"
             }
         },
         "nba": {

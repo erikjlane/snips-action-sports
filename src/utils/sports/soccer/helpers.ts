@@ -67,7 +67,8 @@ export const helpers = {
         const phases = [
             'round_of_16',
             'quarterfinal',
-            'semifinal'
+            'semifinal',
+            'final'
         ]
 
         for (let result of results.results) {
