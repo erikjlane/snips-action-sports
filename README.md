@@ -32,7 +32,7 @@ npm run dev
 # 1) Lint, transpile and test.
 npm start
 # 2) Compile and run the action.
-node action-sports.js
+npm run launch
 ```
 
 ## Test & Demo cases
@@ -77,7 +77,7 @@ Get details about future matches of a team in the given tournament
 
 ## Debug
 
-In the `action-sports.js` file:
+In the `src/index.ts` file:
 
 ```js
 // Uncomment this line to print everything
@@ -94,8 +94,8 @@ npm run test
 
 **In test mode, i18n output and http calls are mocked.**
 
-- **http**: see `tests/httpMocks/index.ts`
-- **i18n**: see `src/factories/i18nFactory.ts`
+- **http**: mocks are written in `tests/httpMocks/index.ts`
+- **i18n**: mocked by `snips-toolkit`, see the [documentation](https://github.com/snipsco/snips-javascript-toolkit#i18n).
 
 ## Contributing
 
