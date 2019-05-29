@@ -1,4 +1,5 @@
 export const BASE_URL = 'https://api.sportradar.us'
+export const CACHE_DIR = `${process.cwd()}/.cache`
 export const HOUR_MILLISECONDS = 1000 * 60 * 60
 export const DAY_MILLISECONDS = 1000 * 60 * 60 * 24
 export const WEEK_MILLISECONDS = 1000 * 60 * 60 * 24 * 7
