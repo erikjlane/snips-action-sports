@@ -79,9 +79,7 @@ export const reader = function (teamNames: string[], tournamentName: string): Ma
     // Searching for the teams ids
     if (!slot.missing(teamNames)) {
         for (let teamName of teamNames) {
-            const matchingTeam = mapping.teams.find(
-                t => t.name.includes(teamName) || teamName.includes(t.name)
-            )
+            const matchingTeam = mapping.teams[teamName.toLowerCase()]
 
             if (!matchingTeam || !matchingTeam.id) {
                 throw new Error('team')
@@ -94,9 +92,7 @@ export const reader = function (teamNames: string[], tournamentName: string): Ma
     
     // Searching for the tournament id
     if (!slot.missing(tournamentName)) {
-        const matchingTournament = mapping.tournaments.find(
-            t => t.name.includes(tournamentName)
-        )
+        const matchingTournament = mapping.tournaments[tournamentName.toLowerCase()]
         
         if (!matchingTournament || !matchingTournament.id) {
             throw new Error('tournament')
