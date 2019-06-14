@@ -33,6 +33,7 @@
                 "noScheduledGames": "Désolé, je n'ai pas trouvé de matchs programmés pour {{- team }}."
             },
             "tournamentStandings": {
+                "notInProgress": "La saison de {{- tournament }} semble être terminée.",
                 "rank": "{{- team }} occupe la place numéro {{ rank }} de {{- tournament }}.",
                 "rankInGroup": "{{- team }} occupe la place numéro {{ rank }} du groupe {{ group }} de {{- tournament }}.",
                 "standings": {
@@ -63,6 +64,7 @@
                 }
             },
             "tournamentResults": {
+                "notInProgress": "La saison de {{- tournament }} semble être terminée.",
                 "introduction": "Voici les derniers résultats de {{- tournament }}.",
                 "introductionRound": "Voici les résultats de la journée {{ day }} de {{- tournament }}.",
                 "teamLost": "{{- team_1 }} a perdu {{ team_1_score }} à {{ team_2_score }} contre {{- team_2 }}.",

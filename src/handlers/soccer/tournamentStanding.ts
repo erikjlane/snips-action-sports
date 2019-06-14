@@ -110,17 +110,29 @@ async function handleCupStandings(mappings: Mappings, results: TournamentResults
 }
 
 export const soccerTournamentStanding = async function(mappings: Mappings): Promise<string> {
-    let speech: string = ''
+    const i18n = i18nFactory.get()
 
-    const standings = await getTournamentStandings(mappings.tournament.id)
+    let speech: string = ''
+    let standings: TournamentStandingsPayload
+
+    try {
+        standings = await getTournamentStandings(mappings.tournament.id)
+    } catch (err) {
+        if (err.name === 'NotInProgressError') {
+            return i18n('sports.soccer.tournamentStandings.notInProgress', {
+                tournament: mappings.tournament.name
+            })
+        }
+    }
+    
     //TODO: fix QPS limit
     await new Promise(resolve => setTimeout(resolve, 1000))
     const results = await getTournamentResults(mappings.tournament.id)
 
     if (helpers.isLeague(results)) {
-        speech += await handleLeagueStandings(mappings, standings, results)
+        speech = await handleLeagueStandings(mappings, standings, results)
     } else {
-        speech += await handleGroupsStandings(mappings, standings, results)
+        speech = await handleGroupsStandings(mappings, standings, results)
     }
 
     return speech

@@ -19,6 +19,12 @@ export async function getTournamentStandings (tournamentId: string): Promise<Tou
             // Network error
             if (error.name === 'TypeError')
                 throw new Error('APIRequest')
+            // Not in progress error
+            if (JSON.parse(error.message).message === 'No standings for this tournament.') {
+                let error = new Error('notInProgress')
+                error.name = 'NotInProgressError'
+                throw error
+            }
             // Other error
             throw new Error('APIResponse')
         }) as TournamentStandingsPayload

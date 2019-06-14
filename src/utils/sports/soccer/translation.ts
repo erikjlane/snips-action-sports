@@ -168,7 +168,7 @@ export const soccerTranslation = {
             const round = results[results.length - 1].sport_event.tournament_round.number
 
             tts += i18n('sports.soccer.tournamentResults.introductionRound', {
-                tournament: results[0].sport_event.tournament.name,
+                tournament: tournamentResults.tournament.name,
                 day: round
             })
             tts += ' '
@@ -180,7 +180,7 @@ export const soccerTranslation = {
             const day = new Date(results[results.length - 1].sport_event.scheduled)
 
             tts += i18n('sports.soccer.tournamentResults.introduction', {
-                tournament: results[0].sport_event.tournament.name
+                tournament: tournamentResults.tournament.name
             })
             tts += ' '
 

@@ -11,13 +11,21 @@ import {
 import { Mappings } from '../../utils/sports'
 
 async function handleTournamentMatchResults(mappings: Mappings): Promise<string> {
+    const i18n = i18nFactory.get()
+
     let speech: string = ''
     let tournamentResults: TournamentResultsPayload = await getTournamentResults(mappings.tournament.id)
 
     // keeping ended matches only
     tournamentResults.results = helpers.getEndedResults(tournamentResults.results)
 
-    speech += soccerTranslation.tournamentResultsToSpeech(tournamentResults)
+    if (tournamentResults.results.length === 0) {
+        speech = i18n('sports.soccer.tournamentResults.notInProgress', {
+            tournament: tournamentResults.tournament.name
+        })
+    } else {
+        speech = soccerTranslation.tournamentResultsToSpeech(tournamentResults)
+    }
 
     return speech
 }

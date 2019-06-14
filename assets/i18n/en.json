@@ -33,6 +33,7 @@
                 "noScheduledGames": "I'm sorry, I found no scheduled game for {{- team }}."
             },
             "tournamentStandings": {
+                "notInProgress": "The {{- tournament }} season seems to be finished.",
                 "rank": "{{- team }} occupies rank {{ rank }} of the {{- tournament }}.",
                 "rankInGroup": "{{- team }} occupies rank {{ rank }} of group {{ group }} in the {{- tournament }}.",
                 "standings": {
@@ -65,6 +66,7 @@
                 }
             },
             "tournamentResults": {
+                "notInProgress": "The {{- tournament }} season seems to be finished.",
                 "introduction": "Here are the last results of the {{- tournament }}.",
                 "introductionRound": "Here are the results of the {{- tournament }} day {{ day }}.",
                 "teamLost": "{{- team_1 }} lost {{ team_1_score }} to {{ team_2_score }} against {{- team_2 }}.",

@@ -45,7 +45,7 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, her
         flow.continue('snips-assistant:Cancel', (_, flow) => {
             flow.end()
         })
-        flow.continue('snips-assistant:Stop', (_, flow) => {
+        flow.continue('snips-assistant:StopSilence', (_, flow) => {
             flow.end()
         })
 

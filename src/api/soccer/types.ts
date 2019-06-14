@@ -158,8 +158,9 @@ export interface Result {
 export interface TournamentResultsPayload {
     generated_at: Date;
     schema: any;
-    tournament: Tournament;
-    results: Result[];
+    message?: string;
+    tournament?: Tournament;
+    results?: Result[];
 }
 
 export interface TeamResultsPayload {
@@ -172,9 +173,10 @@ export interface TeamResultsPayload {
 export interface TournamentStandingsPayload {
     generated_at: Date;
     schema: string;
-    tournament: Tournament;
-    season: Season;
-    standings: Standing[];
+    message?: string;
+    tournament?: Tournament;
+    season?: Season;
+    standings?: Standing[];
 }
 
 export interface TournamentSchedulePayload {
