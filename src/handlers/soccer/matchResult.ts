@@ -11,8 +11,6 @@ import {
 import { Mappings } from '../../utils/sports'
 
 async function handleTournamentMatchResults(mappings: Mappings): Promise<string> {
-    const i18n = i18nFactory.get()
-
     let speech: string = ''
     let tournamentResults: TournamentResultsPayload = await getTournamentResults(mappings.tournament.id)
 

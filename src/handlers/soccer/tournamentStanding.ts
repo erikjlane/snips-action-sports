@@ -104,8 +104,6 @@ async function handleCupStandings(mappings: Mappings, results: TournamentResults
 }
 
 export const soccerTournamentStanding = async function(mappings: Mappings): Promise<string> {
-    const i18n = i18nFactory.get()
-
     let speech: string = ''
     let standings: TournamentStandingsPayload
 
@@ -113,7 +111,7 @@ export const soccerTournamentStanding = async function(mappings: Mappings): Prom
         standings = await getTournamentStandings(mappings.tournament.id)
     } catch (err) {
         if (err.name === 'NotInProgressError') {
-            return i18n('sports.soccer.tournamentStandings.notInProgress', {
+            return i18n.translate('sports.soccer.tournamentStandings.notInProgress', {
                 tournament: mappings.tournament.name
             })
         }
