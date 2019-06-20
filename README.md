@@ -4,6 +4,8 @@ Snips action code for the Sports app
 
 At the moment, only a limited number of soccer tournaments and the NBA are supported.
 
+[![Build Status](https://travis-ci.org/snipsco/snips-action-sports.svg?branch=master)](https://travis-ci.org/snipsco/snips-action-sports)
+
 ## Setup
 
 ```sh
