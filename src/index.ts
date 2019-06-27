@@ -11,7 +11,7 @@ export default async function ({
     done
 }: {
     hermes: Hermes,
-    done: Done 
+    done: Done
 }) {
     try {
         const { name } = require('../package.json')
@@ -28,15 +28,15 @@ export default async function ({
         // Subscribe to the app intents
         dialog.flows([
             {
-                intent: 'snips-assistant:NextMatch',
+                intent: `${ config.get().assistantPrefix }:NextMatch`,
                 action: (msg, flow) => handlers.nextMatch(msg, flow, hermes)
             },
             {
-                intent: 'snips-assistant:TournamentStanding',
+                intent: `${ config.get().assistantPrefix }:TournamentStanding`,
                 action: (msg, flow) => handlers.tournamentStanding(msg, flow, hermes)
             },
             {
-                intent: 'snips-assistant:MatchResult',
+                intent: `${ config.get().assistantPrefix }:MatchResult`,
                 action: (msg, flow) => handlers.matchResult(msg, flow, hermes)
             }
         ])

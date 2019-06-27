@@ -1,5 +1,5 @@
 import { slot, tts } from '../utils'
-import { Handler, logger, i18n } from 'snips-toolkit'
+import { Handler, logger, i18n, config } from 'snips-toolkit'
 import commonHandler, { KnownSlots } from './common'
 import { soccerTournamentStanding } from './soccer'
 import { nbaTournamentStanding } from './nba'
@@ -27,8 +27,8 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, her
             return tournamentStandingHandler(msg, flow, knownSlots)
         })
         */
-       
-        flow.continue('snips-assistant:ElicitTournament', (msg, flow) => {
+
+        flow.continue(`${ config.get().assistantPrefix }:ElicitTournament`, (msg, flow) => {
             if (msg.intent.confidenceScore < INTENT_FILTER_PROBABILITY_THRESHOLD) {
                 throw new Error('intentNotRecognized')
             }
@@ -39,10 +39,10 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, her
             })
         })
 
-        flow.continue('snips-assistant:Cancel', (_, flow) => {
+        flow.continue(`${ config.get().assistantPrefix }:Cancel`, (_, flow) => {
             flow.end()
         })
-        flow.continue('snips-assistant:StopSilence', (_, flow) => {
+        flow.continue(`${ config.get().assistantPrefix }:StopSilence`, (_, flow) => {
             flow.end()
         })
 
@@ -63,7 +63,7 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, her
         const sportId = (mappings.tournament)
             ? mappings.tournament.sport.id
             : mappings.teams[0].sport.id
-        
+
         switch (sportId) {
             // soccer
             case 'sr:sport:1': {
@@ -77,7 +77,7 @@ export const tournamentStandingHandler: Handler = async function (msg, flow, her
             }
         }
 
-        logger.info(speech)        
+        logger.info(speech)
 
         flow.end()
         if (Date.now() - now < 4000) {

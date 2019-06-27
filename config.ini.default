@@ -4,3 +4,4 @@ locale=en
 [secret]
 soccer_api_key=
 nba_api_key=
+assistant_prefix=snips-assistant
