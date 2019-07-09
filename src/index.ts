@@ -23,6 +23,10 @@ export default async function ({
         await i18n.init(config.get().locale)
         cronFactory.init()
 
+        if (!config.get().soccerApiKey || !config.get().nbaApiKey) {
+            throw new Error('noAPIKey')
+        }
+
         const dialog = hermes.dialog()
 
         // Subscribe to the app intents
